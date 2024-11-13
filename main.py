@@ -1,6 +1,7 @@
 import pygame
 import math
 from car import *
+from race import current_track
 #from race import *
 
 pygame.init()
@@ -13,12 +14,12 @@ clock = pygame.time.Clock()
 def update():
     delta_time = clock.tick(FPS) / 1000
 
-    player.update_rotation(delta_time)
-    player.update_position(delta_time)
+    player.update_rotation(delta_time, current_track)
+    player.update_position(delta_time, current_track)
 
 running = True
 while running:
-    screen.fill((0, 0, 0))
+    screen.fill((116, 118, 120))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
