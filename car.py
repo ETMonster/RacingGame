@@ -48,7 +48,7 @@ class Player(Car):
         keys = pygame.key.get_pressed()
 
         turn_radius = math.sqrt(self.velocity.x ** 2 + self.velocity.y ** 2) * self.turn_factor
-        turn_radius = max(turn_radius, self.min_turn_radius)
+        turn_radius = max(turn_radius, self.min_turn_radius * PIXEL_TO_SCREEN_FACTOR)
 
         turn_speed = math.sqrt(self.velocity.x ** 2 + self.velocity.y ** 2) / turn_radius if turn_radius > 0 else 0
 
@@ -127,8 +127,8 @@ player = Player(
     brake_acceleration = 250, # Acceleration when pressing brake button
     roll_acceleration = 0.98, # Acceleration when acceleration buttons pressed
     skid_acceleration = 0.96, # Acceleration when burning out (Target direction + Travel direction > 90)
-    min_turn_radius = 50,
+    min_turn_radius = 30,
     turn_factor = 0.5, # The rate at which cars turn
     max_turn_speed = 3, # The maximum turn speed
-    max_speed = 500 # The maximum velocity
+    max_speed = 600 # The maximum velocity
 )
