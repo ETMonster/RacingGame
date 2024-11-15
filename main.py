@@ -19,7 +19,7 @@ def update():
 
 running = True
 while running:
-    screen.fill((116, 118, 120))
+    screen.fill((80, 80, 80))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -30,7 +30,9 @@ while running:
     rotated_image = pygame.transform.rotate(player.image, player.rotation.angle)
 
     player_rect = rotated_image.get_rect()
-    player_rect.center = (player.position.x + player.width // 2, player.position.y + player.height // 2)
+    player_rect.center = (player.position.world_to_screen(x = player.position.x + player.width // 2).x, player.position.world_to_screen(y = player.position.y + player.height // 2).y)
+
+    print(player.position.world_to_screen(x = player.position.x + player.width // 2).x, player.position.world_to_screen(y = player.position.y + player.height // 2).y)
 
     screen.blit(rotated_image, player_rect.topleft)
 

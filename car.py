@@ -109,8 +109,8 @@ class Player(Car):
             if abs(self.velocity.y) < MOVEMENT_ZERO_MARGIN: # Check if velocity is near zero
                 self.velocity.y = 0 #if below a certain margin, set to zero
 
-        self.velocity.x = min(self.velocity.x, self.max_speed) #
-        self.velocity.y = min(self.velocity.y, self.max_speed) # Max speed
+        self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed) #
+        self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
 
         self.position.x += self.velocity.x * self.direction.x * delta_time #
         self.position.y += self.velocity.y * self.direction.y * delta_time # Update position
@@ -119,11 +119,11 @@ player = Player(
     image = pygame.image.load('red_car.png'), # Car image path
     width = pygame.image.load('red_car.png').get_width() * PIXEL_TO_SCREEN_FACTOR, # Car width so it retains its aspect with rescale
     height = pygame.image.load('red_car.png').get_height() * PIXEL_TO_SCREEN_FACTOR, # Car height so it retains its aspect with rescale
-    position = Vector(x = WINDOW_WIDTH // 2, y = WINDOW_HEIGHT // 2), # Position on screen
+    position = Vector(x = 0, y = 0), # Position in world
     velocity = Vector(x = 0, y = 0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
     direction = Vector(x = 0, y = 0), # The direction that the car is currently moving in (-1 to 1) and multiplies by velocity to get new position
     rotation = Rotation(radians = 0, angle = 0), # The current rotation of the car in radians and angles
-    gas_acceleration = 50, # Acceleration when pressing gas button
+    gas_acceleration = 80, # Acceleration when pressing gas button
     brake_acceleration = 250, # Acceleration when pressing brake button
     roll_acceleration = 0.98, # Acceleration when acceleration buttons pressed
     skid_acceleration = 0.96, # Acceleration when burning out (Target direction + Travel direction > 90)
