@@ -2,7 +2,7 @@ import pygame
 import math
 from car import *
 from race import current_track
-#from race import *
+from constants import *
 
 pygame.init()
 
@@ -14,8 +14,11 @@ clock = pygame.time.Clock()
 def update():
     delta_time = clock.tick(FPS) / 1000
 
-    player.update_rotation(delta_time, current_track)
-    player.update_position(delta_time, current_track)
+    for car in current_track.objects.to_dictionary()['cars']:
+        car.update_rotation(delta_time, current_track)
+        car.update_position(delta_time, current_track)
+
+    current_track.update_race(screen)
 
 running = True
 while running:
@@ -27,14 +30,7 @@ while running:
 
     update()
 
-    rotated_image = pygame.transform.rotate(player.image, player.rotation.angle)
-
-    player_rect = rotated_image.get_rect()
-    player_rect.center = (player.position.world_to_screen(x = player.position.x + player.width // 2).x, player.position.world_to_screen(y = player.position.y + player.height // 2).y)
-
-    print(player.position.world_to_screen(x = player.position.x + player.width // 2).x, player.position.world_to_screen(y = player.position.y + player.height // 2).y)
-
-    screen.blit(rotated_image, player_rect.topleft)
+    pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, 2, 2))
 
     pygame.display.flip()
 
