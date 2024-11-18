@@ -2,7 +2,7 @@ import pygame
 import math
 from car import *
 from race import current_track
-from constants import *
+#from race import *
 
 pygame.init()
 
@@ -14,15 +14,15 @@ clock = pygame.time.Clock()
 def update():
     delta_time = clock.tick(FPS) / 1000
 
-    for car in current_track.objects.to_dictionary()['cars']:
-        car.update_rotation(delta_time, current_track)
-        car.update_position(delta_time, current_track)
+    player.update_rotation(delta_time, current_track)
+    player.update_position(delta_time, current_track)
+    trial_npc.update_rotation(delta_time, current_track)
+    trial_npc.update_position(delta_time, current_track)
 
-    current_track.update_race(screen)
 
 running = True
 while running:
-    screen.fill((80, 80, 80))
+    screen.fill((116, 118, 120))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -30,7 +30,17 @@ while running:
 
     update()
 
-    pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, 2, 2))
+    rotated_image = pygame.transform.rotate(player.image, player.rotation.angle)
+    rotated_image2 = pygame.transform.rotate(trial_npc.image, trial_npc.rotation.angle)
+
+    player_rect = rotated_image.get_rect()
+    player_rect.center = (player.position.x + player.width // 2, player.position.y + player.height // 2)
+    trial_npc_rect = rotated_image2.get_rect()
+    trial_npc_rect.center = (trial_npc.position.x + trial_npc.width // 2,trial_npc.position.y + trial_npc.height // 2)
+
+    screen.blit(rotated_image, player_rect.topleft)
+    screen.blit(rotated_image2, trial_npc_rect.topright)
+
 
     pygame.display.flip()
 
