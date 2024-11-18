@@ -15,8 +15,11 @@ def update():
     delta_time = clock.tick(FPS) / 1000
 
     for car in current_track.objects.to_dictionary()['cars']:
-        car.update_rotation(delta_time, current_track)
-        car.update_position(delta_time, current_track)
+        if car.is_player == True:
+            car.update_rotation(delta_time, current_track)
+            car.update_position(delta_time, current_track)
+
+        camera.update_position(car)
 
     current_track.update_race(screen)
 

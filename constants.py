@@ -14,10 +14,21 @@ class Rotation:
         self.radians = radians
         self.angle = angle
 
+class Object:
+    def __init__(self, image, width, height, position, rotation):
+        self.image = image
+        self.width = width
+        self.height = height
+        self.position = position
+        self.rotation = rotation
+
 class Camera:
     def __init__(self, position, scale):
         self.position = Vector(position.x - WINDOW_WIDTH // 2, position.y - WINDOW_HEIGHT // 2)
         self.scale = scale
+
+    def update_position(self, focus_object):
+        self.position = Vector(focus_object.position.x - WINDOW_WIDTH // 2, focus_object.position.y - WINDOW_HEIGHT // 2)
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800

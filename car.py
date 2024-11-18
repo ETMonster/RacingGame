@@ -3,16 +3,14 @@ import math
 
 from constants import *
 
-class Car:
-    def __init__(self, image, width, height, position, velocity, direction,
-                 rotation, gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed):
-        self.image = image
-        self.width = width
-        self.height = height
-        self.position = position
+class Car(Object):
+    def __init__(self, image, width, height, position, rotation, is_player, velocity, direction, gas_acceleration,
+                 brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed,
+                 max_speed):
+        super().__init__(image, width, height, position, rotation)
+        self.is_player = is_player
         self.velocity = velocity
         self.direction = direction
-        self.rotation = rotation
         self.gas_acceleration = gas_acceleration
         self.brake_acceleration = brake_acceleration
         self.roll_acceleration = roll_acceleration
@@ -23,11 +21,11 @@ class Car:
         self.max_speed = max_speed
 
 class Opponent(Car):
-    def __init__(self, image, width, height, position, velocity, direction, rotation,
+    def __init__(self, image, width, height, position, rotation, is_player, velocity, direction,
                  gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed,
                  difficulty):
         super().__init__(
-            image, width, height, position, velocity, direction, rotation,
+            image, width, height, position, rotation, is_player, velocity, direction,
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
         )
 
@@ -35,10 +33,10 @@ class Opponent(Car):
 
 class Player(Car):
     def __init__(
-        self, image, width, height, position, velocity, direction, rotation,
+        self, image, width, height, position, rotation, is_player, velocity, direction,
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed):
         super().__init__(
-            image, width, height, position, velocity, direction, rotation,
+            image, width, height, position, rotation, is_player, velocity, direction,
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
         )
 
@@ -114,21 +112,3 @@ class Player(Car):
 
         self.position.x += self.velocity.x * self.direction.x * delta_time #
         self.position.y += self.velocity.y * self.direction.y * delta_time # Update position
-
-player = Player(
-    image = pygame.image.load('red_car.png'), # Car image path
-    width = pygame.image.load('red_car.png').get_width() * PIXEL_TO_SCREEN_FACTOR, # Car width so it retains its aspect with rescale
-    height = pygame.image.load('red_car.png').get_height() * PIXEL_TO_SCREEN_FACTOR, # Car height so it retains its aspect with rescale
-    position = Vector(x = 0, y = 0), # Position in world
-    velocity = Vector(x = 0, y = 0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
-    direction = Vector(x = 0, y = 0), # The direction that the car is currently moving in (-1 to 1) and multiplies by velocity to get new position
-    rotation = Rotation(radians = 0, angle = 0), # The current rotation of the car in radians and angles
-    gas_acceleration = 80, # Acceleration when pressing gas button
-    brake_acceleration = 250, # Acceleration when pressing brake button
-    roll_acceleration = 0.98, # Acceleration when acceleration buttons pressed
-    skid_acceleration = 0.96, # Acceleration when burning out (Target direction + Travel direction > 90)
-    min_turn_radius = 30,
-    turn_factor = 0.5, # The rate at which cars turn
-    max_turn_speed = 3, # The maximum turn speed
-    max_speed = 600 # The maximum velocity
-)
