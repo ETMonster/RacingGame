@@ -19,9 +19,12 @@ def update():
         car.update_position(delta_time, current_track)
 
         if car.is_player:
+            #camera.scale = math.sqrt(car.velocity.x ** 2 + car.velocity.y ** 2) / 500
+            #camera.scale = max(camera.scale, MIN_CAMERA_SCALE)
+
             camera.update_position(car)
 
-    current_track.update_race(screen)
+    current_track.update_screen(screen)
 
 running = True
 while running:
@@ -32,8 +35,6 @@ while running:
             running = False
 
     update()
-
-    pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2, 2, 2))
 
     pygame.display.flip()
 

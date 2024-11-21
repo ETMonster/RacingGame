@@ -116,8 +116,8 @@ class Opponent(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed)  #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed)  # Max speed
 
-        self.position.x += self.velocity.x * self.direction.x * delta_time  #
-        self.position.y += self.velocity.y * self.direction.y * delta_time  # Update position
+        self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale  #
+        self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale  # Update position
 
 class Player(Car):
     def __init__(
@@ -128,7 +128,7 @@ class Player(Car):
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
         )
 
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
+        #self.image = pygame.transform.scale(self.image, (self.width, self.height))
 
     def update_rotation(self, delta_time, current_track):
         keys = pygame.key.get_pressed()
@@ -198,5 +198,5 @@ class Player(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed) #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
 
-        self.position.x += self.velocity.x * self.direction.x * delta_time #
-        self.position.y += self.velocity.y * self.direction.y * delta_time # Update position
+        self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
+        self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position

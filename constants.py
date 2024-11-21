@@ -38,4 +38,5 @@ MOVEMENT_ZERO_MARGIN = 0.5
 
 FPS = 60
 
+MIN_CAMERA_SCALE = 1
 camera = Camera(Vector(x = 0, y = 0), 1)

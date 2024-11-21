@@ -7,16 +7,17 @@ class Race:
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
 
-    def update_race(self, screen):
+    def update_screen(self, screen):
         for object_group in self.objects.to_dictionary():
             for obj in self.objects.to_dictionary()[object_group]:
-                print(obj, obj.position.x, obj.position.y)
-                obj_rotated_image = pygame.transform.rotate(obj.image, obj.rotation.angle) # Get object image and rotate it
+                obj_image = pygame.transform.scale(obj.image, (obj.width / camera.scale, obj.height / camera.scale))
+
+                obj_rotated_image = pygame.transform.rotate(obj_image, obj.rotation.angle) # Get object image and rotate it
                 obj_rect = obj_rotated_image.get_rect() # Get rect of rotated image
 
                 obj_rect.center = (obj.position.world_to_screen(x = obj.position.x).x, obj.position.world_to_screen(y = obj.position.y).y) # Set screen position in relation to camera
 
-                screen.blit(pygame.transform.rotate(obj.image, obj.rotation.angle), obj_rect.topleft) # Blit onto screen
+                screen.blit(pygame.transform.rotate(obj_image, obj.rotation.angle), obj_rect.topleft) # Blit onto screen
 
 
 class Race_Objects:
@@ -48,8 +49,8 @@ class Obstacle(Object):
         pass
 
 current_track = Race(
-    0.1,
-    Race_Objects(
+    friction = 0.1,
+    objects = Race_Objects(
         cars = [
             car.Player(
                 image = pygame.image.load('red_car.png'), # Car image path
