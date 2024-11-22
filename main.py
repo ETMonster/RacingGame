@@ -1,7 +1,7 @@
 import pygame
 import math
 from car import *
-from race import current_track
+from race import current_race
 from constants import *
 
 pygame.init()
@@ -14,9 +14,9 @@ clock = pygame.time.Clock()
 def update():
     delta_time = clock.tick(FPS) / 1000
 
-    for car in current_track.objects.to_dictionary()['cars']:
-        car.update_rotation(delta_time, current_track)
-        car.update_position(delta_time, current_track)
+    for car in current_race.objects.to_dictionary()['cars']:
+        car.update_rotation(delta_time, current_race)
+        car.update_position(delta_time, current_race)
 
         if car.is_player:
             #camera.scale = math.sqrt(car.velocity.x ** 2 + car.velocity.y ** 2) / 500
@@ -24,7 +24,7 @@ def update():
 
             camera.update_position(car)
 
-    current_track.update_screen(screen)
+    current_race.update_screen(screen)
 
 running = True
 while running:

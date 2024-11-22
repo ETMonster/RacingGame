@@ -51,7 +51,7 @@ class Opponent(Car):
 
         return keys
 
-    def update_rotation(self, delta_time, current_track):
+    def update_rotation(self, delta_time, current_race):
         keys = self.simulate_inputs()
 
         turn_radius = math.sqrt(self.velocity.x ** 2 + self.velocity.y ** 2) * self.turn_factor
@@ -73,9 +73,9 @@ class Opponent(Car):
         # direction = ((1 - turn blending) x direction + turn blending x target direction)
         # turn_blend_factor is how fast travel direction equals target direction
         self.direction.x = (
-                (1 - current_track.friction) * self.direction.x + current_track.friction * target_direction.x)
+                (1 - current_race.friction) * self.direction.x + current_race.friction * target_direction.x)
         self.direction.y = (
-                (1 - current_track.friction) * self.direction.y + current_track.friction * target_direction.y)
+                (1 - current_race.friction) * self.direction.y + current_race.friction * target_direction.y)
 
         if abs(self.direction.x - target_direction.x) + (self.direction.y - target_direction.y) > 2:
             self.velocity.x *= self.skid_acceleration  #
@@ -87,7 +87,7 @@ class Opponent(Car):
             self.direction.x /= direction_magnitude
             self.direction.y /= direction_magnitude
 
-    def update_position(self, delta_time, current_track):
+    def update_position(self, delta_time, current_race):
         keys = self.simulate_inputs()
 
         if keys["forward"]:
@@ -116,6 +116,12 @@ class Opponent(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed)  #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed)  # Max speed
 
+        if self.check_collision(current_race.objects, Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)):
+            self.velocity.x = 0
+            self.velocity.y = 0
+
+            return
+
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale  #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale  # Update position
 
@@ -128,9 +134,7 @@ class Player(Car):
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
         )
 
-        #self.image = pygame.transform.scale(self.image, (self.width, self.height))
-
-    def update_rotation(self, delta_time, current_track):
+    def update_rotation(self, delta_time, current_race):
         keys = pygame.key.get_pressed()
 
         turn_radius = math.sqrt(self.velocity.x ** 2 + self.velocity.y ** 2) * self.turn_factor
@@ -154,8 +158,8 @@ class Player(Car):
         # Set travel direction to target direction based on a linear interpolation equation
         # direction = ((1 - turn blending) x direction + turn blending x target direction)
         # turn_blend_factor is how fast travel direction equals target direction
-        self.direction.x = ((1 - current_track.friction) * self.direction.x + current_track.friction * target_direction.x)
-        self.direction.y = ((1 - current_track.friction) * self.direction.y + current_track.friction * target_direction.y)
+        self.direction.x = ((1 - current_race.friction) * self.direction.x + current_race.friction * target_direction.x)
+        self.direction.y = ((1 - current_race.friction) * self.direction.y + current_race.friction * target_direction.y)
 
         if abs(self.direction.x - target_direction.x) + (self.direction.y - target_direction.y) > 2:
             self.velocity.x *= self.skid_acceleration #
@@ -167,7 +171,7 @@ class Player(Car):
             self.direction.x /= direction_magnitude
             self.direction.y /= direction_magnitude
 
-    def update_position(self, delta_time, current_track):
+    def update_position(self, delta_time, current_race):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP] and keys[pygame.K_DOWN]:
@@ -197,6 +201,12 @@ class Player(Car):
 
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed) #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
+
+        if self.check_collision(current_race.objects, Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)):
+            self.velocity.x = 0
+            self.velocity.y = 0
+
+            return
 
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position

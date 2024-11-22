@@ -1,3 +1,5 @@
+import pygame
+
 class Vector:
     def __init__(self, x = None, y = None):
         self.x = x
@@ -21,6 +23,19 @@ class Object:
         self.height = height
         self.position = position
         self.rotation = rotation
+
+    def get_rect(self, new_position = None):
+        return pygame.Rect(self.position.x if new_position is None else new_position.x, self.position.y if new_position is None else new_position.y, self.width, self.height)
+
+    def check_collision(self, objects, delta_position):
+        for obj_group in objects.to_dictionary():
+            for obj in objects.to_dictionary()[obj_group]:
+                if self.get_rect(delta_position).colliderect(obj.get_rect()) and not self == obj:
+                    return True
+                else:
+                    continue
+
+        return False
 
 class Camera:
     def __init__(self, position, scale):

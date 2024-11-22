@@ -8,8 +8,8 @@ class Race:
         self.objects = objects
 
     def update_screen(self, screen):
-        for object_group in self.objects.to_dictionary():
-            for obj in self.objects.to_dictionary()[object_group]:
+        for obj_group in self.objects.to_dictionary():
+            for obj in self.objects.to_dictionary()[obj_group]:
                 obj_image = pygame.transform.scale(obj.image, (obj.width / camera.scale, obj.height / camera.scale))
 
                 obj_rotated_image = pygame.transform.rotate(obj_image, obj.rotation.angle) # Get object image and rotate it
@@ -32,23 +32,11 @@ class Race_Objects:
         }
 
 class Obstacle(Object):
-    def __init__(self, image, width, height, position, rotation, color = None, rect = None):
+    def __init__(self, image, width, height, position, rotation, color = None):
         super().__init__(image, width, height, position, rotation)
         self.color = color
-        self.rect = rect
 
-        self.image = pygame.transform.scale(self.image, (self.width, self.height))
-
-    def get_rect(self):
-        self.rect = pygame.Rect(self.position.x, self.position.y, self.width, self.height)
-
-    def create_obstacle(self):
-        pass
-
-    def destroy_obstacle(self):
-        pass
-
-current_track = Race(
+current_race = Race(
     friction = 0.1,
     objects = Race_Objects(
         cars = [
@@ -56,7 +44,7 @@ current_track = Race(
                 image = pygame.image.load('red_car.png'), # Car image path
                 width = pygame.image.load('red_car.png').get_width() * PIXEL_TO_SCREEN_FACTOR, # Car width so it retains its aspect with rescale
                 height = pygame.image.load('red_car.png').get_height() * PIXEL_TO_SCREEN_FACTOR, # Car height so it retains its aspect with rescale
-                position = Vector(x = 0, y = 0), # Position in world
+                position = Vector(x = 0, y = 300), # Position in world
                 rotation = Rotation(radians=0, angle=0),  # The current rotation of the car in radians and angles
                 is_player = True,
                 velocity = Vector(x = 0, y = 0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
@@ -92,7 +80,7 @@ current_track = Race(
         ],
 
         obstacles = [
-            Obstacle(pygame.image.load('car.png'), 50, 50, Vector(x = 0, y = 0), Rotation(angle = 0), (255, 0, 0))
+            Obstacle(pygame.image.load('car.png'), 50, 50, Vector(x = -100, y = 0), Rotation(angle = 0), (255, 0, 0))
         ]
     )
 )
