@@ -17,23 +17,38 @@ class Rotation:
         self.angle = angle
 
 class Object:
-    def __init__(self, image, width, height, position, rotation):
+    def __init__(self, image, position, rotation, width = None, height = None):
         self.image = image
-        self.width = width
-        self.height = height
         self.position = position
         self.rotation = rotation
 
-    def get_rect(self, new_position = None):
-        return pygame.Rect(self.position.x if new_position is None else new_position.x, self.position.y if new_position is None else new_position.y, self.width, self.height)
+        if width is None:
+            self.width = image.convert_alpha().get_width() * PIXEL_TO_SCREEN_FACTOR
+        else:
+            self.width = width
+        if height is None:
+            self.height = image.convert_alpha().get_height() * PIXEL_TO_SCREEN_FACTOR
+        else:
+            self.height = height
 
-    def check_collision(self, objects, delta_position):
+        self.render_image = image
+        self.mask = pygame.mask.from_surface(self.render_image)
+
+    def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
             for obj in objects.to_dictionary()[obj_group]:
-                if self.get_rect(delta_position).colliderect(obj.get_rect()) and not self == obj:
-                    return True
-                else:
+                if obj == self: # Makes sure to not check for collision on self
                     continue
+
+                obj.mask = pygame.mask.from_surface(obj.render_image)
+
+                if delta_position is not None:
+                    offset = (delta_position.x - obj.position.x, delta_position.y - obj.position.y)
+                else:
+                    offset = (self.position.x - obj.position.x, self.position.y - obj.position.y)
+
+                if self.mask.overlap(obj.mask, offset): # Compares object masks with offsets for pixel perfect collision
+                    return True
 
         return False
 

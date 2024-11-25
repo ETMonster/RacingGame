@@ -1,3 +1,5 @@
+from pydoc import describe
+
 import pygame
 import math
 import time
@@ -6,10 +8,10 @@ import random
 from constants import *
 
 class Car(Object):
-    def __init__(self, image, width, height, position, rotation, is_player, velocity, direction, gas_acceleration,
+    def __init__(self, image, position, rotation, is_player, velocity, direction, gas_acceleration,
                  brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed,
-                 max_speed):
-        super().__init__(image, width, height, position, rotation)
+                 max_speed, width = None, height = None):
+        super().__init__(image, position, rotation, width, height)
         self.is_player = is_player
         self.velocity = velocity
         self.direction = direction
@@ -23,12 +25,12 @@ class Car(Object):
         self.max_speed = max_speed
 
 class Opponent(Car):
-    def __init__(self, image, width, height, position, rotation, is_player, velocity, direction,
+    def __init__(self, image, position, rotation, is_player, velocity, direction,
                  gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed,
-                 difficulty):
+                 difficulty, width = None, height = None):
         super().__init__(
-            image, width, height, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
+            image, position, rotation, is_player, velocity, direction,
+            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width, height
         )
 
         self.difficulty = difficulty
@@ -116,22 +118,24 @@ class Opponent(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed)  #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed)  # Max speed
 
-        if self.check_collision(current_race.objects, Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)):
-            self.velocity.x = 0
-            self.velocity.y = 0
+        desired_position = Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)
+        if self.check_collision(current_race.objects, desired_position):
+            #self.velocity.x = 0
+            #self.velocity.y = 0
 
-            return
+            #return
+            pass
 
-        self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale  #
-        self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale  # Update position
+        self.position.x = desired_position.x  #
+        self.position.y = desired_position.y  # Update position
 
 class Player(Car):
     def __init__(
-        self, image, width, height, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed):
+        self, image, position, rotation, is_player, velocity, direction,
+            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width = None, height = None):
         super().__init__(
-            image, width, height, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed
+            image, position, rotation, is_player, velocity, direction,
+            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width, height
         )
 
     def update_rotation(self, delta_time, current_race):
@@ -203,10 +207,13 @@ class Player(Car):
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
 
         if self.check_collision(current_race.objects, Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)):
-            self.velocity.x = 0
-            self.velocity.y = 0
+            #self.velocity.x = 0
+            #self.velocity.y = 0
 
-            return
+            print('Colliding')
+            #return
+        else:
+            print('Not colliding')
 
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
