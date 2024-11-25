@@ -8,10 +8,10 @@ import random
 from constants import *
 
 class Car(Object):
-    def __init__(self, image, position, rotation, is_player, velocity, direction, gas_acceleration,
-                 brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed,
-                 max_speed, width = None, height = None):
-        super().__init__(image, position, rotation, width, height)
+    def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
+                 brake_acceleration = 0, roll_acceleration = 0, skid_acceleration = 0, min_turn_radius = 0, turn_factor = 0, max_turn_speed = 0,
+                 max_speed = 0, collision = False, width = None, height = None):
+        super().__init__(image, position, rotation, collision, width, height)
         self.is_player = is_player
         self.velocity = velocity
         self.direction = direction
@@ -25,15 +25,13 @@ class Car(Object):
         self.max_speed = max_speed
 
 class Opponent(Car):
-    def __init__(self, image, position, rotation, is_player, velocity, direction,
-                 gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed,
-                 difficulty, width = None, height = None):
+    def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
+                 brake_acceleration = 0, roll_acceleration = 0, skid_acceleration = 0, min_turn_radius = 0, turn_factor = 0, max_turn_speed = 0,
+                 max_speed = 0, collision = False, width = None, height = None):
         super().__init__(
             image, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width, height
+            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, collision, width, height
         )
-
-        self.difficulty = difficulty
 
     def simulate_inputs(self):
         keys = {"forward": False, "backward": False, "left": False, "right": False}
@@ -130,12 +128,12 @@ class Opponent(Car):
         self.position.y = desired_position.y  # Update position
 
 class Player(Car):
-    def __init__(
-        self, image, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width = None, height = None):
+    def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
+                 brake_acceleration = 0, roll_acceleration = 0, skid_acceleration = 0, min_turn_radius = 0, turn_factor = 0, max_turn_speed = 0,
+                 max_speed = 0, collision = False, width = None, height = None):
         super().__init__(
             image, position, rotation, is_player, velocity, direction,
-            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, width, height
+            gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, collision, width, height
         )
 
     def update_rotation(self, delta_time, current_race):
@@ -161,7 +159,7 @@ class Player(Car):
 
         # Set travel direction to target direction based on a linear interpolation equation
         # direction = ((1 - turn blending) x direction + turn blending x target direction)
-        # turn_blend_factor is how fast travel direction equals target direction
+        # friction is how fast travel direction equals target direction
         self.direction.x = ((1 - current_race.friction) * self.direction.x + current_race.friction * target_direction.x)
         self.direction.y = ((1 - current_race.friction) * self.direction.y + current_race.friction * target_direction.y)
 

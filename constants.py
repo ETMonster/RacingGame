@@ -17,19 +17,20 @@ class Rotation:
         self.angle = angle
 
 class Object:
-    def __init__(self, image, position, rotation, width = None, height = None):
+    def __init__(self, image = None, position = Vector(0, 0), rotation = Rotation(0, 0), collision = False, width = None, height = None):
         self.image = image
         self.position = position
         self.rotation = rotation
+        self.collision = collision
 
         if width is None:
             self.width = image.convert_alpha().get_width() * PIXEL_TO_SCREEN_FACTOR
         else:
-            self.width = width
+            self.width = image.convert_alpha().get_width() * width * PIXEL_TO_SCREEN_FACTOR
         if height is None:
             self.height = image.convert_alpha().get_height() * PIXEL_TO_SCREEN_FACTOR
         else:
-            self.height = height
+            self.height = image.convert_alpha().get_height() * height * PIXEL_TO_SCREEN_FACTOR
 
         self.render_image = image
         self.mask = pygame.mask.from_surface(self.render_image)
@@ -37,7 +38,7 @@ class Object:
     def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
             for obj in objects.to_dictionary()[obj_group]:
-                if obj == self: # Makes sure to not check for collision on self
+                if obj == self or not obj.collision or not self.collision: # Makes sure to not check for collision on self or obj that doesn't collide
                     continue
 
                 obj.mask = pygame.mask.from_surface(obj.render_image)
@@ -62,7 +63,7 @@ class Camera:
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
-PIXEL_TO_SCREEN_FACTOR = 3
+PIXEL_TO_SCREEN_FACTOR = 2.5
 
 MOVEMENT_ZERO_MARGIN = 0.5
 

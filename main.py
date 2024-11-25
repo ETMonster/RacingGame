@@ -29,7 +29,8 @@ current_race = Race(
                 min_turn_radius = 30,
                 turn_factor = 0.5, # The rate at which cars turn
                 max_turn_speed = 3, # The maximum turn speed
-                max_speed = 600 # The maximum velocity
+                max_speed = 600, # The maximum velocity
+                collision = True, # Collision
             ),
             car.Opponent(
                 image=pygame.image.load('red_car.png').convert_alpha(),  # Car image path
@@ -46,7 +47,7 @@ current_race = Race(
                 turn_factor=0.5,  # The rate at which cars turn
                 max_turn_speed=3,  # The maximum turn speed
                 max_speed=50,  # The maximum velocity
-                difficulty=1
+                collision = True,
             )
         ],
 
@@ -54,7 +55,8 @@ current_race = Race(
             Obstacle(
                 image=pygame.image.load('obstacle.png').convert_alpha(),
                 position=Vector(x = -100, y = 0),
-                rotation=Rotation(radians = 0, angle = 0)
+                rotation=Rotation(radians = 0, angle = 0),
+                collision=True,
             ),
         ]
     )

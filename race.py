@@ -10,16 +10,17 @@ class Race:
     def update_screen(self, screen):
         for obj_group in self.objects.to_dictionary():
             for obj in self.objects.to_dictionary()[obj_group]:
-                obj_scaled_image = pygame.transform.scale(obj.image, (obj.width / camera.scale, obj.height / camera.scale)) # Account for camera scale function
+                scaled_image = pygame.transform.scale(obj.image, (obj.width / camera.scale, obj.height / camera.scale)) # Account for camera scale function
 
-                obj_rotated_image = pygame.transform.rotate(obj_scaled_image, obj.rotation.angle) # Get object image and rotate it
-                obj_rect = obj_rotated_image.get_rect() # Get rect of rotated image
+                rotated_image = pygame.transform.rotate(scaled_image, obj.rotation.angle) # Get object image and rotate it
+                rect = rotated_image.get_rect() # Get rect of rotated image
 
-                obj_rect.center = (obj.position.world_to_screen(x = obj.position.x).x, obj.position.world_to_screen(y = obj.position.y).y) # Set screen position in relation to camera
+                rect.center = (obj.position.world_to_screen(x = obj.position.x).x, obj.position.world_to_screen(y = obj.position.y).y) # Set screen position in relation to camera
 
-                obj.render_image = pygame.transform.rotate(obj_scaled_image, obj.rotation.angle)
+                obj.render_image = pygame.transform.rotate(scaled_image, obj.rotation.angle)
 
-                screen.blit(obj.render_image, obj_rect.topleft) # Blit onto screen
+                #screen.blit(obj.mask.to_surface(), rect.topleft)
+                screen.blit(obj.render_image, rect.topleft) # Blit onto screen
 
 
 class Race_Objects:
@@ -34,7 +35,7 @@ class Race_Objects:
         }
 
 class Obstacle(Object):
-    def __init__(self, image, position, rotation, width = None, height = None):
-        super().__init__(image, position, rotation, width, height)
+    def __init__(self, image = None, position = Vector(0, 0), rotation = Rotation(0, 0), collision = False, width = None, height = None):
+        super().__init__(image, position, rotation, collision, width, height)
 
 current_race = None
