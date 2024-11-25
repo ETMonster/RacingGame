@@ -1,49 +1,69 @@
 import pygame
 import math
-from car import *
-from race import current_track
-#from race import *
+from car import trial_npc
+
 
 pygame.init()
 
-screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-pygame.display.set_caption('Racing Prototype')
+WIDTH, HEIGHT = 900, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
-clock = pygame.time.Clock()
+center = [WIDTH // 2, HEIGHT // 2]
+x1, y1 = 150, 50  #dimensions for inner ellipse
+x2, y2 = 250, 120  #dimensions for outer ellipse
+total_points = 720
 
-def update():
-    delta_time = clock.tick(FPS) / 1000
+#function to calculate ellipse points
+def ellipse_points(center, x, y, total_points):
+    coordinates = []
+    for i in range(180):
+        rad = 2 * (math.pi / 180) * i
+        a = center[0] + x * math.cos(rad)
+        b = center[1] + y * math.sin(rad)
+        coordinates.append((a, b))
+    return coordinates
 
-    player.update_rotation(delta_time, current_track)
-    player.update_position(delta_time, current_track)
-    trial_npc.update_rotation(delta_time, current_track)
-    trial_npc.update_position(delta_time, current_track)
+#generate track points
+inner_points = ellipse_points(center, x1, y1, total_points)
+outer_points = ellipse_points(center, x2, y2, total_points)
+print(inner_points)
+print(outer_points)
+#create wall segments
+wall_segments=[]
+for x in range(len(inner_points)):
+    wall_segments.append((inner_points[x - 1], inner_points[x]))
+    wall_segments.append((outer_points[x-1], outer_points[x]))
+print(wall_segments)
 
+#image for car
+npc_image=pygame.image.load("red_car.png")
+npc_image=pygame.transform.scale(npc_image, (20,10))
 
-running = True
-while running:
-    screen.fill((116, 118, 120))
+#declaring npc
+npc_car=trial_npc("red_car.png",[center[0], center[1] - y2 + 35], 0, 0.07, 0.5 )
+npc_car.update(wall_segments, inner_points, outer_points)
 
+screen.fill((0,0,0))
+
+#loop for game
+game_active = True
+while game_active:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
-
-    update()
-
-    rotated_image = pygame.transform.rotate(player.image, player.rotation.angle)
-    rotated_image2 = pygame.transform.rotate(trial_npc.image, trial_npc.rotation.angle)
-
-    player_rect = rotated_image.get_rect()
-    player_rect.center = (player.position.x + player.width // 2, player.position.y + player.height // 2)
-    trial_npc_rect = rotated_image2.get_rect()
-    trial_npc_rect.center = (trial_npc.position.x + trial_npc.width // 2,trial_npc.position.y + trial_npc.height // 2)
-
-    screen.blit(rotated_image, player_rect.topleft)
-    screen.blit(rotated_image2, trial_npc_rect.topright)
+            game_active = False
 
 
-    pygame.display.flip()
+    npc_car.update(wall_segments, inner_points, outer_points)
+    screen.fill((0, 0, 0))
 
-    pygame.time.Clock().tick(FPS)
+    pygame.draw.polygon(screen, (255, 255, 255), outer_points) #drawing outer ellipse
+    pygame.draw.polygon(screen, (0, 0, 0), inner_points) #drawing inner ellipse using background colour
+
+    #blitting the car on the screen
+    car_temp = pygame.transform.rotate(npc_image, -npc_car.dir)
+    screen.blit(car_temp,npc_car.pos)
+
+    pygame.display.update()
 
 pygame.quit()
+
