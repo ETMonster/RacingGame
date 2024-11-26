@@ -48,10 +48,13 @@ class Object:
                 else:
                     offset = (self.position.x - obj.position.x, self.position.y - obj.position.y)
 
-                if self.mask.overlap(obj.mask, offset): # Compares object masks with offsets for pixel perfect collision
-                    return True
+                if self.mask.overlap(obj.mask, offset): # Compares object masks at offset for pixel perfect collision
+                    return {
+                        'offset': offset,
+                        'object': obj
+                    }
 
-        return False
+        return None
 
 class Camera:
     def __init__(self, position, scale):

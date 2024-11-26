@@ -204,14 +204,33 @@ class Player(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed) #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
 
-        if self.check_collision(current_race.objects, Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)):
+        new_position = Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)
+        collision = self.check_collision(current_race.objects, new_position)
+        if collision is not None:
+            collision_offset = Vector(collision['offset'][0], collision['offset'][1])
+            collision_object = collision['object']
+
+            #print((collision_object.height / 2), abs(collision_offset.y / 2), self.direction.y)
+            print((collision_offset.x - ((self.width / 2) * self.direction.x)) / 2, (collision_offset.y - ((self.height / 2) * self.direction.y)) / 2, collision_object.width)
+
+
+            # ISSUE
+            # "offset" is the difference between car position and object position.
+            # I have to find the distance of which the car overlaps into the object to then
+            # move it outside of the object.
+
+
+            #self.position.x -= ((collision_object.width / 2) - abs(collision_offset.x / 2)) * self.direction.x
+            #self.position.y -= ((collision_object.height / 2) - abs(collision_offset.y / 2)) * self.direction.y
+
+            #self.position.x -= ((collision_object.width / 2) - abs(collision_offset.x / 2)) * self.direction.x
+            #self.position.y -= ((collision_object.height / 2) - abs(collision_offset.y / 2)) * self.direction.y
+
             #self.velocity.x = 0
             #self.velocity.y = 0
-
-            print('Colliding')
-            #return
-        else:
-            print('Not colliding')
+            #print('Colliding:', collision_offset.x, collision_offset.y)
+        #else:
+            #print('Not colliding')
 
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
