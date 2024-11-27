@@ -204,33 +204,21 @@ class Player(Car):
         self.velocity.x = max(min(self.velocity.x, self.max_speed), -self.max_speed) #
         self.velocity.y = max(min(self.velocity.y, self.max_speed), -self.max_speed) # Max speed
 
-        new_position = Vector(self.position.x + (self.velocity.x * self.direction.x * delta_time) / camera.scale, self.position.y + (self.velocity.y * self.direction.y * delta_time) / camera.scale)
-        collision = self.check_collision(current_race.objects, new_position)
+        self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
+        self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
+
+        collision = self.check_collision(current_race.objects, self.position)
         if collision is not None:
             collision_offset = Vector(collision['offset'][0], collision['offset'][1])
             collision_object = collision['object']
 
-            #print((collision_object.height / 2), abs(collision_offset.y / 2), self.direction.y)
-            print((collision_offset.x - ((self.width / 2) * self.direction.x)) / 2, (collision_offset.y - ((self.height / 2) * self.direction.y)) / 2, collision_object.width)
+            collision_closest_to_center = abs((self.width / 2) * self.direction.x) + abs((self.height / 2) * self.direction.y)
+            print(((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center)) * self.direction.x, ((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center)) * self.direction.y)
 
+            self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center)) * self.direction.x) / PIXEL_TO_SCREEN_FACTOR
+            self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center)) * self.direction.y) / PIXEL_TO_SCREEN_FACTOR
 
-            # ISSUE
-            # "offset" is the difference between car position and object position.
-            # I have to find the distance of which the car overlaps into the object to then
-            # move it outside of the object.
+            self.velocity.x = abs(self.direction.x) / self.velocity.x if not self.velocity.x == 0 else 0
+            self.velocity.y = abs(self.direction.y) / self.velocity.y if not self.velocity.y == 0 else 0
 
-
-            #self.position.x -= ((collision_object.width / 2) - abs(collision_offset.x / 2)) * self.direction.x
-            #self.position.y -= ((collision_object.height / 2) - abs(collision_offset.y / 2)) * self.direction.y
-
-            #self.position.x -= ((collision_object.width / 2) - abs(collision_offset.x / 2)) * self.direction.x
-            #self.position.y -= ((collision_object.height / 2) - abs(collision_offset.y / 2)) * self.direction.y
-
-            #self.velocity.x = 0
-            #self.velocity.y = 0
-            #print('Colliding:', collision_offset.x, collision_offset.y)
-        #else:
-            #print('Not colliding')
-
-        self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
-        self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
+            # Y dir is still tweaking prolly due to closest_to_center variable
