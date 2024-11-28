@@ -212,13 +212,22 @@ class Player(Car):
             collision_offset = Vector(collision['offset'][0], collision['offset'][1])
             collision_object = collision['object']
 
-            collision_closest_to_center = abs((self.width / 2) * self.direction.x) + abs((self.height / 2) * self.direction.y)
-            print(((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center)) * self.direction.x, ((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center)) * self.direction.y)
+            collision_closest_to_center = Vector(
+                x = abs((self.width / 2) * self.direction.x) + abs((self.height / 2) * self.direction.y),
+                y = abs((self.width / 2) * self.direction.y) + abs((self.height / 2) * self.direction.x)
+            )
 
-            self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center)) * self.direction.x) / PIXEL_TO_SCREEN_FACTOR
-            self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center)) * self.direction.y) / PIXEL_TO_SCREEN_FACTOR
+            print(
+                (abs(collision_offset.x) - (collision_object.width / 2)) * -self.direction.x,
+                (abs(collision_offset.y) - (collision_object.height / 2)) * -self.direction.y
+            )
 
-            self.velocity.x = abs(self.direction.x) / self.velocity.x if not self.velocity.x == 0 else 0
-            self.velocity.y = abs(self.direction.y) / self.velocity.y if not self.velocity.y == 0 else 0
+            #self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center.x)) * self.direction.x) / PIXEL_TO_SCREEN_FACTOR
+            #self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center.y)) * self.direction.y) / PIXEL_TO_SCREEN_FACTOR
+
+            #self.velocity.x = self.velocity.x * (1 - abs(self.direction.x))
+            #self.velocity.y = self.velocity.y * (1 - abs(self.direction.y))
+
+            #print(self.velocity.x, self.velocity.y)
 
             # Y dir is still tweaking prolly due to closest_to_center variable

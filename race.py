@@ -30,8 +30,8 @@ class Race_Objects:
 
     def to_dictionary(self):
         return {
+            'obstacles': self.obstacles,
             'cars': self.cars,
-            'obstacles': self.obstacles
         }
 
 class Obstacle(Object):
