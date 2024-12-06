@@ -12,6 +12,7 @@ pygame.display.set_caption('Racing Prototype')
 clock = pygame.time.Clock()
 
 current_race = Race(
+    screen = screen,
     friction = 0.1,
     objects = Race_Objects(
         cars = [

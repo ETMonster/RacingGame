@@ -1,15 +1,10 @@
 import pygame
+import math
 
 class Vector:
     def __init__(self, x = None, y = None):
         self.x = x
         self.y = y
-
-    def screen_to_world(self):
-        return Vector(self.x - camera.position.x, self.y - camera.position.y)
-
-    def world_to_screen(self, x = None, y = None):
-        return Vector(self.x if x is None else x - camera.position.x, self.y if y is None else y - camera.position.y)
 
 class Rotation:
     def __init__(self, radians = None, angle = None):
@@ -34,6 +29,26 @@ class Object:
 
         self.render_image = image
         self.mask = pygame.mask.from_surface(self.render_image)
+        self.corners = [Vector(), Vector(), Vector(), Vector()]
+
+    def update(self):
+        self.calculate_corners()
+
+    def calculate_corners(self):
+        self.corners[0] = Vector(-self.width / 2, -self.height / 2)
+        self.corners[1] = Vector(self.width / 2, -self.height / 2)
+        self.corners[2] = Vector(self.width / 2, self.height / 2)
+        self.corners[3] = Vector(-self.width / 2, self.height / 2)
+
+        i = 0
+        for corner in self.corners:
+            i += 1
+
+            corner.x = self.position.x + ((corner.x - self.position.x) * math.cos(self.rotation.angle)) - ((corner.y - self.position.y) * math.sin(self.rotation.angle))
+            corner.y = self.position.y + ((corner.x - self.position.x) * math.sin(self.rotation.angle)) + ((corner.y - self.position.y) * math.cos(self.rotation.angle))
+
+    #def deepest_point(self, collision_object):
+    #    corner
 
     def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
@@ -63,6 +78,12 @@ class Camera:
 
     def update_position(self, focus_object):
         self.position = Vector(focus_object.position.x - WINDOW_WIDTH // 2, focus_object.position.y - WINDOW_HEIGHT // 2)
+
+def world_to_screen(self = None, x = None, y = None):
+    if self is None:
+        return Vector(x if x is None else x - camera.position.x, y if y is None else y - camera.position.y)
+
+    return Vector(self.position.x if x is None else x - camera.position.x, self.position.y if y is None else y - camera.position.y)
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800

@@ -3,9 +3,15 @@ from constants import *
 import car
 
 class Race:
-    def __init__(self, friction, objects):
+    def __init__(self, screen, friction, objects):
+        self.screen = screen
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
+
+    def draw_image(self, image, rect):
+        rect.center = (world_to_screen(x = rect.top).x, world_to_screen(y = rect.left).y)
+
+        self.screen.blit(image, rect.topleft)
 
     def update_screen(self, screen):
         for obj_group in self.objects.to_dictionary():
@@ -15,13 +21,12 @@ class Race:
                 rotated_image = pygame.transform.rotate(scaled_image, obj.rotation.angle) # Get object image and rotate it
                 rect = rotated_image.get_rect() # Get rect of rotated image
 
-                rect.center = (obj.position.world_to_screen(x = obj.position.x).x, obj.position.world_to_screen(y = obj.position.y).y) # Set screen position in relation to camera
+                rect.center = (world_to_screen(self = obj, x = obj.position.x).x, world_to_screen(self = obj, y = obj.position.y).y) # Set screen position in relation to camera
 
                 obj.render_image = pygame.transform.rotate(scaled_image, obj.rotation.angle)
 
                 #screen.blit(obj.mask.to_surface(), rect.topleft)
                 screen.blit(obj.render_image, rect.topleft) # Blit onto screen
-
 
 class Race_Objects:
     def __init__(self, cars, obstacles):
@@ -30,8 +35,8 @@ class Race_Objects:
 
     def to_dictionary(self):
         return {
-            'obstacles': self.obstacles,
             'cars': self.cars,
+            'obstacles': self.obstacles,
         }
 
 class Obstacle(Object):

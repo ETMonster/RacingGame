@@ -207,27 +207,34 @@ class Player(Car):
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
 
+        self.update()
+
+        for corner in self.corners:
+            current_race.draw_image(pygame.image.load('images/circle.png'), pygame.Rect(corner.x, corner.y))
+
         collision = self.check_collision(current_race.objects, self.position)
         if collision is not None:
-            collision_offset = Vector(collision['offset'][0], collision['offset'][1])
+
+
+
+            """collision_offset = Vector(collision['offset'][0], collision['offset'][1])
             collision_object = collision['object']
 
-            collision_closest_to_center = Vector(
+            contact_point = Vector(
                 x = abs((self.width / 2) * self.direction.x) + abs((self.height / 2) * self.direction.y),
                 y = abs((self.width / 2) * self.direction.y) + abs((self.height / 2) * self.direction.x)
             )
 
+            current_race.draw_image(pygame.image.load('red_car.png'), pygame.Rect(contact_point.x, contact_point.y, 2, 2))
+
             print(
-                (abs(collision_offset.x) - (collision_object.width / 2)) * -self.direction.x,
-                (abs(collision_offset.y) - (collision_object.height / 2)) * -self.direction.y
+                contact_point.x, contact_point.y
             )
 
-            #self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - collision_closest_to_center.x)) * self.direction.x) / PIXEL_TO_SCREEN_FACTOR
-            #self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - collision_closest_to_center.y)) * self.direction.y) / PIXEL_TO_SCREEN_FACTOR
+            self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - contact_point.x)) * self.direction.x)
+            self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - contact_point.y)) * self.direction.y)
 
-            #self.velocity.x = self.velocity.x * (1 - abs(self.direction.x))
-            #self.velocity.y = self.velocity.y * (1 - abs(self.direction.y))
+            self.velocity.x = self.velocity.x * (1 - abs(self.direction.x))
+            self.velocity.y = self.velocity.y * (1 - abs(self.direction.y))
 
-            #print(self.velocity.x, self.velocity.y)
-
-            # Y dir is still tweaking prolly due to closest_to_center variable
+            #print(self.velocity.x, self.velocity.y)"""
