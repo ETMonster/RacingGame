@@ -9,7 +9,7 @@ class trial_npc:
         self.speed = speed
         self.max_angle = max_angle
         self.rays = []
-        for x in range(1, 4):
+        for x in range(3):
             self.rays.append(Ray(self.pos, ((x * 60) - 60), 1000))
 
     def update(self, wall_segments, inner_points, outer_points):  # method for updating car's functions
@@ -42,9 +42,9 @@ class trial_npc:
             self.dir = self.dir - self.max_angle
         elif ray_index == 1:  # since the forward ray will most likely be the longest ray the most often, to introduce more turning, we will take into account the other two rays and send the car in an average direction
             if self.rays[0].distance > self.rays[2].distance:  # if the right ray is longer, then we send the car half the max_angle
-                self.dir = self.dir - (self.max_angle / 2)
+                self.dir = self.dir - (self.max_angle / 7)
             elif self.rays[0].distance < self.rays[2].distance:  # we do the same for the left side but opposite
-                self.dir = self.dir + (self.max_angle / 2)
+                self.dir = self.dir + (self.max_angle / 7)
         elif ray_index == 2:
             self.dir = self.dir + self.max_angle
 
