@@ -40,12 +40,18 @@ class Object:
         self.corners[2] = Vector(self.width / 2, self.height / 2)
         self.corners[3] = Vector(-self.width / 2, self.height / 2)
 
-        i = 0
         for corner in self.corners:
-            i += 1
+            """corner_offset = Vector(corner.x - self.position.x, corner.y - self.position.y)
 
-            corner.x = self.position.x + ((corner.x - self.position.x) * math.cos(self.rotation.angle)) - ((corner.y - self.position.y) * math.sin(self.rotation.angle))
-            corner.y = self.position.y + ((corner.x - self.position.x) * math.sin(self.rotation.angle)) + ((corner.y - self.position.y) * math.cos(self.rotation.angle))
+            corner.x = self.position.x + (corner_offset.x * math.cos(self.rotation.radians) - corner_offset.y * math.sin(self.rotation.radians))
+            corner.y = self.position.y + (corner_offset.x * math.sin(self.rotation.radians) + corner_offset.y * math.cos(self.rotation.radians))
+
+            print(self.position.x, self.position.y)"""
+
+            corner.x = corner.x * math.cos(self.rotation.radians) - corner.y * math.sin(self.rotation.radians)
+            corner.y = corner.x * math.sin(self.rotation.radians) + corner.y * math.cos(self.rotation.radians)
+
+            print(self.rotation.angle)
 
     #def deepest_point(self, collision_object):
     #    corner

@@ -23,7 +23,7 @@ class Race:
 
                 rect.center = (world_to_screen(self = obj, x = obj.position.x).x, world_to_screen(self = obj, y = obj.position.y).y) # Set screen position in relation to camera
 
-                obj.render_image = pygame.transform.rotate(scaled_image, obj.rotation.angle)
+                obj.render_image = pygame.transform.rotate(scaled_image, -obj.rotation.angle)
 
                 #screen.blit(obj.mask.to_surface(), rect.topleft)
                 screen.blit(obj.render_image, rect.topleft) # Blit onto screen

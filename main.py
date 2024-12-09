@@ -18,7 +18,7 @@ current_race = Race(
         cars = [
             car.Player(
                 image = pygame.image.load('red_car.png').convert_alpha(), # Car image path
-                position = Vector(x = 0, y = 300), # Position in world
+                position = Vector(x = 0, y = 0), # Position in world
                 rotation = Rotation(radians=0, angle=0),  # The current rotation of the car in radians and angles
                 is_player = True,
                 velocity = Vector(x = 0, y = 0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
@@ -35,7 +35,7 @@ current_race = Race(
             ),
             car.Opponent(
                 image=pygame.image.load('red_car.png').convert_alpha(),  # Car image path
-                position=Vector(x=0, y=0),  # Position on screen
+                position=Vector(x=0, y=100),  # Position on screen
                 rotation=Rotation(radians=0, angle=0),  # The current rotation of the car in radians and angles
                 is_player = False,
                 velocity = Vector(x=0, y=0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)

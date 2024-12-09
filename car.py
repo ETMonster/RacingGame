@@ -149,10 +149,14 @@ class Player(Car):
             pass
         elif keys[pygame.K_LEFT]:
             self.rotation.radians -= turn_speed * delta_time
+            if self.rotation.radians < 0:
+                self.rotation.radians = 2 * math.pi
         elif keys[pygame.K_RIGHT]:
             self.rotation.radians += turn_speed * delta_time
+            if self.rotation.radians > 2 * math.pi:
+                self.rotation.radians = 0
 
-        self.rotation.angle = -self.rotation.radians * (180 / math.pi)
+        self.rotation.angle = self.rotation.radians * (180 / math.pi)
 
         # Get target direction vector based on where the car is pointing
         target_direction = Vector(x = math.cos(self.rotation.radians), y = math.sin(self.rotation.radians))
@@ -210,7 +214,7 @@ class Player(Car):
         self.update()
 
         for corner in self.corners:
-            current_race.draw_image(pygame.image.load('images/circle.png'), pygame.Rect(corner.x, corner.y))
+            current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y + self.position.y, corner.x + self.position.x, 1, 1))
 
         collision = self.check_collision(current_race.objects, self.position)
         if collision is not None:
