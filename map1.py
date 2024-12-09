@@ -35,11 +35,23 @@ def ellipse_points_y(center, x, y, direction, sort):
     return coordinates
 
 
-inner_points, outer_points =[],[]
+inner_points, outer_points,obstacle_points=[],[],[]
 
 #filler test
 for y in range(2830, 2600,-10):
     outer_points.append((280,y))
+
+obstacle_points.append([])
+#obstacle 1
+for y in range(1000, 840, -10):
+    obstacle_points[0].append((370,y))
+for x in range(370,440, 10):
+    obstacle_points[0].append((x,850))
+for y in range(850, 1010, 10):
+    obstacle_points[0].append((430,y))
+for x in range(430, 360, -10):
+    obstacle_points[0].append((x,1000))
+
 
 #end of straight y section 1 60 points
 for y in range(2600, 590, -10):
@@ -67,6 +79,10 @@ for y in range(600, 1010, 10):
 for y in range(1010, 1250, 10):
     outer_points.append((1720, y))
 
+obstacle_points.append([])
+#obstacle 2
+for x in range(80):
+    obstacle_points[1].append((math.cos(((x*math.pi)/40))*30+1300,math.sin(((x*math.pi)/40))*30+1120 ))
 
 #straight x section 1 72 points for outer 47 for inner
 for x in range(1720, 1090, -10):
@@ -95,6 +111,12 @@ for x in range(1110, 1910, 10):
 #filler for line gap 2
 for x in range(1910, 2150, 10):
     inner_points.append((x,2180))
+
+obstacle_points.append([])
+#obstacle 3
+for x in range(80):
+    obstacle_points[2].append((math.cos(((x*math.pi)/40))*30+2070,math.sin(((x*math.pi)/40))*30+2060 ))
+
 
 
 #straight y section 3
@@ -155,7 +177,7 @@ for x in range(2650, 3010, 10):
 for x in range(3010, 3250, 10):
     outer_points.append((x, 2340))
 
-#test 1
+#straight y section 4
 for y in range(2340, 2610, 10):
     if y>=2340 and y<=2580:
         outer_points.append((3240,y))
@@ -167,7 +189,7 @@ for y in range(2340, 2610, 10):
 for y in range(2610, 2850, 10):
     outer_points.append((3240,y))
 
-#test straight
+#straight x section 6
 for x in range (3240, 270, -10):
     if (x>=3000 and x<=3240) or (x>=280 and x<=520):
         outer_points.append((x, 2840))
@@ -175,12 +197,34 @@ for x in range (3240, 270, -10):
         outer_points.append((x, 2840))
         inner_points.append((x, 2600))
 
+obstacle_points.append([])
+#obstacle 4
+for y in range(2840, 2750, -10):
+    obstacle_points[3].append((2500, y))
+for x in range(2500, 2410, -10):
+    obstacle_points[3].append((x, 2760))
+for y in range(2760, 2850, 10):
+    obstacle_points[3].append((2420, y))
+
+obstacle_points.append([])
+#obstacle 5
+for y in range(2600, 2690, 10):
+    obstacle_points[4].append((2300, y))
+for x in range(2300, 2210, -10):
+    obstacle_points[4].append((x, 2680))
+for y in range(2680, 2590, -10):
+    obstacle_points[4].append((2200, y))
+
+obstacle_points.append([])
+#obstacle 6
+for x in range(80):
+    obstacle_points[5].append((math.cos(((x*math.pi)/40))*30+1400,math.sin(((x*math.pi)/40))*30+2760 ))
 
 #function to delete points that are the same and adjacent
-for x in range(len(outer_points) - 1, 0, -1):
-    if outer_points[x] == outer_points[x - 1]:
+for x in range(len(outer_points)-1, 0, -1):
+    if outer_points[x] == outer_points[x-1]:
         del outer_points[x]
 
-for x in range(len(inner_points) - 1, 0, -1):
-    if inner_points[x] == inner_points[x - 1]:
+for x in range(len(inner_points)-1, 0, -1):
+    if inner_points[x] == inner_points[x-1]:
         del inner_points[x]
