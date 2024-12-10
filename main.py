@@ -66,6 +66,12 @@ current_race = Race(
 def update():
     delta_time = clock.tick(FPS) / 1000
 
+    for obj_group in current_race.objects.to_dictionary():
+        for obj in current_race.objects.to_dictionary()[obj_group]:
+            obj.update_corners()
+
+            obj.debug(['corners'], current_race)
+
     for car in current_race.objects.to_dictionary()['cars']:
         car.update_rotation(delta_time, current_race)
         car.update_position(delta_time, current_race)

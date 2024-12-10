@@ -211,34 +211,6 @@ class Player(Car):
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
 
-        self.update()
-
-        for corner in self.corners:
-            current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y + self.position.y, corner.x + self.position.x, 1, 1))
-
         collision = self.check_collision(current_race.objects, self.position)
         if collision is not None:
-
-
-
-            """collision_offset = Vector(collision['offset'][0], collision['offset'][1])
-            collision_object = collision['object']
-
-            contact_point = Vector(
-                x = abs((self.width / 2) * self.direction.x) + abs((self.height / 2) * self.direction.y),
-                y = abs((self.width / 2) * self.direction.y) + abs((self.height / 2) * self.direction.x)
-            )
-
-            current_race.draw_image(pygame.image.load('red_car.png'), pygame.Rect(contact_point.x, contact_point.y, 2, 2))
-
-            print(
-                contact_point.x, contact_point.y
-            )
-
-            self.position.x += (((collision_object.width / 2) - (abs(collision_offset.x) - contact_point.x)) * self.direction.x)
-            self.position.y += (((collision_object.height / 2) - (abs(collision_offset.y) - contact_point.y)) * self.direction.y)
-
-            self.velocity.x = self.velocity.x * (1 - abs(self.direction.x))
-            self.velocity.y = self.velocity.y * (1 - abs(self.direction.y))
-
-            #print(self.velocity.x, self.velocity.y)"""
+            self.point_in_rect(collision['object'])

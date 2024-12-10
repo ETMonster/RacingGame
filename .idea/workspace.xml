@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e8c829f-8840-4923-a556-a1327bbde4fd" name="Changes" comment="Working on collision">
-      <change afterPath="$PROJECT_DIR$/circle.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/car.py" beforeDir="false" afterPath="$PROJECT_DIR$/car.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
@@ -112,7 +111,7 @@
       <workItem from="1732578473809" duration="11887000" />
       <workItem from="1732803059612" duration="5346000" />
       <workItem from="1733150417922" duration="9466000" />
-      <workItem from="1733494250195" duration="8236000" />
+      <workItem from="1733494250195" duration="11743000" />
     </task>
     <task id="LOCAL-00001" summary="Working on collision">
       <option name="closed" value="true" />
@@ -138,7 +137,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733498478566</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Working on collision">
+      <option name="closed" value="true" />
+      <created>1733762364806</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1733762364806</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,7 +168,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="Working on collision" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RacingGame$main.coverage" NAME="main Coverage Results" MODIFIED="1733762239122" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/RacingGame$main.coverage" NAME="main Coverage Results" MODIFIED="1733842802463" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/RacingGame$car.coverage" NAME="car Coverage Results" MODIFIED="1731339240550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

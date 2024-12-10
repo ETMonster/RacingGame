@@ -1,5 +1,6 @@
 import pygame
 import math
+from itertools import combinations
 
 class Vector:
     def __init__(self, x = None, y = None):
@@ -31,30 +32,35 @@ class Object:
         self.mask = pygame.mask.from_surface(self.render_image)
         self.corners = [Vector(), Vector(), Vector(), Vector()]
 
-    def update(self):
-        self.calculate_corners()
-
-    def calculate_corners(self):
+    def update_corners(self):
         self.corners[0] = Vector(-self.width / 2, -self.height / 2)
         self.corners[1] = Vector(self.width / 2, -self.height / 2)
         self.corners[2] = Vector(self.width / 2, self.height / 2)
         self.corners[3] = Vector(-self.width / 2, self.height / 2)
 
         for corner in self.corners:
-            """corner_offset = Vector(corner.x - self.position.x, corner.y - self.position.y)
+            prev_corner = Vector(corner.x, corner.y)
 
-            corner.x = self.position.x + (corner_offset.x * math.cos(self.rotation.radians) - corner_offset.y * math.sin(self.rotation.radians))
-            corner.y = self.position.y + (corner_offset.x * math.sin(self.rotation.radians) + corner_offset.y * math.cos(self.rotation.radians))
+            corner.x = prev_corner.x * math.cos(self.rotation.radians) - prev_corner.y * math.sin(self.rotation.radians)
+            corner.y = prev_corner.x * math.sin(self.rotation.radians) + prev_corner.y * math.cos(self.rotation.radians)
 
-            print(self.position.x, self.position.y)"""
+            corner.x += self.position.x
+            corner.y += self.position.y
 
-            corner.x = corner.x * math.cos(self.rotation.radians) - corner.y * math.sin(self.rotation.radians)
-            corner.y = corner.x * math.sin(self.rotation.radians) + corner.y * math.cos(self.rotation.radians)
+    def point_in_rect(self, obj):
+        for corner in self.corners:
+            cross_products = []
 
-            print(self.rotation.angle)
+            for obj_edge in list(combinations(obj.corners, 2)):
+                if not obj_edge[0].x == obj_edge[1].x and not obj_edge[0].y == obj_edge[1].y:
+                    continue
 
-    #def deepest_point(self, collision_object):
-    #    corner
+                cross_products.append(((obj_edge[0].x - corner.x) * (obj_edge[1].y - corner.y)) - ((obj_edge[0].y - corner.y) * (obj_edge[1].x - corner.x)))
+
+            if all(cross_product >= 0 for cross_product in cross_products):
+                return corner
+            elif all(cross_product < 0 for cross_product in cross_products):
+                return corner
 
     def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
@@ -76,6 +82,15 @@ class Object:
                     }
 
         return None
+
+    def debug(self, parameters = None, current_race = None):
+        for parameter in parameters:
+            if parameter == 'corners':
+                for corner in self.corners:
+                    try:
+                        current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y, corner.x, 1, 1))
+                    except:
+                        print('Something went wrong')
 
 class Camera:
     def __init__(self, position, scale):
