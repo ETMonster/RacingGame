@@ -31,8 +31,9 @@ class Object:
         self.render_image = image
         self.mask = pygame.mask.from_surface(self.render_image)
         self.corners = [Vector(), Vector(), Vector(), Vector()]
+        self.edges = [[Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()]]
 
-    def update_corners(self):
+    def update_attributes(self):
         self.corners[0] = Vector(-self.width / 2, -self.height / 2)
         self.corners[1] = Vector(self.width / 2, -self.height / 2)
         self.corners[2] = Vector(self.width / 2, self.height / 2)
@@ -47,20 +48,30 @@ class Object:
             corner.x += self.position.x
             corner.y += self.position.y
 
-    def point_in_rect(self, obj):
-        for corner in self.corners:
+        self.edges.clear()
+        self.edges = [edge for edge in list(combinations(self.corners, 2)) if edge ]
+
+        for potential_edge in list(combinations(self.corners, 2)):
+            if math.sqrt(potential_edge[0].x == potential_edge[1].x or potential_edge[0].y == potential_edge[1].y):
+                self.edges.append(potential_edge)
+
+    def points_in_rect(self, obj):
+        points = []
+
+        for i, corner in enumerate(self.corners):
             cross_products = []
 
-            for obj_edge in list(combinations(obj.corners, 2)):
-                if not obj_edge[0].x == obj_edge[1].x and not obj_edge[0].y == obj_edge[1].y:
-                    continue
+            for edge in obj.edges:
+                cross_products.append(((edge[0].x - corner.x) * (edge[1].y - corner.y)) - ((edge[0].y - corner.y) * (edge[1].x - corner.x)))
 
-                cross_products.append(((obj_edge[0].x - corner.x) * (obj_edge[1].y - corner.y)) - ((obj_edge[0].y - corner.y) * (obj_edge[1].x - corner.x)))
+            #print(i, cross_products)
 
             if all(cross_product >= 0 for cross_product in cross_products):
-                return corner
+                points.append(corner)
             elif all(cross_product < 0 for cross_product in cross_products):
-                return corner
+                points.append(corner)
+
+        return points
 
     def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
@@ -84,13 +95,33 @@ class Object:
         return None
 
     def debug(self, parameters = None, current_race = None):
+        def throw_error(e):
+            print(e)
+
         for parameter in parameters:
             if parameter == 'corners':
                 for corner in self.corners:
                     try:
                         current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y, corner.x, 1, 1))
-                    except:
-                        print('Something went wrong')
+                    except Exception as e:
+                        throw_error(e)
+
+            if parameter == 'edges':
+                for edge in self.edges:
+                    print(
+                        world_to_screen(x=edge[0].x, y=edge[0].y, return_tuple=True),
+                        world_to_screen(x=edge[1].x, y=edge[1].y, return_tuple=True),
+                    )
+
+                    try:
+                        pygame.draw.line(
+                            current_race.screen,
+                            (0, 255, 0),
+                            world_to_screen(x = edge[0].x, y = edge[0].y, return_tuple = True),
+                            world_to_screen(x = edge[1].x, y = edge[1].y, return_tuple = True),
+                        )
+                    except Exception as e:
+                        throw_error(e)
 
 class Camera:
     def __init__(self, position, scale):
@@ -100,11 +131,19 @@ class Camera:
     def update_position(self, focus_object):
         self.position = Vector(focus_object.position.x - WINDOW_WIDTH // 2, focus_object.position.y - WINDOW_HEIGHT // 2)
 
-def world_to_screen(self = None, x = None, y = None):
+def world_to_screen(self = None, x = None, y = None, return_tuple = False):
     if self is None:
-        return Vector(x if x is None else x - camera.position.x, y if y is None else y - camera.position.y)
+        return (
+            Vector(x if x is None else x - camera.position.x, y if y is None else y - camera.position.y)
+            if not return_tuple else
+            (x if x is None else x - camera.position.x, y if y is None else y - camera.position.y)
+        )
 
-    return Vector(self.position.x if x is None else x - camera.position.x, self.position.y if y is None else y - camera.position.y)
+    return (
+        Vector(self.position.x if x is None else x - camera.position.x, self.position.y if y is None else y - camera.position.y)
+        if not return_tuple else
+        (self.position.x if x is None else x - camera.position.x, self.position.y if y is None else y - camera.position.y)
+    )
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
