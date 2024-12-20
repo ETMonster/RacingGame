@@ -3,8 +3,9 @@ from constants import *
 import car
 
 class Race:
-    def __init__(self, screen, friction, objects):
+    def __init__(self, screen, is_paused, friction, objects):
         self.screen = screen
+        self.is_paused = is_paused
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
 
@@ -26,7 +27,7 @@ class Race:
                 obj.render_image = pygame.transform.rotate(scaled_image, -obj.rotation.angle)
 
                 #screen.blit(obj.mask.to_surface(), rect.topleft)
-                screen.blit(obj.render_image, rect.topleft) # Blit onto screen
+                #screen.blit(obj.render_image, rect.topleft) # Blit onto screen
 
 class Race_Objects:
     def __init__(self, cars, obstacles):

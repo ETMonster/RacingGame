@@ -13,6 +13,7 @@ clock = pygame.time.Clock()
 
 current_race = Race(
     screen = screen,
+    is_paused = False,
     friction = 0.1,
     objects = Race_Objects(
         cars = [
@@ -66,18 +67,19 @@ current_race = Race(
 def update():
     delta_time = clock.tick(FPS) / 1000
 
-    for obj_group in current_race.objects.to_dictionary():
-        for obj in current_race.objects.to_dictionary()[obj_group]:
-            obj.update_attributes()
+    if not current_race.is_paused:
+        for obj_group in current_race.objects.to_dictionary():
+            for obj in current_race.objects.to_dictionary()[obj_group]:
+                obj.update_attributes()
 
-            obj.debug(['corners', 'edges'], current_race)
+                obj.debug(['corners', 'edges'], current_race)
 
-    for car in current_race.objects.to_dictionary()['cars']:
-        car.update_rotation(delta_time, current_race)
-        car.update_position(delta_time, current_race)
+        for car in current_race.objects.to_dictionary()['cars']:
+            car.update_rotation(delta_time, current_race)
+            car.update_position(delta_time, current_race)
 
-        if car.is_player:
-            camera.update_position(car)
+            if car.is_player:
+                camera.update_position(car)
 
     current_race.update_screen(screen)
 

@@ -49,11 +49,12 @@ class Object:
             corner.y += self.position.y
 
         self.edges.clear()
-        self.edges = [edge for edge in list(combinations(self.corners, 2)) if edge ]
+        self.edges = [edge for edge in list(combinations(self.corners, 2))]
 
-        for potential_edge in list(combinations(self.corners, 2)):
-            if math.sqrt(potential_edge[0].x == potential_edge[1].x or potential_edge[0].y == potential_edge[1].y):
-                self.edges.append(potential_edge)
+        distances = [[edge, math.sqrt((edge[1].x - edge[0].x)**2 + (edge[1].y - edge[0].y)**2)] for edge in self.edges]
+        distances.sort(key = lambda x: x[1])
+
+        self.edges = [edge[0] for edge in distances[:-2]]
 
     def points_in_rect(self, obj):
         points = []
@@ -64,12 +65,12 @@ class Object:
             for edge in obj.edges:
                 cross_products.append(((edge[0].x - corner.x) * (edge[1].y - corner.y)) - ((edge[0].y - corner.y) * (edge[1].x - corner.x)))
 
-            #print(i, cross_products)
-
             if all(cross_product >= 0 for cross_product in cross_products):
                 points.append(corner)
             elif all(cross_product < 0 for cross_product in cross_products):
                 points.append(corner)
+
+            print(i, cross_products)
 
         return points
 
@@ -108,11 +109,6 @@ class Object:
 
             if parameter == 'edges':
                 for edge in self.edges:
-                    print(
-                        world_to_screen(x=edge[0].x, y=edge[0].y, return_tuple=True),
-                        world_to_screen(x=edge[1].x, y=edge[1].y, return_tuple=True),
-                    )
-
                     try:
                         pygame.draw.line(
                             current_race.screen,
