@@ -1,13 +1,16 @@
 import math
 
 class trial_npc:
-    def __init__ (self,image, pos, dir, speed, max_angle, bias):
+    def __init__ (self,image, pos, dir, speed, max_angle, bias, name,laps, checker):
         self.image=image
         self.pos = pos
         self.dir = dir
         self.speed = speed
         self.max_angle = max_angle
         self.rays=[]
+        self.name=name
+        self.laps=laps
+        self.checker=checker
         for x in range(3):
             self.rays.append(Ray(self.pos,((x*60)-60),1000))
         self.bias = bias
@@ -121,4 +124,9 @@ class Ray:
 
         #once loop is over set new value
         self.distance=distance
+
+
+
+
+
 
