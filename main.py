@@ -1,6 +1,13 @@
 import pygame
 import math
-from map1 import inner_points, outer_points, obstacle_points
+from timer import update_timer
+
+map_choice=2
+
+if map_choice==1:
+    from map1 import inner_points, outer_points, obstacle_points
+if map_choice==2:
+    from map2 import inner_points, outer_points, obstacle_points
 from car import trial_npc
 
 
@@ -35,15 +42,34 @@ for x in range(len(obstacle_points)):
 npc_image1 = pygame.image.load("red_car.png")
 npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
 
-npc_car1 = trial_npc("red_car.png", [1000, 450], 0, 3, 6, "right")
+npc_car1 = trial_npc("red_car.png", [1000, 450], 0, 3, 6, "right", "npc car1", 0,0)
 npc_car1.update(wall_segments, inner_points, outer_points)
 
 npc_image2 = pygame.image.load("red_car.png")
 npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
 
-npc_car2 = trial_npc("red_car.png", [1000, 350], 0, 3, 6, "left")
+npc_car2 = trial_npc("red_car.png", [1000, 350], 0, 3, 6, "left", "npc car2",0,0)
 npc_car2.update(wall_segments, inner_points, outer_points)
+npc_car_list=[npc_car1, npc_car2]
 
+
+
+def checker_count(car):
+    if (car.pos[0]>=280 and car.pos[0]<=520) and (car.pos[1]>=600 and car.pos[1]<=610):
+        car.checker=car.laps
+        print(car.checker)
+
+def lap_checker(car):
+    if (car.pos[0]>=990 and car.pos[0]<1000) and (car.pos[1]>=240 and car.pos[1]<=500):
+        car.laps=car.checker+1
+        print(car.laps)
+    if car.laps == 1:
+        return True
+    else:
+        return False
+
+start_time=pygame.time.get_ticks()
+font=pygame.font.Font(None,24)
 
 #Game loop
 running = True
@@ -53,6 +79,11 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+    for x in npc_car_list:
+        checker_count(x)
+        if lap_checker(x):
+            running = False
+            print((pygame.time.get_ticks()-start_time )/1000)
 
     #camera position to follow the NPC car
     camera_x = npc_car1.pos[0] - SCREEN_WIDTH // 2
@@ -77,6 +108,8 @@ while running:
 
     car_temp2 = pygame.transform.rotate(npc_image2, -npc_car2.dir)
     screen.blit(car_temp2, (npc_car2.pos[0] - camera_x, npc_car2.pos[1] - camera_y))
+
+    update_timer(screen,start_time, (255,0,0), (650,10), font)
 
     pygame.display.flip()
     clock.tick(60)
