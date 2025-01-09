@@ -5,9 +5,9 @@ from timer import update_timer
 map_choice=2
 
 if map_choice==1:
-    from map1 import inner_points, outer_points, obstacle_points
+    from map1 import inner_points, outer_points, obstacle_points, track_width, track_height
 if map_choice==2:
-    from map2 import inner_points, outer_points, obstacle_points
+    from map2 import inner_points, outer_points, obstacle_points, track_width, track_height
 from car import trial_npc
 
 
@@ -25,11 +25,11 @@ for x in obstacle_points:
 
 pygame.init()
 
-SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen_width, screen_height = 800, 800
+screen=pygame.display.set_mode((screen_width, screen_height))
 
-TRACK_WIDTH, TRACK_HEIGHT = 8000, 8000
-track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
+track_surface=pygame.Surface((track_width, track_height))
+
 
 #drawing track
 track_surface.fill((50, 50, 50))
@@ -42,13 +42,13 @@ for x in range(len(obstacle_points)):
 npc_image1 = pygame.image.load("red_car.png")
 npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
 
-npc_car1 = trial_npc("red_car.png", [1000, 450], 0, 3, 6, "right", "npc car1", 0,0)
+npc_car1 = trial_npc("red_car.png", [1530, 800], 90, 3, 6, "right", "npc car1", 0,0)
 npc_car1.update(wall_segments, inner_points, outer_points)
 
 npc_image2 = pygame.image.load("red_car.png")
 npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
 
-npc_car2 = trial_npc("red_car.png", [1000, 350], 0, 3, 6, "left", "npc car2",0,0)
+npc_car2 = trial_npc("red_car.png", [1680, 800], 90, 3, 6, "left", "npc car2",0,0)
 npc_car2.update(wall_segments, inner_points, outer_points)
 npc_car_list=[npc_car1, npc_car2]
 
@@ -86,12 +86,12 @@ while running:
             print((pygame.time.get_ticks()-start_time )/1000)
 
     #camera position to follow the NPC car
-    camera_x = npc_car1.pos[0] - SCREEN_WIDTH // 2
-    camera_y = npc_car1.pos[1] - SCREEN_HEIGHT // 2
+    camera_x = npc_car1.pos[0] - screen_width // 2
+    camera_y = npc_car1.pos[1] - screen_height // 2
 
     #ensure camera stays within track limits
-    camera_x = max(0, min(camera_x, TRACK_WIDTH - SCREEN_WIDTH))
-    camera_y = max(0, min(camera_y, TRACK_HEIGHT - SCREEN_HEIGHT))
+    camera_x = max(0, min(camera_x, track_width - screen_width))
+    camera_y = max(0, min(camera_y, track_height - screen_height))
 
     #Update NPC car position
     npc_car1.update(wall_segments, inner_points, outer_points)
