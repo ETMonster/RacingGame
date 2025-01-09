@@ -5,6 +5,9 @@ from map1 import ellipse_points_x, ellipse_points_y
 
 
 inner_points, outer_points, obstacle_points= [],[],[]
+track_width=5000
+track_height=4000
+
 
 #end of straight
 for y in range(840, 590, -10):
