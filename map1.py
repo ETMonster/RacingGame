@@ -36,6 +36,9 @@ def ellipse_points_y(center, x, y, direction, sort):
 
 
 inner_points, outer_points,obstacle_points=[],[],[]
+track_width=5000
+track_height=4000
+
 
 #filler test
 for y in range(2830, 2600,-10):
