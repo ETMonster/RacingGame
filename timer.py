@@ -8,3 +8,10 @@ def update_timer(screen, start_time, color, position, font):
     #blit the timer
     timer_surface=font.render(timer_text, True, color)
     screen.blit(timer_surface, position)
+
+
+def update_laps(screen, laps, color, position, font):
+
+    laps_text="Laps: " + str(laps)
+    laps_surface=font.render(laps_text, True, color)
+    screen.blit(laps_surface, position)
