@@ -1,8 +1,8 @@
 import pygame
 import math
-from timer import update_timer
+from timer import update_timer, update_laps
 
-map_choice=2
+map_choice=1
 
 if map_choice==1:
     from map1 import inner_points, outer_points, obstacle_points, track_width, track_height
@@ -45,10 +45,10 @@ npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
 npc_car1 = trial_npc("red_car.png", [1530, 800], 90, 3, 6, "right", "npc car1", 0,0)
 npc_car1.update(wall_segments, inner_points, outer_points)
 
-npc_image2 = pygame.image.load("red_car.png")
+npc_image2 = pygame.image.load("blue_car.png")
 npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
 
-npc_car2 = trial_npc("red_car.png", [1680, 800], 90, 3, 6, "left", "npc car2",0,0)
+npc_car2 = trial_npc("blue_car.png", [1680, 800], 90, 3, 6, "left", "npc car2",0,0)
 npc_car2.update(wall_segments, inner_points, outer_points)
 npc_car_list=[npc_car1, npc_car2]
 
@@ -63,7 +63,7 @@ def lap_checker(car):
     if (car.pos[0]>=990 and car.pos[0]<1000) and (car.pos[1]>=240 and car.pos[1]<=500):
         car.laps=car.checker+1
         print(car.laps)
-    if car.laps == 1:
+    if car.laps == 2:
         return True
     else:
         return False
@@ -110,6 +110,7 @@ while running:
     screen.blit(car_temp2, (npc_car2.pos[0] - camera_x, npc_car2.pos[1] - camera_y))
 
     update_timer(screen,start_time, (255,0,0), (650,10), font)
+    update_laps(screen, npc_car1.laps,(255,0,0), (10,10), font )
 
     pygame.display.flip()
     clock.tick(60)
