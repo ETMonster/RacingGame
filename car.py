@@ -213,4 +213,4 @@ class Player(Car):
 
         collision = self.check_collision(current_race.objects, self.position)
         if collision is not None:
-            x = self.points_in_rect(collision['object'])
+            print('crash')

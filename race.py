@@ -3,16 +3,12 @@ from constants import *
 import car
 
 class Race:
-    def __init__(self, screen, is_paused, friction, objects):
+    def __init__(self, screen, is_paused, friction, objects, map):
         self.screen = screen
         self.is_paused = is_paused
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
-
-    def draw_image(self, image, rect):
-        rect.center = (world_to_screen(x = rect.top).x, world_to_screen(y = rect.left).y)
-
-        self.screen.blit(image, rect.topleft)
+        self.map = map
 
     def update_screen(self, screen):
         for obj_group in self.objects.to_dictionary():
@@ -27,7 +23,31 @@ class Race:
                 obj.render_image = pygame.transform.rotate(scaled_image, -obj.rotation.angle)
 
                 #screen.blit(obj.mask.to_surface(), rect.topleft)
-                #screen.blit(obj.render_image, rect.topleft) # Blit onto screen
+                screen.blit(obj.render_image, rect.topleft) # Blit onto screen
+
+class Map:
+    def __init__(self, image, outer_points, inner_points):
+        self.image = image
+        self.outer_points = outer_points
+        self.inner_points = inner_points
+
+    def ellipse_points(self, center, x, y, direction, sort, rotated = False):
+        # Not correct yet
+
+        coordinates = []
+        for i in range(180):
+            rad = 2 * (math.pi / 180) * i
+            a = center[0] + x * math.cos(rad)
+            b = center[1] + y * math.sin(rad)
+
+            if direction == 1 and a <= center[0]:  # if direction=1 then only draw left half
+                coordinates.append((a, b))
+            elif direction == -1 and a >= center[0]:  # if direction=-1 then only draw right half
+                coordinates.append((a, b))
+
+        if rotated =
+        coordinates.sort(key=lambda coordinates: coordinates[1 if rotated else 0], reverse = sort)  # sort by decreasing y value
+        return coordinates
 
 class Race_Objects:
     def __init__(self, cars, obstacles):

@@ -56,24 +56,6 @@ class Object:
 
         self.edges = [edge[0] for edge in distances[:-2]]
 
-    def points_in_rect(self, obj):
-        points = []
-
-        for i, corner in enumerate(self.corners):
-            cross_products = []
-
-            for edge in obj.edges:
-                cross_products.append(((edge[0].x - corner.x) * (edge[1].y - corner.y)) - ((edge[0].y - corner.y) * (edge[1].x - corner.x)))
-
-            if all(cross_product >= 0 for cross_product in cross_products):
-                points.append(corner)
-            elif all(cross_product < 0 for cross_product in cross_products):
-                points.append(corner)
-
-            print(i, cross_products)
-
-        return points
-
     def check_collision(self, objects, delta_position = None):
         for obj_group in objects.to_dictionary():
             for obj in objects.to_dictionary()[obj_group]:
@@ -96,8 +78,6 @@ class Object:
         return None
 
     def debug(self, parameters = None, current_race = None):
-        def throw_error(e):
-            print(e)
 
         for parameter in parameters:
             if parameter == 'corners':
@@ -105,7 +85,7 @@ class Object:
                     try:
                         current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y, corner.x, 1, 1))
                     except Exception as e:
-                        throw_error(e)
+                        print(e)
 
             if parameter == 'edges':
                 for edge in self.edges:
@@ -117,7 +97,7 @@ class Object:
                             world_to_screen(x = edge[1].x, y = edge[1].y, return_tuple = True),
                         )
                     except Exception as e:
-                        throw_error(e)
+                        print(e)
 
 class Camera:
     def __init__(self, position, scale):

@@ -72,7 +72,7 @@ def update():
             for obj in current_race.objects.to_dictionary()[obj_group]:
                 obj.update_attributes()
 
-                obj.debug(['corners', 'edges'], current_race)
+                #obj.debug(['corners', 'edges'], current_race)
 
         for car in current_race.objects.to_dictionary()['cars']:
             car.update_rotation(delta_time, current_race)
