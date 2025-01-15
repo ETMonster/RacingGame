@@ -98,6 +98,10 @@ class Object:
                         )
                     except Exception as e:
                         print(e)
+            if parameter == 'track':
+                pygame.draw.polygon(current_race.screen, (255, 255, 255), current_race.track.outer_points)
+                pygame.draw.polygon(current_race.screen, (50, 50, 50), current_race.track.inner_points)
+
 
 class Camera:
     def __init__(self, position, scale):
@@ -121,6 +125,28 @@ def world_to_screen(self = None, x = None, y = None, return_tuple = False):
         (self.position.x if x is None else x - camera.position.x, self.position.y if y is None else y - camera.position.y)
     )
 
+def ellipse_points(center, x, y, direction, sort, rotated=False):
+    coordinates = []
+    if rotated:
+        for i in range(180):
+            rad = 2 * (math.pi / 180) * i
+            a = center[0] + x * math.cos(rad)
+            b = center[1] + y * math.sin(rad)
+
+            if direction == 1 and a <= center[0]:  # if direction=1 then only draw left half
+                coordinates.append((a, b))
+            elif direction == -1 and a >= center[0]:  # if direction=-1 then only draw right half
+                coordinates.append((a, b))
+    else:
+        for i in range(180):
+            rad = direction * (math.pi / 180) * i
+            a = center[0] + x * math.cos(rad)
+            b = center[1] + y * math.sin(rad)
+            coordinates.append((a, b))
+
+    coordinates.sort(key=lambda c: c[1 if rotated else 0], reverse=sort)  # sort by decreasing y value
+    return coordinates
+
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
 PIXEL_TO_SCREEN_FACTOR = 2.5
@@ -130,4 +156,4 @@ MOVEMENT_ZERO_MARGIN = 0.5
 FPS = 60
 
 MIN_CAMERA_SCALE = 1
-camera = Camera(Vector(x = 0, y = 0), 1)
+camera = Camera(Vector(x = 0, y = 0), 2)

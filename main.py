@@ -3,6 +3,7 @@ import math
 from car import *
 from race import *
 from constants import *
+from maps import *
 
 pygame.init()
 
@@ -13,6 +14,7 @@ clock = pygame.time.Clock()
 
 current_race = Race(
     screen = screen,
+    track = maps[0],
     is_paused = False,
     friction = 0.1,
     objects = Race_Objects(
@@ -72,8 +74,6 @@ def update():
             for obj in current_race.objects.to_dictionary()[obj_group]:
                 obj.update_attributes()
 
-                #obj.debug(['corners', 'edges'], current_race)
-
         for car in current_race.objects.to_dictionary()['cars']:
             car.update_rotation(delta_time, current_race)
             car.update_position(delta_time, current_race)
@@ -82,6 +82,7 @@ def update():
                 camera.update_position(car)
 
     current_race.update_screen(screen)
+    debug(['track'], current_race)
 
 running = True
 while running:
