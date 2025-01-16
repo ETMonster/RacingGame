@@ -6,14 +6,25 @@ import maps
 class Race:
     def __init__(self, screen, track, is_paused, friction, objects):
         self.screen = screen
-        self.track = track
+        self.map = track
         self.is_paused = is_paused
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
 
         self.race_time = 0
 
-    def update_screen(self, screen):
+    def update_screen(self, screen, debug):
+        for x in debug:
+            if x == 'map':
+                #map_surface = self.map.surface
+                map_rect = pygame.Rect((self.map.width // 2) + camera.position.x, (self.map.height // 2) + camera.position.y, 1000, 1000)
+                map_surface = self.map.surface.subsurface(map_rect)
+
+                map_rect = map_surface.get_rect()
+                map_rect.center = world_to_screen(x = 0, y = 0, return_tuple = True)
+
+                screen.blit(map_surface, map_rect.topleft)
+
         for obj_group in self.objects.to_dictionary():
             for obj in self.objects.to_dictionary()[obj_group]:
                 scaled_image = pygame.transform.scale(obj.image, (obj.width / camera.scale, obj.height / camera.scale)) # Account for camera scale function
@@ -21,7 +32,7 @@ class Race:
                 rotated_image = pygame.transform.rotate(scaled_image, obj.rotation.angle) # Get object image and rotate it
                 rect = rotated_image.get_rect() # Get rect of rotated image
 
-                rect.center = (world_to_screen(self = obj, x = obj.position.x).x, world_to_screen(self = obj, y = obj.position.y).y) # Set screen position in relation to camera
+                rect.center = world_to_screen(x = obj.position.x, y = obj.position.y, return_tuple = True) # Set screen position in relation to camera
 
                 obj.render_image = pygame.transform.rotate(scaled_image, -obj.rotation.angle)
 

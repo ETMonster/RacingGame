@@ -1,3 +1,4 @@
+import pygame
 from constants import *
 
 def map_1():
@@ -209,6 +210,16 @@ class Map:
 
         self.outer_points = calculate_points[self.id]()['outer']
         self.inner_points = calculate_points[self.id]()['inner']
+
+        self.width = abs(max(point[0] for point in self.outer_points)) + abs(min(point[0] for point in self.outer_points))
+        self.height = abs(max(point[1] for point in self.outer_points)) + abs(min(point[1] for point in self.outer_points))
+
+        self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
+
+        pygame.draw.polygon(self.surface, (255, 255, 255), self.outer_points)
+        pygame.draw.polygon(self.surface, (50, 50, 50), self.inner_points)
+
+        pygame.transform.scale(self.surface, (self.width / camera.scale, self.height / camera.scale))
 
 maps = [
     Map(0, 'images/maps/map_1')

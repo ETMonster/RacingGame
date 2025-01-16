@@ -149,11 +149,14 @@ def ellipse_points(center, x, y, direction, sort, rotated=False):
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
-PIXEL_TO_SCREEN_FACTOR = 2.5
+PIXEL_TO_SCREEN_FACTOR = 1.2
 
 MOVEMENT_ZERO_MARGIN = 0.5
 
 FPS = 60
 
 MIN_CAMERA_SCALE = 1
-camera = Camera(Vector(x = 0, y = 0), 2)
+camera = Camera(
+    position = Vector(x = 0, y = 0),
+    scale = 0.8
+)

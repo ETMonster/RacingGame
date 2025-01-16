@@ -16,7 +16,7 @@ current_race = Race(
     screen = screen,
     track = maps[0],
     is_paused = False,
-    friction = 0.1,
+    friction = 1,
     objects = Race_Objects(
         cars = [
             car.Player(
@@ -26,14 +26,14 @@ current_race = Race(
                 is_player = True,
                 velocity = Vector(x = 0, y = 0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
                 direction = Vector(x = 0, y = 0), # The direction that the car is currently moving in (-1 to 1) and multiplies by velocity to get new position
-                gas_acceleration = 80, # Acceleration when pressing gas button
-                brake_acceleration = 250, # Acceleration when pressing brake button
+                gas_acceleration = 30, # Acceleration when pressing gas button
+                brake_acceleration = 150, # Acceleration when pressing brake button
                 roll_acceleration = 0.98, # Acceleration when acceleration buttons pressed
                 skid_acceleration = 0.96, # Acceleration when burning out (Target direction + Travel direction > 90)
                 min_turn_radius = 30,
-                turn_factor = 0.5, # The rate at which cars turn
+                turn_factor = 0.7, # The rate at which cars turn
                 max_turn_speed = 3, # The maximum turn speed
-                max_speed = 600, # The maximum velocity
+                max_speed = 450, # The maximum velocity
                 collision = True, # Collision
             ),
             car.Opponent(
@@ -74,6 +74,8 @@ def update():
             for obj in current_race.objects.to_dictionary()[obj_group]:
                 obj.update_attributes()
 
+                obj.debug([''], current_race)
+
         for car in current_race.objects.to_dictionary()['cars']:
             car.update_rotation(delta_time, current_race)
             car.update_position(delta_time, current_race)
@@ -81,8 +83,7 @@ def update():
             if car.is_player:
                 camera.update_position(car)
 
-    current_race.update_screen(screen)
-    debug(['track'], current_race)
+    current_race.update_screen(screen, ['map'])
 
 running = True
 while running:
