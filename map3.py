@@ -3,6 +3,8 @@ import math
 from map1 import ellipse_points_x, ellipse_points_y
 
 inner_points, outer_points, obstacle_points= [],[],[]
+track_width=5000
+track_height=4000
 
 #end of straight
 for y in range(1010, 590, -10):
@@ -26,11 +28,22 @@ for y in range(600, 1010, 10):
     outer_points.append((1720, y))
     inner_points.append((1480, y))
 
+obstacle_points.append([])
+#obstacle 1
+for x in range(80):
+    obstacle_points[0].append((math.cos(((x*math.pi)/40))*30+1600,math.sin(((x*math.pi)/40))*30+800 ))
+
 #curve 2 inner h
 center=[1930, 1000]
 x1=450
 y1=350
 inner_points+=(ellipse_points_x(center, x1, y1, 1, 0))
+
+obstacle_points.append([])
+#obstacle 2
+for x in range(80):
+    obstacle_points[1].append((math.cos(((x*math.pi)/40))*30+1930,math.sin(((x*math.pi)/40))*30+1235 ))
+
 
 #curve 2 outer h
 center=[1930, 1000]
@@ -55,6 +68,15 @@ for x in range(2140, 3010, 10):
         outer_points.append((x,360))
         inner_points.append((x,600))
 
+obstacle_points.append([])
+#obstacle 3
+for y in range(360, 450, 10):
+    obstacle_points[2].append((2300, y))
+for x in range(2300, 2390, 10):
+    obstacle_points[2].append((x, 440))
+for y in range(440, 350, -10):
+    obstacle_points[2].append((2380, y))
+
 #filler gap
 for x in range(3010, 3240, 10):
     outer_points.append((x, 360))
@@ -67,9 +89,25 @@ for y in range(360, 1510, 10):
         outer_points.append((3240, y))
         inner_points.append((3000, y))
 
+obstacle_points.append([])
+#obstacle 4
+for y in range(800, 960, 10):
+    obstacle_points[3].append((3090, y))
+for x in range(3090, 3160, 10):
+    obstacle_points[3].append((x, 950))
+for y in range(950, 790, -10):
+    obstacle_points[3].append((3150, y))
+for x in range(3150, 3080, -10):
+    obstacle_points[3].append((x, 800))
+
 #filler gap
 for y in range(1510, 1740, 10):
     outer_points.append((3240, y))
+
+obstacle_points.append([])
+#obstacle 5
+for x in range(80):
+    obstacle_points[4].append((math.cos(((x*math.pi)/40))*30+3150,math.sin(((x*math.pi)/40))*30+1650 ))
 
 #straight x section 2
 for x in range(3240, 2730, -10):
@@ -121,6 +159,17 @@ for y in range(2000, 2610, 10):
     outer_points.append((1610, y))
     inner_points.append((1370, y))
 
+obstacle_points.append([])
+#obstacle 6
+for y in range(2200, 2410, 10):
+    obstacle_points[5].append((1460, y))
+for x in range(1460, 1530, 10):
+    obstacle_points[5].append((x, 2400))
+for y in range(2400, 2190, -10):
+    obstacle_points[5].append((1520, y))
+for x in range(1520, 1450, -10):
+    obstacle_points[5].append((x, 2200))
+
 #curve 5 inner h
 center=[1870, 2600]
 x1=500
@@ -161,6 +210,25 @@ outer_points+=(ellipse_points_x(center, x1, y1, 1, 0))
 for y in range(2600, 1490, -10):
     outer_points.append((3650, y))
     inner_points.append((3890, y))
+
+obstacle_points.append([])
+#obstacle 7
+for x in range(3650, 3720, 10):
+    obstacle_points[6].append((x, 2400))
+for y in range(2400, 2330, -10):
+    obstacle_points[6].append((3710, y))
+for x in range(3710, 3640, -10):
+    obstacle_points[6].append((x, 2340))
+
+obstacle_points.append([])
+#obstacle 8
+for x in range(3890, 3840, -10):
+    obstacle_points[7].append((x, 1800))
+for y in range(1800, 1870, 10):
+    obstacle_points[7].append((3850, y))
+for x in range(3850, 3900, 10):
+    obstacle_points[7].append((x, 1860))
+
 
 #filler gap
 for y in range(1490, 1260, -10):
@@ -246,6 +314,18 @@ for x in range(4590, 3710, -10):
         outer_points.append((x, 3240))
         inner_points.append((x, 3000))
 
+obstacle_points.append([])
+#obstacle 9
+for x in range(4100, 4010, -10):
+    obstacle_points[8].append((x, 3090))
+for y in range(3090, 3160, 10):
+    obstacle_points[8].append((4020, y))
+for x in range(4020, 4110, 10):
+    obstacle_points[8].append((x, 3150))
+for y in range(3150, 3080, -10):
+    obstacle_points[8].append((4110, y))
+
+
 #filler gap
 for x in range(3710, 3480, -10):
     inner_points.append((x, 3000))
@@ -257,6 +337,7 @@ for y in range(3000, 3410, 10):
     else:
         inner_points.append((3480, y))
         outer_points.append((3720, y))
+
 
 #filler gap
 for y in range(3410, 3640, 10):
@@ -353,6 +434,31 @@ for y in range(3240, 1010, -10):
     else:
         outer_points.append((280, y))
         inner_points.append((520, y))
+
+obstacle_points.append([])
+#obstacle 10
+for x in range(80):
+    obstacle_points[9].append((math.cos(((x*math.pi)/40))*30+400,math.sin(((x*math.pi)/40))*30+2500 ))
+
+
+obstacle_points.append([])
+#obstacle 11
+for x in range(280, 340, 10):
+    obstacle_points[10].append((x,1700 ))
+for y in range(1700, 1630, -10):
+    obstacle_points[10].append((330, y))
+for x in range(330, 270, -10):
+    obstacle_points[10].append((x, 1640))
+
+
+obstacle_points.append([])
+#obstacle 12
+for x in range(520, 470, -10):
+    obstacle_points[11].append((x, 1300))
+for y in range(1300, 1360, 10):
+    obstacle_points[11].append((480, y))
+for x in range(480, 530, 10):
+    obstacle_points[11].append((x, 1360))
 
 
 
