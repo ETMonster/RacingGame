@@ -12,6 +12,7 @@ def update_timer(screen, start_time, color, position, font):
 
 def update_laps(screen, laps, color, position, font):
 
-    laps_text="Laps: " + str(laps)
-    laps_surface=font.render(laps_text, True, color)
-    screen.blit(laps_surface, position)
+    if laps!=3:
+        laps_text="Lap: " + str(laps) +"/2"
+        laps_surface=font.render(laps_text, True, color)
+        screen.blit(laps_surface, position)
