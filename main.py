@@ -1,16 +1,16 @@
 import pygame
 import math
-from timer import update_timer, update_laps
 
-map_choice=1
+map_choice=3
 
 if map_choice==1:
-    from map1 import inner_points, outer_points, obstacle_points, track_width, track_height
+    from map1 import inner_points, outer_points, obstacle_points
 if map_choice==2:
-    from map2 import inner_points, outer_points, obstacle_points, track_width, track_height
-from car import trial_npc
-
-
+    from map2 import inner_points, outer_points, obstacle_points
+if map_choice==3:
+    from map3 import inner_points, outer_points, obstacle_points
+print(outer_points)
+print(inner_points)
 
 wall_segments = []
 for x in range(len(inner_points)):
@@ -22,14 +22,13 @@ for x in obstacle_points:
         wall_segments.append((x[y-1],x[y]))
 
 
-
 pygame.init()
 
-screen_width, screen_height = 800, 800
-screen=pygame.display.set_mode((screen_width, screen_height))
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-track_surface=pygame.Surface((track_width, track_height))
-
+TRACK_WIDTH, TRACK_HEIGHT = 8000, 8000
+track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
 
 #drawing track
 track_surface.fill((50, 50, 50))
@@ -39,37 +38,11 @@ pygame.draw.polygon(track_surface, (50, 50, 50), inner_points)
 for x in range(len(obstacle_points)):
     pygame.draw.polygon(track_surface, (0, 0, 0), obstacle_points[x])
 
-npc_image1 = pygame.image.load("red_car.png")
-npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
-
-npc_car1 = trial_npc("red_car.png", [1530, 800], 90, 3, 6, "right", "npc car1", 0,0)
-npc_car1.update(wall_segments, inner_points, outer_points)
-
-npc_image2 = pygame.image.load("blue_car.png")
-npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
-
-npc_car2 = trial_npc("blue_car.png", [1680, 800], 90, 3, 6, "left", "npc car2",0,0)
-npc_car2.update(wall_segments, inner_points, outer_points)
-npc_car_list=[npc_car1, npc_car2]
-
-
-
-def checker_count(car):
-    if (car.pos[0]>=280 and car.pos[0]<=520) and (car.pos[1]>=600 and car.pos[1]<=610):
-        car.checker=car.laps
-        print(car.checker)
-
-def lap_checker(car):
-    if (car.pos[0]>=990 and car.pos[0]<1000) and (car.pos[1]>=240 and car.pos[1]<=500):
-        car.laps=car.checker+1
-        print(car.laps)
-    if car.laps == 2:
-        return True
-    else:
-        return False
-
-start_time=pygame.time.get_ticks()
-font=pygame.font.Font(None,24)
+# Ball properties
+ball_color = (0, 0, 255)
+ball_radius = 15
+ball_pos = [200, 500]  # Starting position
+ball_speed = 5
 
 #Game loop
 running = True
@@ -79,38 +52,36 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-    for x in npc_car_list:
-        checker_count(x)
-        if lap_checker(x):
-            running = False
-            print((pygame.time.get_ticks()-start_time )/1000)
 
-    #camera position to follow the NPC car
-    camera_x = npc_car1.pos[0] - screen_width // 2
-    camera_y = npc_car1.pos[1] - screen_height // 2
+    # Ball movement with arrow keys
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_UP]:
+        ball_pos[1] -= ball_speed
+    if keys[pygame.K_DOWN]:
+        ball_pos[1] += ball_speed
+    if keys[pygame.K_LEFT]:
+        ball_pos[0] -= ball_speed
+    if keys[pygame.K_RIGHT]:
+        ball_pos[0] += ball_speed
+
+    # Ensure ball stays within track limits
+    ball_pos[0] = max(ball_radius, min(ball_pos[0], TRACK_WIDTH - ball_radius))
+    ball_pos[1] = max(ball_radius, min(ball_pos[1], TRACK_HEIGHT - ball_radius))
+
+    #camera position to follow the ball
+    camera_x = ball_pos[0] - SCREEN_WIDTH // 2
+    camera_y = ball_pos[1] - SCREEN_HEIGHT // 2
 
     #ensure camera stays within track limits
-    camera_x = max(0, min(camera_x, track_width - screen_width))
-    camera_y = max(0, min(camera_y, track_height - screen_height))
-
-    #Update NPC car position
-    npc_car1.update(wall_segments, inner_points, outer_points)
-    npc_car2.update(wall_segments, inner_points, outer_points)
-
+    camera_x = max(0, min(camera_x, TRACK_WIDTH - SCREEN_WIDTH))
+    camera_y = max(0, min(camera_y, TRACK_HEIGHT - SCREEN_HEIGHT))
 
     #blit the updated screen
     screen.fill((0, 0, 0))
     screen.blit(track_surface, (-camera_x, -camera_y))
 
-    #draw the NPC car
-    car_temp = pygame.transform.rotate(npc_image1, -npc_car1.dir)
-    screen.blit(car_temp, (npc_car1.pos[0] - camera_x, npc_car1.pos[1] - camera_y))
-
-    car_temp2 = pygame.transform.rotate(npc_image2, -npc_car2.dir)
-    screen.blit(car_temp2, (npc_car2.pos[0] - camera_x, npc_car2.pos[1] - camera_y))
-
-    update_timer(screen,start_time, (255,0,0), (650,10), font)
-    update_laps(screen, npc_car1.laps,(255,0,0), (10,10), font )
+    # Draw the ball
+    pygame.draw.circle(screen, ball_color, (ball_pos[0] - camera_x, ball_pos[1] - camera_y), ball_radius)
 
     pygame.display.flip()
     clock.tick(60)
