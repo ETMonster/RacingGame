@@ -1,8 +1,17 @@
 import pygame
 import math
-from timer import update_timer, update_laps
+from labels import update_timer, update_laps, lap_label
+
+pygame.init()
+
 
 map_choice=1
+SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+
+TRACK_WIDTH, TRACK_HEIGHT = 8000, 8000
+track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
+
 
 if map_choice==1:
     from map1 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker
@@ -11,6 +20,8 @@ if map_choice==2:
 if map_choice==3:
     from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker
 
+#how many laps the user wants. Should be input but currently set to 2
+total_laps=2
 
 
 wall_segments = []
@@ -24,13 +35,8 @@ for x in obstacle_points:
 
 
 
-pygame.init()
 
-SCREEN_WIDTH, SCREEN_HEIGHT = 800, 800
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 
-TRACK_WIDTH, TRACK_HEIGHT = 8000, 8000
-track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
 
 #drawing track
 track_surface.fill((50, 50, 50))
@@ -44,18 +50,24 @@ for x in range(len(obstacle_points)):
 
 npc_image1 = pygame.image.load("red_car.png")
 npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
-
 npc_car1.update(wall_segments, inner_points, outer_points)
 
-npc_image2 = pygame.image.load("red_car.png")
+
+npc_image2 = pygame.image.load("blue_car.png")
 npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
+
+
 
 npc_car2.update(wall_segments, inner_points, outer_points)
 npc_car_list=[npc_car1, npc_car2]
 
 
-
-
+if map_choice==1:
+    pygame.draw.polygon(track_surface, (100, 100, 100), [(280, 2250), (520, 2250), (520, 2240), (280, 2240)])
+elif map_choice==2:
+    pygame.draw.polygon(track_surface, (100, 100, 100), [(2250, 110), (2260, 110), (2260, 350), (2250, 350)])
+elif map_choice==3:
+    pygame.draw.polygon(track_surface, (100, 100, 100), [(1290, 3000), (1300, 3000), (1300, 3240), (1290, 3240)])
 
 start_time=pygame.time.get_ticks()
 font=pygame.font.Font(None,24)
@@ -98,8 +110,11 @@ while running:
     car_temp2 = pygame.transform.rotate(npc_image2, -npc_car2.dir)
     screen.blit(car_temp2, (npc_car2.pos[0] - camera_x, npc_car2.pos[1] - camera_y))
 
+
+    lap_label(screen, (0,0), (255,255,255), font)
     update_timer(screen,start_time, (255,0,0), (650,10), font)
-    update_laps(screen, npc_car1.laps, (255, 0, 0), (10, 10), font)
+    for x in range(len(npc_car_list)):
+        update_laps(screen, npc_car_list[x].laps, (255, 0, 0), (10, 10+(20*x)), font,npc_car_list[x].name, total_laps)
 
     pygame.display.flip()
     clock.tick(60)
