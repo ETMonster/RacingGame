@@ -1,5 +1,25 @@
 import pygame
 import math
+from npc_car import trial_npc
+
+
+npc_car1 = trial_npc("red_car.png", [450, 2250], -90, 3, 6, "right", "npc car1", 0,0)
+npc_car2 = trial_npc("red_car.png", [350, 2250], -90, 3, 6, "left", "npc car2",0,0)
+
+def checker_count(car):
+    if (car.pos[0]>=280 and car.pos[0]<=520) and (car.pos[1]>=2300 and car.pos[1]<=2310):
+        car.checker=car.laps
+        print(car.checker)
+
+def lap_checker(car):
+    if (car.pos[0]>=280 and car.pos[0]<520) and (car.pos[1]>=2240 and car.pos[1]<=2250):
+        car.laps=car.checker+1
+        print(car.laps)
+    if car.laps==3:
+        return True
+    else:
+        return False
+
 
 #ellipse function used in previous week
 def ellipse_points_x(center, x, y, direction, sort): #direction =-1 draw upper half direction=0 draw lower half
@@ -23,9 +43,9 @@ def ellipse_points_y(center, x, y, direction, sort):
         a = center[0] + x * math.cos(rad)
         b = center[1] + y * math.sin(rad)
 
-        if direction == 1 and a <= center[0]: #if direction=1 then only draw left half
+        if direction==1 and a <= center[0]: #if direction=1 then only draw left half
             coordinates.append((a, b))
-        elif direction == -1 and a >= center[0]: #if direction=-1 then only draw right half
+        elif direction==-1 and a >= center[0]: #if direction=-1 then only draw right half
             coordinates.append((a, b))
 
     if sort==0:
@@ -36,8 +56,6 @@ def ellipse_points_y(center, x, y, direction, sort):
 
 
 inner_points, outer_points,obstacle_points=[],[],[]
-track_width=5000
-track_height=4000
 
 
 #filler test
@@ -225,9 +243,9 @@ for x in range(80):
 
 #function to delete points that are the same and adjacent
 for x in range(len(outer_points)-1, 0, -1):
-    if outer_points[x] == outer_points[x-1]:
+    if outer_points[x]==outer_points[x-1]:
         del outer_points[x]
 
 for x in range(len(inner_points)-1, 0, -1):
-    if inner_points[x] == inner_points[x-1]:
+    if inner_points[x]==inner_points[x-1]:
         del inner_points[x]
