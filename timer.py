@@ -10,9 +10,18 @@ def update_timer(screen, start_time, color, position, font):
     screen.blit(timer_surface, position)
 
 
-def update_laps(screen, laps, color, position, font):
 
-    if laps!=3:
-        laps_text="Lap: " + str(laps) +"/2"
-        laps_surface=font.render(laps_text, True, color)
-        screen.blit(laps_surface, position)
+def lap_label(screen, position, color, font):
+
+    pygame.draw.rect(screen, (0, 0, 0), (position[0], position[1], 150, 100))
+    pygame.draw.rect(screen, color, (position[0], position[1], 150, 100), 3)
+
+    title_text = "Laps:"
+    title_surface = font.render(title_text, True, color)
+    screen.blit(title_surface, (position[0] + 10, position[1] + 10))
+
+def update_laps(screen, laps, color, position, font, name, total_laps):
+
+    car_text = name + ": " + str(laps)+"/"+str(total_laps)
+    car_surface = font.render(car_text, True, color)
+    screen.blit(car_surface, (position[0] , position[1] + 25))  # Display the lap count below the title
