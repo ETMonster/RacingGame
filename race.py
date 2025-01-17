@@ -16,14 +16,17 @@ class Race:
     def update_screen(self, screen, debug):
         for x in debug:
             if x == 'map':
-                #map_surface = self.map.surface
-                map_rect = pygame.Rect((self.map.width // 2) + camera.position.x, (self.map.height // 2) + camera.position.y, 1000, 1000)
-                map_surface = self.map.surface.subsurface(map_rect)
+                map_rect = pygame.Rect(
+                    (self.map.width // 2) + camera.position.x, (self.map.height // 2) + camera.position.y,
+                    500, 500
+                )
+                map_rect = map_rect.clamp(self.map.surface.get_rect())
 
-                map_rect = map_surface.get_rect()
-                map_rect.center = world_to_screen(x = 0, y = 0, return_tuple = True)
+                map_subsurface = self.map.surface.subsurface(map_rect)
 
-                screen.blit(map_surface, map_rect.topleft)
+                map_rect.center = world_to_screen(x = camera.position.x + (WINDOW_WIDTH // 2), y = camera.position.y + (WINDOW_HEIGHT // 2), return_tuple = True)
+
+                screen.blit(map_subsurface, map_rect.topleft)
 
         for obj_group in self.objects.to_dictionary():
             for obj in self.objects.to_dictionary()[obj_group]:
