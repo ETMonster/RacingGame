@@ -1,13 +1,27 @@
 import pygame
 import math
+from npc_car import trial_npc
 
 from map1 import ellipse_points_x, ellipse_points_y
 
+npc_car1 = trial_npc("red_car.png", [2250, 280], 0, 3, 6, "right", "npc car1", 0,0)
+npc_car2 = trial_npc("red_car.png", [2250, 180], 0, 3, 6, "left", "npc car2",0,0)
+
+def checker_count(car):
+    if (car.pos[0]>=2150 and car.pos[0]<=2160) and (car.pos[1]>=110 and car.pos[1]<=350):
+        car.checker=car.laps
+        print(car.checker)
+
+def lap_checker(car):
+    if (car.pos[0]>=2250 and car.pos[0]<2260) and (car.pos[1]>=110 and car.pos[1]<=350):
+        car.laps=car.checker+1
+        print(car.laps)
+    if car.laps==3:
+        return True
+    else:
+        return False
 
 inner_points, outer_points, obstacle_points= [],[],[]
-track_width=5000
-track_height=4000
-
 
 #end of straight
 for y in range(840, 590, -10):
@@ -236,9 +250,7 @@ x1=300
 outer_points+=(ellipse_points_y(center, x1, y1, -1, 0))
 
 
-
-
-#straight x  section 3
+#straight x section 3
 for x in range(4100, 3740, -10):
     outer_points.append((x,3430))
     inner_points.append((x,3190))
