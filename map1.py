@@ -55,7 +55,7 @@ def ellipse_points_y(center, x, y, direction, sort):
     return coordinates
 
 
-inner_points, outer_points,obstacle_points=[],[],[]
+inner_points, outer_points,obstacle_points, checkpoints=[],[],[],[]
 
 
 #filler test
@@ -96,6 +96,8 @@ for y in range(600, 1010, 10):
     outer_points.append((1720, y))
     inner_points.append((1480, y))
 
+checkpoints.append(pygame.Rect(1480, 800, 240, 30))
+
 #filler for line gap 1
 for y in range(1010, 1250, 10):
     outer_points.append((1720, y))
@@ -128,6 +130,8 @@ inner_points+=(ellipse_points_y(center, x1, y1, 1,0))
 for x in range(1110, 1910, 10):
     outer_points.append((x, 1940))
     inner_points.append((x, 2180))
+
+checkpoints.append(pygame.Rect(1300, 1940, 30, 240))
 
 #filler for line gap 2
 for x in range(1910, 2150, 10):
@@ -194,6 +198,8 @@ for x in range(2650, 3010, 10):
     outer_points.append((x, 2340))
     inner_points.append((x, 2580))
 
+checkpoints.append(pygame.Rect(2700, 2340, 30, 240))
+
 #filler test gap 1
 for x in range(3010, 3250, 10):
     outer_points.append((x, 2340))
@@ -240,6 +246,8 @@ obstacle_points.append([])
 #obstacle 6
 for x in range(80):
     obstacle_points[5].append((math.cos(((x*math.pi)/40))*30+1400,math.sin(((x*math.pi)/40))*30+2760 ))
+
+checkpoints.append(pygame.Rect(1000, 2600, 30, 240))
 
 #function to delete points that are the same and adjacent
 for x in range(len(outer_points)-1, 0, -1):
