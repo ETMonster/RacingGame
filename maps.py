@@ -206,7 +206,7 @@ calculate_points = [
 class Map:
     def __init__(self, id, image):
         self.id = id
-        self.image = image
+        self.image = pygame.image.load(image)
 
         self.outer_points = calculate_points[self.id]()['outer']
         self.inner_points = calculate_points[self.id]()['inner']
@@ -222,5 +222,5 @@ class Map:
         pygame.transform.scale(self.surface, (self.width / camera.scale, self.height / camera.scale))
 
 maps = [
-    Map(0, 'images/maps/map_1')
+    Map(0, 'images/maps/map_2.png')
 ]

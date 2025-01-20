@@ -3,7 +3,6 @@ import math
 from car import *
 from race import *
 from constants import *
-from maps import *
 
 pygame.init()
 
@@ -11,6 +10,8 @@ screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Racing Prototype')
 
 clock = pygame.time.Clock()
+
+from maps import *
 
 current_race = Race(
     screen = screen,

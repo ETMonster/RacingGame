@@ -147,8 +147,8 @@ def ellipse_points(center, x, y, direction, sort, rotated=False):
     coordinates.sort(key=lambda c: c[1 if rotated else 0], reverse=sort)  # sort by decreasing y value
     return coordinates
 
-WINDOW_WIDTH = 800
-WINDOW_HEIGHT = 800
+WINDOW_WIDTH = 1920
+WINDOW_HEIGHT = 1080
 PIXEL_TO_SCREEN_FACTOR = 1.2
 
 MOVEMENT_ZERO_MARGIN = 0.5
