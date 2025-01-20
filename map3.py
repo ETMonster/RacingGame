@@ -21,14 +21,20 @@ def lap_checker(car):
     else:
         return False
 
-inner_points, outer_points, obstacle_points, checkpoints= [],[],[],[]
-track_width=5000
-track_height=4000
+inner_points, outer_points, obstacle_points, checkpoints= [],[],[], []
+
+
+checkpoints.append(pygame.Rect(280, 800, 240, 30))
+checkpoints.append(pygame.Rect(2800,1500,30, 240))
+checkpoints.append(pygame.Rect(3650, 2000, 240, 30))
+checkpoints.append(pygame.Rect(4350, 2800, 240, 30))
+
 
 #end of straight
 for y in range(1010, 590, -10):
     outer_points.append((280, y))
     inner_points.append((520, y))
+
 
 #curve 1 outer h
 center=[1000, 600]
@@ -136,6 +142,7 @@ for x in range(3240, 2730, -10):
         outer_points.append((x, 1740))
         inner_points.append((x, 1500))
 
+
 #filler gap
 for x in range(2730, 2500, -10):
     inner_points.append((x, 1500))
@@ -239,6 +246,8 @@ for y in range(2400, 2330, -10):
 for x in range(3710, 3640, -10):
     obstacle_points[6].append((x, 2340))
 
+
+
 obstacle_points.append([])
 #obstacle 8
 for x in range(3890, 3840, -10):
@@ -320,6 +329,7 @@ for y in range(2360, 3010, 10):
     else:
         outer_points.append((4590, y))
         inner_points.append((4350, y))
+
 
 #filler gap
 for y in range(3010, 3240, 10):
