@@ -1,6 +1,6 @@
 import pygame
 import math
-from labels import update_timer, update_laps, lap_label
+from labels import update_timer, update_laps, lap_label, update_lap_player
 
 pygame.init()
 
@@ -14,11 +14,11 @@ track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
 
 
 if map_choice==1:
-    from map1 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker
+    from map1 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
 if map_choice==2:
-    from map2 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker
+    from map2 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
 if map_choice==3:
-    from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker
+    from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
 
 #how many laps the user wants. Should be input but currently set to 2
 total_laps=2
@@ -61,6 +61,8 @@ npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
 npc_car2.update(wall_segments, inner_points, outer_points)
 npc_car_list=[npc_car1, npc_car2]
 
+for x in checkpoints:
+    pygame.draw.rect(track_surface, (0, 255, 0), x, 0)
 
 if map_choice==1:
     pygame.draw.polygon(track_surface, (100, 100, 100), [(280, 2250), (520, 2250), (520, 2240), (280, 2240)])
@@ -71,6 +73,9 @@ elif map_choice==3:
 
 start_time=pygame.time.get_ticks()
 font=pygame.font.Font(None,24)
+
+
+
 
 #Game loop
 running = True
