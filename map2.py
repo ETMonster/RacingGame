@@ -21,7 +21,15 @@ def lap_checker(car):
     else:
         return False
 
-inner_points, outer_points, obstacle_points= [],[],[]
+inner_points, outer_points, obstacle_points, checkpoints= [],[],[], []
+
+
+checkpoints.append(pygame.Rect(3900, 3190, 30, 240))
+checkpoints.append(pygame.Rect(550, 2600, 240, 30))
+checkpoints.append(pygame.Rect(1480, 800, 240, 30))
+checkpoints.append(pygame.Rect(2100, 800, 30, 240))
+
+
 
 #end of straight
 for y in range(840, 590, -10):
@@ -44,6 +52,7 @@ inner_points+=(ellipse_points_x(center, x1, y1, -1, 0))
 for y in range(600, 1510, 10):
     outer_points.append((1720, y))
     inner_points.append((1480, y))
+
 
 #curve 2 outer h
 center=[1930, 1500]
@@ -139,6 +148,7 @@ for x in range(2380, 2040, -10):
     else:
         outer_points.append((x,1040))
         inner_points.append((x, 800))
+
 
 #filler gap
 for x in range(2040,1820, -10):
@@ -255,6 +265,7 @@ for x in range(4100, 3740, -10):
     outer_points.append((x,3430))
     inner_points.append((x,3190))
 
+
 #filler gap
 for x in range(3740, 3520, -10):
     outer_points.append((x,3430))
@@ -322,6 +333,7 @@ for y in range(2800, 1790, -10):
     outer_points.append((550,y))
     inner_points.append((790,y))
 
+
 #filler gap
 for y in range(1790, 1550, -10):
     inner_points.append((790, y))
@@ -356,6 +368,3 @@ for x in range(len(outer_points)-1, 0, -1):
 for x in range(len(inner_points)-1, 0, -1):
     if inner_points[x]==inner_points[x-1]:
         del inner_points[x]
-
-
-
