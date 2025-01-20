@@ -21,7 +21,7 @@ def lap_checker(car):
     else:
         return False
 
-inner_points, outer_points, obstacle_points= [],[],[]
+inner_points, outer_points, obstacle_points, checkpoints= [],[],[],[]
 track_width=5000
 track_height=4000
 
