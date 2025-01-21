@@ -21,7 +21,7 @@ if map_choice==3:
     from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints, finish_line
 
 #how many laps the user wants. Should be input but currently set to 2
-total_laps=2
+total_laps=1
 
 
 wall_segments = []
@@ -74,7 +74,7 @@ elif map_choice==3:
 start_time=pygame.time.get_ticks()
 font=pygame.font.Font("font(1).ttf",10)
 
-
+pygame.draw.rect(track_surface, (0,255,0), finish_line, 0)
 
 
 #Game loop
@@ -87,8 +87,8 @@ while running:
             running = False
     for x in npc_car_list:
         checker_count(x)
-        if lap_checker(x):
-            running = False
+        if lap_checker(x, total_laps):
+            x.speed = 0
             print((pygame.time.get_ticks()-start_time )/1000)
 
     #camera position to follow the NPC car
