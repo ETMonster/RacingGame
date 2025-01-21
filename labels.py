@@ -22,10 +22,14 @@ def lap_label(screen, position, color, font):
 
 def update_laps(screen, laps, color, position, font, name, total_laps):
 
-    car_text = name + ": " + str(laps)+"/"+str(total_laps)
-    car_surface = font.render(car_text, True, color)
-    screen.blit(car_surface, (position[0] , position[1] + 25))  #Display the lap count below the title
-
+    if laps<=total_laps:
+        car_text = name + ": " + str(laps)+"/"+str(total_laps)
+        car_surface = font.render(car_text, True, color)
+        screen.blit(car_surface, (position[0] , position[1] + 25))  #Display the lap count below the title\
+    else:
+        car_text = name + ": " + "FINISHED"
+        car_surface = font.render(car_text, True, color)
+        screen.blit(car_surface, (position[0] , position[1] + 25))  #Display the lap count below the title\
 #requires checkpoint attribute in player car class
 #checkpoints is list of rect
 #finish line is rect
