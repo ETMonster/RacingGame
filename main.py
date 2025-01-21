@@ -14,11 +14,11 @@ track_surface = pygame.Surface((TRACK_WIDTH, TRACK_HEIGHT))
 
 
 if map_choice==1:
-    from map1 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
+    from map1 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints, finish_line
 if map_choice==2:
-    from map2 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
+    from map2 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints, finish_line
 if map_choice==3:
-    from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints
+    from map3 import inner_points, outer_points, obstacle_points, npc_car2, npc_car1, checker_count, lap_checker, checkpoints, finish_line
 
 #how many laps the user wants. Should be input but currently set to 2
 total_laps=2
