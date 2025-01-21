@@ -72,7 +72,7 @@ elif map_choice==3:
     pygame.draw.polygon(track_surface, (100, 100, 100), [(1290, 3000), (1300, 3000), (1300, 3240), (1290, 3240)])
 
 start_time=pygame.time.get_ticks()
-font=pygame.font.Font(None,24)
+font=pygame.font.Font("font(1).ttf",10)
 
 
 
