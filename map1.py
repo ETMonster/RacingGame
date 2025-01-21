@@ -3,19 +3,20 @@ import math
 from npc_car import trial_npc
 
 
-npc_car1 = trial_npc("red_car.png", [450, 2250], -90, 3, 6, "right", "npc car1", 0,0)
-npc_car2 = trial_npc("red_car.png", [350, 2250], -90, 3, 6, "left", "npc car2",0,0)
+
+npc_car1 = trial_npc("red_car.png", [450, 2250], -90, 3, 6, "right", "Red Car", 0,0)
+npc_car2 = trial_npc("blue_car.png", [350, 2250], -90, 3, 6, "left", "Blue Car",0,0)
 
 def checker_count(car):
     if (car.pos[0]>=280 and car.pos[0]<=520) and (car.pos[1]>=2300 and car.pos[1]<=2310):
         car.checker=car.laps
         print(car.checker)
 
-def lap_checker(car):
+def lap_checker(car, total_laps):
     if (car.pos[0]>=280 and car.pos[0]<520) and (car.pos[1]>=2240 and car.pos[1]<=2250):
         car.laps=car.checker+1
         print(car.laps)
-    if car.laps==3:
+    if car.laps==total_laps+1:
         return True
     else:
         return False
