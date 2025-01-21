@@ -13,8 +13,8 @@ def update_timer(screen, start_time, color, position, font):
 
 def lap_label(screen, position, color, font):
 
-    pygame.draw.rect(screen, (0, 0, 0), (position[0], position[1], 150, 100))
-    pygame.draw.rect(screen, color, (position[0], position[1], 150, 100), 3)
+    pygame.draw.rect(screen, (0, 0, 0), (position[0], position[1], 170, 100))
+    pygame.draw.rect(screen, color, (position[0], position[1], 170, 100), 3)
 
     title_text = "Laps:"
     title_surface = font.render(title_text, True, color)
@@ -23,11 +23,11 @@ def lap_label(screen, position, color, font):
 def update_laps(screen, laps, color, position, font, name, total_laps):
 
     if laps<=total_laps:
-        car_text = name + ": " + str(laps)+"/"+str(total_laps)
+        car_text = name + ":" + str(laps)+"/"+str(total_laps)
         car_surface = font.render(car_text, True, color)
         screen.blit(car_surface, (position[0] , position[1] + 25))  #Display the lap count below the title\
     else:
-        car_text = name + ": " + "FINISHED"
+        car_text = name +":DONE"
         car_surface = font.render(car_text, True, color)
         screen.blit(car_surface, (position[0] , position[1] + 25))  #Display the lap count below the title\
 #requires checkpoint attribute in player car class
