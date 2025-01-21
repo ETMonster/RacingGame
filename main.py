@@ -67,7 +67,7 @@ def update():
             if car.is_player:
                 camera.update_position(car)
 
-    current_race.update_screen(screen, ['map'])
+    current_race.update_screen(screen)
 
 running = True
 while running:

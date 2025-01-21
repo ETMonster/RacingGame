@@ -2,12 +2,19 @@ import pygame
 from constants import *
 
 def map_1():
-    inner_points, outer_points, obstacle_points = [], [], []
+    inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
+    checkpoints.append(pygame.Rect(1480, 800, 240, 30))
+    checkpoints.append(pygame.Rect(1300, 1940, 30, 240))
+    checkpoints.append(pygame.Rect(2700, 2340, 30, 240))
+    checkpoints.append(pygame.Rect(1000, 2600, 30, 240))
+    finish_line = pygame.Rect(280, 2240, 240, 10)
 
+    # filler test
     for y in range(2830, 2600, -10):
         outer_points.append((280, y))
 
     obstacle_points.append([])
+    # obstacle 1
     for y in range(1000, 840, -10):
         obstacle_points[0].append((370, y))
     for x in range(370, 440, 10):
@@ -61,12 +68,12 @@ def map_1():
     center = [1100, 1590]
     x1 = 200
     y1 = 350
-    outer_points += (ellipse_points(center, x1, y1, 1, 0, rotated=True))
+    outer_points += (ellipse_points(center, x1, y1, 1, 0, rotated = True))
     # curve 2 inner (larger ellipse) v
     center = [1100, 1590]
     x1 = 440
     y1 = 590
-    inner_points += (ellipse_points(center, x1, y1, 1, 0, rotated=True))
+    inner_points += (ellipse_points(center, x1, y1, 1, 0, rotated = True))
 
     # straight x section 2
     for x in range(1110, 1910, 10):
@@ -107,13 +114,13 @@ def map_1():
     center = [2700, 1450]
     x1 = 350
     y1 = 490
-    outer_points += (ellipse_points(center, x1, y1, -1, 0, rotated=True))
+    outer_points += (ellipse_points(center, x1, y1, -1, 0, rotated = True))
 
     # curve 3 inner (smaller ellipse) v
     center = [2700, 1450]
     x1 = 110
     y1 = 250
-    inner_points += (ellipse_points(center, x1, y1, -1, 0, rotated=True))
+    inner_points += (ellipse_points(center, x1, y1, -1, 0, rotated = True))
 
     # straight x section 4
     for x in range(2700, 2640, -10):
@@ -124,13 +131,13 @@ def map_1():
     center = [2650, 2140]
     x1 = 110
     y1 = 200
-    outer_points += (ellipse_points(center, x1, y1, 1, 0, rotated=True))
+    outer_points += (ellipse_points(center, x1, y1, 1, 0, rotated = True))
 
     # curve 4 inner (bigger ellipse) v
     center = [2650, 2140]
     x1 = 350
     y1 = 440
-    inner_points += (ellipse_points(center, x1, y1, 1, 0, rotated=True))
+    inner_points += (ellipse_points(center, x1, y1, 1, 0, rotated = True))
 
     # straight x section 5
     for x in range(2650, 3010, 10):
@@ -196,7 +203,9 @@ def map_1():
 
     return {
         'outer': outer_points,
-        'inner': inner_points
+        'inner': inner_points,
+        'obstacle': obstacle_points,
+        'checkpoint': checkpoints,
     }
 def map_2():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
@@ -205,6 +214,7 @@ def map_2():
     checkpoints.append(pygame.Rect(550, 2600, 240, 30))
     checkpoints.append(pygame.Rect(1480, 800, 240, 30))
     checkpoints.append(pygame.Rect(2100, 800, 30, 240))
+    finish_line = pygame.Rect(2250, 110, 10, 240)
 
     # end of straight
     for y in range(840, 590, -10):
@@ -536,6 +546,8 @@ def map_2():
     return {
         'outer': outer_points,
         'inner': inner_points,
+        'obstacle': obstacle_points,
+        'checkpoint': checkpoints
     }
 
 calculate_points = [
@@ -549,6 +561,17 @@ class Map:
 
         self.outer_points = calculate_points[self.id]()['outer']
         self.inner_points = calculate_points[self.id]()['inner']
+        self.obstacle_points = calculate_points[self.id]()['obstacle']
+        self.checkpoints = calculate_points[self.id]()['checkpoint']
+
+        self.wall_segments = []
+        for i in range(len(self.inner_points)):
+            self.wall_segments.append((self.inner_points[i - 1], self.inner_points[i]))
+        for i in range(len(self.outer_points)):
+            self.wall_segments.append((self.outer_points[i - 1], self.outer_points[i]))
+        for i in self.obstacle_points:
+            for j in range(len(i)):
+                self.wall_segments.append((i[j - 1], i[j]))
 
         self.width = abs(max(point[0] for point in self.outer_points)) + abs(min(point[0] for point in self.outer_points))
         self.height = abs(max(point[1] for point in self.outer_points)) + abs(min(point[1] for point in self.outer_points))

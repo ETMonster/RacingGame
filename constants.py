@@ -1,6 +1,7 @@
 import pygame
 import math
 from itertools import combinations
+from screeninfo import get_monitors
 
 class Vector:
     def __init__(self, x = None, y = None):
@@ -147,8 +148,16 @@ def ellipse_points(center, x, y, direction, sort, rotated=False):
     coordinates.sort(key=lambda c: c[1 if rotated else 0], reverse=sort)  # sort by decreasing y value
     return coordinates
 
-WINDOW_WIDTH = 1920
-WINDOW_HEIGHT = 1080
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
+for monitor in get_monitors():
+    if monitor.is_primary:
+        SCREEN_WIDTH = monitor.width
+        SCREEN_HEIGHT = monitor.height
+        break
+
+WINDOW_WIDTH = SCREEN_HEIGHT - 100
+WINDOW_HEIGHT = SCREEN_HEIGHT - 100
 PIXEL_TO_SCREEN_FACTOR = 1.2
 
 MOVEMENT_ZERO_MARGIN = 0.5
