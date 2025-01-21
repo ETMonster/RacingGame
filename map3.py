@@ -28,6 +28,7 @@ checkpoints.append(pygame.Rect(280, 800, 240, 30))
 checkpoints.append(pygame.Rect(2800,1500,30, 240))
 checkpoints.append(pygame.Rect(3650, 2000, 240, 30))
 checkpoints.append(pygame.Rect(4350, 2800, 240, 30))
+finish_line=pygame.Rect(1290, 3000, 10, 240)
 
 
 #end of straight
