@@ -12,11 +12,11 @@ def checker_count(car):
         car.checker=car.laps
         print(car.checker)
 
-def lap_checker(car):
-    if (car.pos[0]>=2250 and car.pos[0]<2260) and (car.pos[1]>=110 and car.pos[1]<=350):
+def lap_checker(car, total_laps):
+    if (car.pos[0]>=280 and car.pos[0]<520) and (car.pos[1]>=2240 and car.pos[1]<=2250):
         car.laps=car.checker+1
         print(car.laps)
-    if car.laps==3:
+    if car.laps==total_laps+1:
         return True
     else:
         return False
