@@ -14,21 +14,21 @@ class Rotation:
 
 class Object:
     def __init__(self, image = None, position = Vector(0, 0), rotation = Rotation(0, 0), collision = False, width = None, height = None):
-        self.image = image
+        self.image = pygame.image.load(image)
         self.position = position
         self.rotation = rotation
         self.collision = collision
 
         if width is None:
-            self.width = image.convert_alpha().get_width() * PIXEL_TO_SCREEN_FACTOR
+            self.width = self.image.convert_alpha().get_width() * PIXEL_TO_SCREEN_FACTOR
         else:
-            self.width = image.convert_alpha().get_width() * width * PIXEL_TO_SCREEN_FACTOR
+            self.width = self.image.convert_alpha().get_width() * width * PIXEL_TO_SCREEN_FACTOR
         if height is None:
-            self.height = image.convert_alpha().get_height() * PIXEL_TO_SCREEN_FACTOR
+            self.height = self.image.convert_alpha().get_height() * PIXEL_TO_SCREEN_FACTOR
         else:
-            self.height = image.convert_alpha().get_height() * height * PIXEL_TO_SCREEN_FACTOR
+            self.height = self.image.convert_alpha().get_height() * height * PIXEL_TO_SCREEN_FACTOR
 
-        self.render_image = image
+        self.render_image = self.image
         self.mask = pygame.mask.from_surface(self.render_image)
         self.corners = [Vector(), Vector(), Vector(), Vector()]
         self.edges = [[Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()]]

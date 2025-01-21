@@ -15,13 +15,13 @@ from maps import *
 
 current_race = Race(
     screen = screen,
-    track = maps[0],
+    track = maps[1],
     is_paused = False,
-    friction = 1,
+    friction = 0.1,
     objects = Race_Objects(
         cars = [
             car.Player(
-                image = pygame.image.load('red_car.png').convert_alpha(), # Car image path
+                image = 'red_car.png', # Car image path
                 position = Vector(x = 0, y = 0), # Position in world
                 rotation = Rotation(radians=0, angle=0),  # The current rotation of the car in radians and angles
                 is_player = True,
@@ -37,28 +37,11 @@ current_race = Race(
                 max_speed = 450, # The maximum velocity
                 collision = True, # Collision
             ),
-            car.Opponent(
-                image=pygame.image.load('red_car.png').convert_alpha(),  # Car image path
-                position=Vector(x=0, y=100),  # Position on screen
-                rotation=Rotation(radians=0, angle=0),  # The current rotation of the car in radians and angles
-                is_player = False,
-                velocity = Vector(x=0, y=0), # Forward velocity (positive if moving forward from the car's point of view, negative if moving backwards from car's point of view)
-                direction= Vector(x=0, y=0), # The direction that the car is currently moving in (-1 to 1) and multiplies by velocity to get new position
-                gas_acceleration=50,  # Acceleration when pressing gas button
-                brake_acceleration=250,  # Acceleration when pressing brake button
-                roll_acceleration=0.98,  # Acceleration when acceleration buttons pressed
-                skid_acceleration=0.96,  # Acceleration when burning out (Target direction + Travel direction > 90)
-                min_turn_radius=30,
-                turn_factor=0.5,  # The rate at which cars turn
-                max_turn_speed=3,  # The maximum turn speed
-                max_speed=50,  # The maximum velocity
-                collision = True,
-            )
         ],
 
         obstacles = [
             Obstacle(
-                image=pygame.image.load('obstacle.png').convert_alpha(),
+                image='obstacle.png',
                 position=Vector(x = -100, y = 0),
                 rotation=Rotation(radians = 0, angle = 0),
                 collision=True,
