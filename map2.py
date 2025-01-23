@@ -4,16 +4,16 @@ from npc_car import trial_npc
 
 from map1 import ellipse_points_x, ellipse_points_y
 
-npc_car1 = trial_npc("red_car.png", [2250, 280], 0, 3, 6, "right", "npc car1", 0,0)
-npc_car2 = trial_npc("red_car.png", [2250, 180], 0, 3, 6, "left", "npc car2",0,0)
+npc_car1 = trial_npc("red_car.png", [3270, 280], 0, 3, 6, "right", "npc car1", 0,0)
+npc_car2 = trial_npc("red_car.png", [3270, 180], 0, 3, 6, "left", "npc car2",0,0)
 
 def checker_count(car):
-    if (car.pos[0]>=2150 and car.pos[0]<=2160) and (car.pos[1]>=110 and car.pos[1]<=350):
+    if (car.pos[0]>=3000 and car.pos[0]<=3010) and (car.pos[1]>=110 and car.pos[1]<=350):
         car.checker=car.laps
         print(car.checker)
 
 def lap_checker(car, total_laps):
-    if (car.pos[0]>=280 and car.pos[0]<520) and (car.pos[1]>=2240 and car.pos[1]<=2250):
+    if (car.pos[0]>=3270 and car.pos[0]<3820) and (car.pos[1]>=2240 and car.pos[1]<=2250):
         car.laps=car.checker+1
         print(car.laps)
     if car.laps==total_laps+1:
