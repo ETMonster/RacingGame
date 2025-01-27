@@ -89,8 +89,8 @@ speed = 3
 music_on = True
 #also initialized in main just added here for clarity
 
-def options(laps, speed, music_on):
-   #arguments are player_car laps attribute. Set attribute to 2 in code mannually
+def options(total_laps, speed, music_on):
+   #arguments are player_car tota_laps attribute. Set attribute to 2 in code mannually
    #total_laps variable in npc branch main file should also be set to 2
    #speed argument is player speed
    #music should be default on
@@ -188,7 +188,7 @@ def options(laps, speed, music_on):
                 if back_button.checkForInput(mouse_pos):
                     print(laps, speed, music_on)
                     main_menu()
-                    #player car laps attribute should be set to laps
+                    #player car total_laps attribute should be set to laps
                     #total_laps (variable in npc's main module) should be set to laps as it is a variable used to decide the # of laps the npc car's drive and important for some of the labels
                     #return the state of music
 
