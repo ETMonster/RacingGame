@@ -4,22 +4,23 @@ from npc_car import trial_npc
 
 
 
-npc_car1 = trial_npc("red_car.png", [450, 2250], -90, 3, 6, "right", "Red Car", 0,0)
-npc_car2 = trial_npc("blue_car.png", [350, 2250], -90, 3, 6, "left", "Blue Car",0,0)
+npc_car1 = trial_npc("red_car.png", [1850, 2650], 180, 3, 6, "right", "Red Car", 0,0)
+npc_car2 = trial_npc("blue_car.png", [1850, 2750], 180, 3, 6, "left", "Blue Car",0,0)
 
 def checker_count(car):
-    if (car.pos[0]>=280 and car.pos[0]<=520) and (car.pos[1]>=2300 and car.pos[1]<=2310):
+    if (car.pos[0]>=1790 and car.pos[0]<=1800) and (car.pos[1]>=2600 and car.pos[1]<=2840):
         car.checker=car.laps
         print(car.checker)
 
 def lap_checker(car, total_laps):
-    if (car.pos[0]>=280 and car.pos[0]<520) and (car.pos[1]>=2240 and car.pos[1]<=2250):
+    if (car.pos[0]>=1840 and car.pos[0]<1850) and (car.pos[1]>=2600 and car.pos[1]<=2840):
         car.laps=car.checker+1
         print(car.laps)
     if car.laps==total_laps+1:
         return True
     else:
         return False
+
 
 
 #ellipse function used in previous week
@@ -61,7 +62,7 @@ checkpoints.append(pygame.Rect(1480, 800, 240, 30))
 checkpoints.append(pygame.Rect(1300, 1940, 30, 240))
 checkpoints.append(pygame.Rect(2700, 2340, 30, 240))
 checkpoints.append(pygame.Rect(1000, 2600, 30, 240))
-finish_line=pygame.Rect(280,2240, 240, 10)
+finish_line=pygame.Rect(1840,2600, 10, 240)
 
 #filler test
 for y in range(2830, 2600,-10):
