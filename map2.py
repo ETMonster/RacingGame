@@ -13,13 +13,14 @@ def checker_count(car):
         print(car.checker)
 
 def lap_checker(car, total_laps):
-    if (car.pos[0]>=3270 and car.pos[0]<3820) and (car.pos[1]>=2240 and car.pos[1]<=2250):
-        car.laps=car.checker+1
+    if (car.pos[0]>=3270 and car.pos[0]<=3280) and (car.pos[1]>=180 and car.pos[1]<=280):
+        car.laps = car.checker + 1
         print(car.laps)
-    if car.laps==total_laps+1:
+    if car.laps == total_laps + 1:
         return True
     else:
         return False
+
 
 inner_points, outer_points, obstacle_points, checkpoints= [],[],[], []
 
@@ -28,7 +29,7 @@ checkpoints.append(pygame.Rect(3900, 3190, 30, 240))
 checkpoints.append(pygame.Rect(550, 2600, 240, 30))
 checkpoints.append(pygame.Rect(1480, 800, 240, 30))
 checkpoints.append(pygame.Rect(2100, 800, 30, 240))
-finish_line=pygame.Rect(2250, 110, 10, 240)
+finish_line=pygame.Rect(3270, 110, 10, 240)
 
 
 #end of straight
