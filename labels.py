@@ -49,3 +49,6 @@ def update_lap_player(car, car_rect, checkpoints, finish_line):
     if pygame.Rect.colliderect(car_rect, finish_line) and (len(car.checkpoints)==len(checkpoints)):
         car.checkpoints.clear()
         car.laps+=1
+
+    if car.laps>car.total_laps:
+        return false
