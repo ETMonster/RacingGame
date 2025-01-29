@@ -2,12 +2,15 @@ import pygame
 import math
 
 import car
+import race
 from car import *
+from game_over import game_over_screen
 from race import *
 from constants import *
 from maps import *
 from labels import *
 
+a=0
 pygame.init()
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -20,6 +23,7 @@ start_time = pygame.time.get_ticks()
 current_race = None
 
 def update(npc_image1, npc_image2):
+    global a
     player_car = None
 
 
@@ -47,45 +51,53 @@ def update(npc_image1, npc_image2):
     car_temp = pygame.transform.rotate(npc_image1, -current_race.objects.cars[1].dir)
 
 
+    current_race.update_screen(screen)
 
     for x in range(1,3):
         current_race.map.checker_count(current_race.objects.cars[x])
         if current_race.map.lap_checker(current_race.objects.cars[x], current_race.objects.cars[0].total_laps):
             current_race.objects.cars[x].speed = 0
             print((pygame.time.get_ticks() - start_time) / 1000)
+    if current_race.objects.cars[1].laps<=current_race.objects.cars[0].total_laps:
+        npc_pos_screen = (
+            (current_race.objects.cars[1].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
+            (current_race.objects.cars[1].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
+        )
+        screen.blit(car_temp, npc_pos_screen)
+    if current_race.objects.cars[2].laps <= current_race.objects.cars[0].total_laps:
+        car_temp2 = pygame.transform.rotate(npc_image2, -current_race.objects.cars[2].dir)
 
-    current_race.update_screen(screen)
+        npc_pos_screen = (
+            (current_race.objects.cars[2].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
+            (current_race.objects.cars[2].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
+        )
+        screen.blit(car_temp2, npc_pos_screen)
     lap_label(screen, (0, 0), (255, 255, 255), font)
     update_timer(screen, start_time, (255, 0, 0), (650, 10), font)
     display_laps(screen, player_car.laps, (255, 255, 255), (10, 50), font, 'Player Car', player_car.total_laps)
     display_laps(screen, current_race.objects.cars[1].laps, (255, 255, 255),(10, 10), font,current_race.objects.cars[1].name, player_car.total_laps)
     display_laps(screen, current_race.objects.cars[2].laps, (255, 255, 255),(10, 30), font,current_race.objects.cars[2].name,  player_car.total_laps)
 
-    npc_pos_screen = (
-        (current_race.objects.cars[1].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2)  ,
-        (current_race.objects.cars[1].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
-    )
-    screen.blit(car_temp, npc_pos_screen)
-
-    car_temp2 = pygame.transform.rotate(npc_image2, -current_race.objects.cars[2].dir)
-
-    npc_pos_screen = (
-        (current_race.objects.cars[2].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
-        (current_race.objects.cars[2].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
-    )
-    screen.blit(car_temp2, npc_pos_screen)
     '''
-    for x in current_race.objects.cars:
-        if x.is_player:
-            print(x.position.x)
-            print(x.position.y)
-            print("player")
-        else:
-            print(x.pos[0])
-            print(x.pos[1])
-            print(x.name)
-    '''
-def start_race(selected_map):
+       for x in current_race.objects.cars:
+           if x.is_player:
+               print(x.position.x)
+               print(x.position.y)
+               print("player")
+           else:
+               print(x.pos[0])
+               print(x.pos[1])
+               print(x.name)
+       '''
+
+    if current_race.objects.cars[1].laps> current_race.objects.cars[0].total_laps:
+        a=update_timer(screen, start_time, (255, 0, 0), (650, 10), font)
+        return False
+    else:
+        return True
+
+
+def start_race(selected_map, selected_laps, selected_speed):
     global current_race
     # Update current_race with the selected map
     current_race = Race(
@@ -112,18 +124,20 @@ def start_race(selected_map):
                     max_speed=450,
                     collision=True,
                 ),
-                car.Opponent("red_car.png", selected_map.npc_pos, selected_map.npc_dir, 8, 6, "left", "Red Car", 0, 0),
-                car.Opponent("blue_car.png", [selected_map.npc_pos[0], selected_map.npc_pos[1] + 100], selected_map.npc_dir, 8, 6, "right", "Blue Car", 0, 0),
+                car.Opponent("red_car.png", selected_map.npc_pos, selected_map.npc_dir, 3+selected_speed, 6, "left", "Red Car", 0, 0),
+                car.Opponent("blue_car.png", [selected_map.npc_pos[0], selected_map.npc_pos[1] + 100], selected_map.npc_dir, 3+selected_speed, 6, "right", "Blue Car", 0, 0),
             ],
             obstacles=[],
         ),
     )
+
 
     npc_image1 = pygame.image.load("red_car.png")
     npc_image1 = pygame.transform.scale(npc_image1, (30, 20))
 
     npc_image2 = pygame.image.load("blue_car.png")
     npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
+    current_race.objects.cars[0].total_laps = selected_laps
 
     # Countdown variables
     countdown_time = pygame.time.get_ticks()
@@ -159,9 +173,12 @@ def start_race(selected_map):
 
         # Once countdown is complete, start the game updates
         if start_game:
-            update(npc_image1, npc_image2)
-
+           if update(npc_image1, npc_image2):
+               pass
+           else:
+               running = False
         pygame.display.flip()
         pygame.time.Clock().tick(FPS)
+    game_over_screen( game_over_screen(screen, current_race.objects.cars[1].laps, a))
 
     pygame.quit()
