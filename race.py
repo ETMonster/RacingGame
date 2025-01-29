@@ -3,6 +3,8 @@ from constants import *
 import car
 import maps
 
+
+
 class Race:
     def __init__(self, screen, track, is_paused, friction, objects):
         self.screen = screen
@@ -63,6 +65,7 @@ class Race:
 
                     #screen.blit(obj.mask.to_surface(), rect.topleft)
                     screen.blit(obj.render_image, rect.topleft) # Blit onto screen
+
 
 class Race_Objects:
     def __init__(self, cars, obstacles):
