@@ -36,6 +36,7 @@ class Player(Car):
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, collision, width, height
         )
 
+
     def last_checkpoint(self, race):
         #Go to
         if len(self.checkpoints) == 0:
