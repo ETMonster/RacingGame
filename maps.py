@@ -5,11 +5,11 @@ import math
 
 def map_1():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
-    checkpoints.append(pygame.Rect(1000, 2600, 30, 240))
-    checkpoints.append(pygame.Rect(1480, 800, 240, 30))
-    checkpoints.append(pygame.Rect(1300, 1940, 30, 240))
-    checkpoints.append(pygame.Rect(2700, 2340, 30, 240))
-    finish_line = pygame.Rect(1840, 2600, 10, 240)
+    checkpoints.append(pygame.Rect(1000, 2600, 30, 240)) #facing left
+    checkpoints.append(pygame.Rect(1480, 800, 240, 30)) #facing down
+    checkpoints.append(pygame.Rect(1300, 1940, 30, 240)) #facing right
+    checkpoints.append(pygame.Rect(2700, 2340, 30, 240)) #facing right
+    finish_line = pygame.Rect(1800, 2600, 30, 240)
 
     # filler test
     for y in range(2830, 2600, -10):
@@ -213,11 +213,11 @@ def map_1():
 def map_2():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
 
-    checkpoints.append(pygame.Rect(3900, 3190, 30, 240))
-    checkpoints.append(pygame.Rect(550, 2600, 240, 30))
-    checkpoints.append(pygame.Rect(1480, 800, 240, 30))
-    checkpoints.append(pygame.Rect(2100, 800, 30, 240))
-    finish_line = pygame.Rect(3270, 110, 10, 240)
+    checkpoints.append(pygame.Rect(3900, 3190, 30, 240)) #facing left
+    checkpoints.append(pygame.Rect(550, 2600, 240, 30)) #facing up
+    checkpoints.append(pygame.Rect(1480, 800, 240, 30)) #facing down
+    checkpoints.append(pygame.Rect(2100, 800, 30, 240)) #facing left
+    finish_line = pygame.Rect(3280, 110, 30, 240)
 
     # end of straight
     for y in range(840, 590, -10):
@@ -558,11 +558,11 @@ def map_2():
 def map_3():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
 
-    checkpoints.append(pygame.Rect(280, 800, 240, 30))
-    checkpoints.append(pygame.Rect(2800, 1500, 30, 240))
-    checkpoints.append(pygame.Rect(3650, 2000, 240, 30))
-    checkpoints.append(pygame.Rect(4350, 2800, 240, 30))
-    finish_line = pygame.Rect(1290, 3000, 10, 240)
+    checkpoints.append(pygame.Rect(280, 800, 240, 30)) #facing up
+    checkpoints.append(pygame.Rect(2800, 1500, 30, 240)) #facing left
+    checkpoints.append(pygame.Rect(3650, 2000, 240, 30)) #facing up
+    checkpoints.append(pygame.Rect(4350, 2800, 240, 30)) #facing down
+    finish_line = pygame.Rect(1290, 3000, 30, 240)
 
     # end of straight
     for y in range(1010, 590, -10):
@@ -1036,7 +1036,7 @@ class Map:
 
         self.outer_points = calculate_points[self.id]()['outer']
         self.inner_points = calculate_points[self.id]()['inner']
-        self.obstacle_points = calculate_points[self.id]()['obstacle']
+        #self.obstacle_points = calculate_points[self.id]()['obstacle']
         self.checkpoints = calculate_points[self.id]()['checkpoint']
         self.finish = calculate_points[self.id]()['finish']
         self.player_pos = player_pos
@@ -1048,9 +1048,9 @@ class Map:
             self.wall_segments.append((self.inner_points[i - 1], self.inner_points[i]))
         for i in range(len(self.outer_points)):
             self.wall_segments.append((self.outer_points[i - 1], self.outer_points[i]))
-        for i in self.obstacle_points:
-            for j in range(len(i)):
-                self.wall_segments.append((i[j - 1], i[j]))
+       # for i in self.obstacle_points:
+            #for j in range(len(i)):
+                #self.wall_segments.append((i[j - 1], i[j]))
 
         self.width = abs(max(point[0] for point in self.outer_points)) + abs(min(point[0] for point in self.outer_points))
         self.height = abs(max(point[1] for point in self.outer_points)) + abs(min(point[1] for point in self.outer_points))
@@ -1086,7 +1086,7 @@ class Map:
             return False
 
 maps = [
-    Map(0, 'images/maps/map_1.png',[1840, 2600, 1790, 2600], [1850,2650 ], [80,1175], 180, (math.radians(180), 180)),
-    Map(1, 'images/maps/map_2.png',[3270, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0))
+    Map(0, 'images/maps/map_1.png',[1800, 2600, 1900, 2600], [1850,2650 ], [80,1175], 180, (math.radians(180), 180)),
+    Map(1, 'images/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0))
     #Map(2, 'images/maps/map_3.png', ),
 ]
