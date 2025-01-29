@@ -4,7 +4,9 @@ from button import Button
 from main import start_race,current_race, screen as SCREEN
 from maps import maps
 
-
+selected_laps = 2
+selected_speed = 3
+music_on = True
 
 #SCREEN = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Menu")
@@ -68,13 +70,13 @@ def map_selection_screen():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if map1_button.checkForInput(mouse_pos):
-                    start_race(maps[0])  # Pass the first map to start_race
+                    start_race(maps[0],selected_laps, selected_speed )  # Pass the first map to start_race
                     return
                 if map2_button.checkForInput(mouse_pos):
-                    start_race(maps[1])  # Pass the second map to start_race
+                    start_race(maps[1], selected_laps, selected_speed)  # Pass the second map to start_race
                     return
                 if map3_button.checkForInput(mouse_pos):
-                    start_race(maps[2])  # Pass the third map to start_race
+                    start_race(maps[2], selected_laps, selected_speed)  # Pass the third map to start_race
                     return
                 if back_button.checkForInput(mouse_pos):
                     main_menu()
@@ -82,22 +84,25 @@ def map_selection_screen():
 
         pygame.display.update()
 
-def options(laps, speed, music_on):
+def options():
+    global selected_laps, selected_speed, music_on  # Make sure to use global variables
 
-    # arguments are player_car total laps attribute. Set attribute to 2 in code mannually
-    # total_laps variable in npc branch main file should also be set to 2
-    # speed argument is player speed
-    # music should be default on
+    laps_plus_button = Button(image=None, pos=(275, 325), text_input="+", font=get_font(75), base_color="White",
+                              hovering_color="Green")
+    laps_minus_button = Button(image=None, pos=(175, 325), text_input="-", font=get_font(75), base_color="White",
+                               hovering_color="Green")
+    speed_plus_button = Button(image=None, pos=(615, 325), text_input="+", font=get_font(75), base_color="White",
+                               hovering_color="Green")
+    speed_minus_button = Button(image=None, pos=(515, 325), text_input="-", font=get_font(75), base_color="White",
+                                hovering_color="Green")
 
-    laps_plus_button = Button(image=None, pos=(275, 325), text_input="+", font=get_font(75), base_color="White", hovering_color="Green")
-    laps_minus_button = Button(image=None, pos=(175, 325), text_input="-", font=get_font(75), base_color="White", hovering_color="Green")
-    speed_plus_button = Button(image=None, pos=(615, 325), text_input="+", font=get_font(75), base_color="White", hovering_color="Green")
-    speed_minus_button = Button(image=None, pos=(515, 325), text_input="-", font=get_font(75), base_color="White", hovering_color="Green")
+    music_yes_button = Button(image=None, pos=(335, 500), text_input="YES", font=get_font(50), base_color="Black",
+                              hovering_color="LightGreen")
+    music_no_button = Button(image=None, pos=(485, 500), text_input="NO", font=get_font(50), base_color="Black",
+                             hovering_color="LightCoral")
 
-    music_yes_button = Button(image=None, pos=(335, 500), text_input="YES", font=get_font(50), base_color="Black", hovering_color="LightGreen")
-    music_no_button = Button(image=None, pos=(485, 500), text_input="NO", font=get_font(50), base_color="Black", hovering_color="LightCoral")
-
-    back_button = Button(image=pygame.image.load("Quit Rect.png"), pos=(400, 650), text_input="BACK", font=get_font(40), base_color="#d7fcd4", hovering_color="White")
+    back_button = Button(image=pygame.image.load("Quit Rect.png"), pos=(400, 650), text_input="BACK", font=get_font(40),
+                         base_color="#d7fcd4", hovering_color="White")
 
     while True:
         SCREEN.blit(BG, (0, 0))
@@ -106,13 +111,13 @@ def options(laps, speed, music_on):
         OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 100))
         SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)
 
-        laps_text = get_font(40).render("Laps:" + str(laps), True, "Black")
+        laps_text = get_font(40).render("Laps:" + str(selected_laps), True, "Black")
         laps_rect = pygame.Rect(100, 200, 250, 50)
         pygame.draw.rect(SCREEN, "White", laps_rect)
         laps_text_rect = laps_text.get_rect(center=laps_rect.center)
         SCREEN.blit(laps_text, laps_text_rect)
 
-        speed_text = get_font(40).render("Speed:" + str(speed), True, "Black")
+        speed_text = get_font(40).render("Speed:" + str(selected_speed), True, "Black")
         speed_rect = pygame.Rect(425, 200, 300, 50)
         pygame.draw.rect(SCREEN, "White", speed_rect)
         speed_text_rect = speed_text.get_rect(center=speed_rect.center)
@@ -154,29 +159,25 @@ def options(laps, speed, music_on):
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if laps_plus_button.checkForInput(mouse_pos) and laps < 5:
-                    laps += 1
-                if laps_minus_button.checkForInput(mouse_pos) and laps > 1:
-                    laps -= 1
-                if speed_plus_button.checkForInput(mouse_pos) and speed < 5:
-                    speed += 1
-                if speed_minus_button.checkForInput(mouse_pos) and speed > 1:
-                    speed -= 1
+                if laps_plus_button.checkForInput(mouse_pos) and selected_laps < 5:
+                    selected_laps += 1
+                if laps_minus_button.checkForInput(mouse_pos) and selected_laps > 1:
+                    selected_laps -= 1
+                if speed_plus_button.checkForInput(mouse_pos) and selected_speed < 5:
+                    selected_speed += 1
+                if speed_minus_button.checkForInput(mouse_pos) and selected_speed > 1:
+                    selected_speed -= 1
                 if music_yes_button.checkForInput(mouse_pos):
                     music_on = True
                 if music_no_button.checkForInput(mouse_pos):
                     music_on = False
                 if back_button.checkForInput(mouse_pos):
-                    current_race.objects.cars[0]=laps
-
                     main_menu()
-                    #player car total laps attribute should be set to laps
-                    #total_laps (variable in npc's main module) should be set to laps as it is a variable used to decide the # of laps the npc car's drive and important for some of the labels
-                    #return the state of music
-
-                    return laps, speed, music_on
+                    return
 
         pygame.display.update()
+
+
 
 def main_menu():
     while True:
@@ -207,7 +208,7 @@ def main_menu():
                 if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
                     map_selection_screen()
                 if OPTIONS_BUTTON.checkForInput(MENU_MOUSE_POS):
-                    options(laps=2, speed=3, music_on=True)
+                    options()
                 if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
                     pygame.quit()
 
