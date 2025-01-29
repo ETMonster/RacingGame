@@ -1,17 +1,13 @@
 import pygame
 import sys
 from button import Button
-from menu import main_menu, get_font
-from main import screen
 
 pygame.init()
 
 
+def get_font(size):
+    return pygame.font.Font("font(1).ttf", size)
 
-#arguments needed
-#player laps
-#player time
-#screen to blit on
 
 def game_over_screen(screen, laps, time):
 
@@ -27,7 +23,7 @@ def game_over_screen(screen, laps, time):
         screen.blit(game_over_text, game_over_rect)
 
         #laps and time text
-        laps_message="You ran %d laps!" % laps
+        laps_message="You ran %d laps!" % (laps-1)
         time_message="Your time: %.2f seconds!" % time
 
         #blitting
@@ -72,7 +68,8 @@ def game_over_screen(screen, laps, time):
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if main_menu_button.checkForInput(mouse_pos):
-                   main_menu()
+                    from menu import main_menu
+                    main_menu()
 
                 if quit_button.checkForInput(mouse_pos):
                     pygame.quit()
@@ -81,4 +78,3 @@ def game_over_screen(screen, laps, time):
         pygame.display.update()
 
 
-game_over_screen(screen, player, time)
