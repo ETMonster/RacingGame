@@ -89,7 +89,7 @@ def update(npc_image1, npc_image2):
                print(x.pos[1])
                print(x.name)
        '''
-
+    #CHANGE current_race.objects.cars[1].laps TO current_race.objects.cars[0].laps
     if current_race.objects.cars[1].laps> current_race.objects.cars[0].total_laps:
         a=update_timer(screen, start_time, (255, 0, 0), (650, 10), font)
         return False
