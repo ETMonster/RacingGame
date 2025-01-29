@@ -1,6 +1,5 @@
 import pygame
 import math
-
 import car
 import race
 from car import *
@@ -10,20 +9,19 @@ from constants import *
 from maps import *
 from labels import *
 
-a=0
+
 pygame.init()
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 pygame.display.set_caption('Racing Prototype')
-
 clock = pygame.time.Clock()
 font = pygame.font.Font("font(1).ttf", 10)
-start_time = pygame.time.get_ticks()
 
 current_race = None
 
-def update(npc_image1, npc_image2):
-    global a
+
+
+def update(npc_image1, npc_image2, start_time):
     player_car = None
 
 
@@ -77,28 +75,37 @@ def update(npc_image1, npc_image2):
     display_laps(screen, player_car.laps, (255, 255, 255), (10, 50), font, 'Player Car', player_car.total_laps)
     display_laps(screen, current_race.objects.cars[1].laps, (255, 255, 255),(10, 10), font,current_race.objects.cars[1].name, player_car.total_laps)
     display_laps(screen, current_race.objects.cars[2].laps, (255, 255, 255),(10, 30), font,current_race.objects.cars[2].name,  player_car.total_laps)
+    print( current_race.objects.cars[0].position.x)
+    print(current_race.objects.cars[0].position.y)
+    print("asd")
 
-    '''
-       for x in current_race.objects.cars:
-           if x.is_player:
-               print(x.position.x)
-               print(x.position.y)
-               print("player")
-           else:
-               print(x.pos[0])
-               print(x.pos[1])
-               print(x.name)
-       '''
-    #CHANGE current_race.objects.cars[1].laps TO current_race.objects.cars[0].laps
+    #REPLACE current_race.objects.cars[1].laps with current_race.objects.cars[0].laps
     if current_race.objects.cars[1].laps> current_race.objects.cars[0].total_laps:
-        a=update_timer(screen, start_time, (255, 0, 0), (650, 10), font)
+        current_race.objects.cars[1].speed=0
+        current_race.objects.cars[2].speed = 0
+        if current_race.map.id==0:
+            current_race.objects.cars[1].pos = [1850, 2650]
+            current_race.objects.cars[2].pos = [1850, 2750]
+        if current_race.map.id==1:
+            print("reset")
+            current_race.objects.cars[1].pos = [3270, 150]
+            current_race.objects.cars[2].pos = [3270, 250]
         return False
     else:
         return True
 
 
-def start_race(selected_map, selected_laps, selected_speed):
+def start_race(selected_map, selected_laps, selected_speed, music_on):
     global current_race
+
+
+    start_time=pygame.time.get_ticks()
+    if music_on:
+        pygame.mixer.init()
+        pygame.mixer.music.load(selected_map.music)
+        pygame.mixer.music.set_volume(1)
+        pygame.mixer.music.play(-1)
+
     # Update current_race with the selected map
     current_race = Race(
         screen=screen,
@@ -124,8 +131,8 @@ def start_race(selected_map, selected_laps, selected_speed):
                     max_speed=450,
                     collision=True,
                 ),
-                car.Opponent("red_car.png", selected_map.npc_pos, selected_map.npc_dir, 3+selected_speed, 6, "left", "Red Car", 0, 0),
-                car.Opponent("blue_car.png", [selected_map.npc_pos[0], selected_map.npc_pos[1] + 100], selected_map.npc_dir, 3+selected_speed, 6, "right", "Blue Car", 0, 0),
+                car.Opponent("red_car.png", selected_map.npc_pos, selected_map.npc_dir, 3+selected_speed, 6, selected_map.red_bias, "Red Car", 0, 0),
+                car.Opponent("blue_car.png", [selected_map.npc_pos[0], selected_map.npc_pos[1] + 100], selected_map.npc_dir, 3+selected_speed, 6, selected_map.blue_bias, "Blue Car", 0, 0),
             ],
             obstacles=[],
         ),
@@ -144,7 +151,6 @@ def start_race(selected_map, selected_laps, selected_speed):
     countdown_font = pygame.font.Font("font(1).ttf", 75)
     countdown_text = "3"
     start_game = False
-
     running = True
     while running:
         screen.fill((80, 80, 80))
@@ -152,6 +158,7 @@ def start_race(selected_map, selected_laps, selected_speed):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                pygame.quit()
 
         # Countdown logic
         elapsed_time = pygame.time.get_ticks() - countdown_time
@@ -164,21 +171,21 @@ def start_race(selected_map, selected_laps, selected_speed):
         elif elapsed_time >= 3000:
             countdown_text = ""
             start_game = True
-
-        # Render countdown text if present
         if countdown_text:
             countdown_surface = countdown_font.render(countdown_text, True, (255, 0, 0))
             countdown_rect = countdown_surface.get_rect(center=(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2))
             screen.blit(countdown_surface, countdown_rect)
 
-        # Once countdown is complete, start the game updates
+
         if start_game:
-           if update(npc_image1, npc_image2):
+           if update(npc_image1, npc_image2, (start_time+3000)):
                pass
            else:
                running = False
         pygame.display.flip()
         pygame.time.Clock().tick(FPS)
-    game_over_screen( game_over_screen(screen, current_race.objects.cars[1].laps, a))
+
+    display_time=(pygame.time.get_ticks()-(start_time+3000))/1000
+    game_over_screen( game_over_screen(screen, current_race.objects.cars[1].laps, display_time))
 
     pygame.quit()
