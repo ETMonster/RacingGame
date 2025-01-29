@@ -1,7 +1,7 @@
 import pygame
 import sys
 from button import Button
-from main import start_race,current_race, screen as SCREEN
+from main import start_race, screen as SCREEN
 from maps import maps
 
 selected_laps = 2
@@ -27,7 +27,7 @@ def map_selection_screen():
 
     map1_img = pygame.image.load("map1overlay.png")
     map2_img = pygame.image.load("map2overlay.png")
-    map3_img = pygame.image.load("logoimagecorner.png")
+    map3_img = pygame.image.load("map3overlay.png")
 
     map1_img = pygame.transform.scale(map1_img, (300, 200))
     map2_img = pygame.transform.scale(map2_img, (300, 200))
@@ -70,7 +70,7 @@ def map_selection_screen():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if map1_button.checkForInput(mouse_pos):
-                    start_race(maps[0],selected_laps, selected_speed, music_on )  # Pass the first map to start_race
+                    start_race(maps[0],selected_laps, selected_speed, music_on)  # Pass the first map to start_race
                     return
                 if map2_button.checkForInput(mouse_pos):
                     start_race(maps[1], selected_laps, selected_speed, music_on)  # Pass the second map to start_race
