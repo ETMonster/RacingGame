@@ -70,13 +70,13 @@ def map_selection_screen():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if map1_button.checkForInput(mouse_pos):
-                    start_race(maps[0],selected_laps, selected_speed )  # Pass the first map to start_race
+                    start_race(maps[0],selected_laps, selected_speed, music_on )  # Pass the first map to start_race
                     return
                 if map2_button.checkForInput(mouse_pos):
-                    start_race(maps[1], selected_laps, selected_speed)  # Pass the second map to start_race
+                    start_race(maps[1], selected_laps, selected_speed, music_on)  # Pass the second map to start_race
                     return
                 if map3_button.checkForInput(mouse_pos):
-                    start_race(maps[2], selected_laps, selected_speed)  # Pass the third map to start_race
+                    start_race(maps[2], selected_laps, selected_speed, music_on)  # Pass the third map to start_race
                     return
                 if back_button.checkForInput(mouse_pos):
                     main_menu()
@@ -169,8 +169,10 @@ def options():
                     selected_speed -= 1
                 if music_yes_button.checkForInput(mouse_pos):
                     music_on = True
+                    pygame.mixer.music.play(-1)
                 if music_no_button.checkForInput(mouse_pos):
                     music_on = False
+                    pygame.mixer.music.stop()
                 if back_button.checkForInput(mouse_pos):
                     main_menu()
                     return
@@ -180,6 +182,16 @@ def options():
 
 
 def main_menu():
+    global music_on
+
+
+    pygame.mixer.init()
+    pygame.mixer.music.load("Lobby_Music.mp3")  #
+    pygame.mixer.music.set_volume(1)
+
+    if music_on:
+        pygame.mixer.music.play(-1)
+
     while True:
         SCREEN.blit(BG, (0, 0))
 
