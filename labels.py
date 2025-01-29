@@ -7,6 +7,7 @@ def update_timer(screen, start_time, color, position, font):
     #blit the timer
     timer_surface=font.render(timer_text, True, color)
     screen.blit(timer_surface, position)
+    return time
 
 def lap_label(screen, position, color, font):
     pygame.draw.rect(screen, (0, 0, 0), (position[0], position[1], 170, 100))
