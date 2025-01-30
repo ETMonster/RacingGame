@@ -142,7 +142,6 @@ def start_race(selected_map, selected_laps, selected_speed, music_on):
 
     npc_image2 = pygame.image.load("assets/blue_car.png")
     npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
-    current_race.objects.cars[0].total_laps = selected_laps
 
     # Countdown variables
     countdown_time = pygame.time.get_ticks()
