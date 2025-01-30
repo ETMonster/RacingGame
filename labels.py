@@ -33,7 +33,6 @@ def display_laps(screen, laps, color, position, font, name, total_laps):
 #checkpoints is list of rect
 #finish line is rect
 def update_lap_player(car, car_rect, checkpoints, finish_line):
-    last_checkpoint=0
     for x in range(len(checkpoints)):
 
         collide=pygame.Rect.colliderect(car_rect, checkpoints[x])
@@ -41,9 +40,7 @@ def update_lap_player(car, car_rect, checkpoints, finish_line):
         if collide and (x not in car.checkpoints):
             print('Collided!')
             #check to see if car is passing the checkpoints in order
-            if x==last_checkpoint:
-                car.checkpoints.append(x)
-                last_checkpoint+=1
+             car.checkpoints.append(x)
 
         #if car is colliding with finish line and has went through all the checkpoints
     if pygame.Rect.colliderect(car_rect, finish_line) and (len(car.checkpoints)==len(checkpoints)):
