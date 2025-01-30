@@ -45,16 +45,16 @@ def update(npc_image1, npc_image2, start_time):
 
         for x in range(1, 3):
             current_race.map.checker_count(current_race.objects.cars[x])
-            if current_race.map.lap_checker(current_race.objects.cars[x], current_race.objects.cars[0].total_laps):
+            if current_race.map.lap_checker(current_race.objects.cars[x], current_race.total_laps):
                 current_race.objects.cars[x].speed = 0
                 print((pygame.time.get_ticks() - start_time) / 1000)
-        if current_race.objects.cars[1].laps <= current_race.objects.cars[0].total_laps:
+        if current_race.objects.cars[1].laps <= current_race.total_laps:
             npc_pos_screen = (
                 (current_race.objects.cars[1].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
                 (current_race.objects.cars[1].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
             )
             screen.blit(car_temp, npc_pos_screen)
-        if current_race.objects.cars[2].laps <= current_race.objects.cars[0].total_laps:
+        if current_race.objects.cars[2].laps <= current_race.total_laps:
             car_temp2 = pygame.transform.rotate(npc_image2, -current_race.objects.cars[2].dir)
 
             npc_pos_screen = (
@@ -135,7 +135,6 @@ def start_race(selected_map, selected_laps, selected_speed, music_on, pause_menu
 
     npc_image2 = pygame.image.load("assets/blue_car.png")
     npc_image2 = pygame.transform.scale(npc_image2, (30, 20))
-    current_race.objects.cars[0].total_laps = selected_laps
 
     # Countdown variables
     countdown_time = pygame.time.get_ticks()

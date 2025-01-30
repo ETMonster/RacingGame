@@ -559,7 +559,7 @@ def map_3():
     checkpoints.append(pygame.Rect(2800, 1500, 30, 240)) #facing left
     checkpoints.append(pygame.Rect(3650, 2000, 240, 30)) #facing up
     checkpoints.append(pygame.Rect(4350, 2800, 240, 30)) #facing down
-    finish_line = pygame.Rect(1290, 3000, 30, 240)
+    finish_line = pygame.Rect(1020, 3000, 30, 240)
 
     # end of straight
     for y in range(1010, 590, -10):
