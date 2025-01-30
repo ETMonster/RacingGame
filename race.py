@@ -18,20 +18,23 @@ class Race:
 
     def update_screen(self, screen, debug = []):
         if self.map.image is not None:
-            map_rect = pygame.Rect(
-                (self.map.image.get_width() // 2) + camera.position.x,
-                (self.map.image.get_height() // 2) + camera.position.y,
-                WINDOW_WIDTH, WINDOW_HEIGHT
-            )
+            try:
+                map_rect = pygame.Rect(
+                    (self.map.image.get_width() // 2) + camera.position.x,
+                    (self.map.image.get_height() // 2) + camera.position.y,
+                    WINDOW_WIDTH, WINDOW_HEIGHT
+                )
 
-            map_subsurface = self.map.image.subsurface(map_rect)
-            map_rect.center = world_to_screen(
-                x=camera.position.x + (WINDOW_WIDTH // 2),
-                y=camera.position.y + (WINDOW_HEIGHT // 2),
-                return_tuple=True
-            )
+                map_subsurface = self.map.image.subsurface(map_rect)
+                map_rect.center = world_to_screen(
+                    x=camera.position.x + (WINDOW_WIDTH // 2),
+                    y=camera.position.y + (WINDOW_HEIGHT // 2),
+                    return_tuple=True
+                )
 
-            screen.blit(map_subsurface, map_rect.topleft)
+                screen.blit(map_subsurface, map_rect.topleft)
+            except pygame.error as err:
+                print(err)
 
         for x in debug:
             if x == 'map':
@@ -65,7 +68,6 @@ class Race:
                     #screen.blit(obj.mask.to_surface(), rect.topleft)
                     screen.blit(obj.render_image, rect.topleft) # Blit onto screen
 
-
 class Race_Objects:
     def __init__(self, cars, obstacles):
         self.cars = cars
@@ -76,5 +78,3 @@ class Race_Objects:
             'cars': self.cars,
             'obstacles': self.obstacles,
         }
-
-current_race = None

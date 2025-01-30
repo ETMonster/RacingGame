@@ -4,14 +4,12 @@ from button import Button
 
 pygame.init()
 
-
 def get_font(size):
-    return pygame.font.Font("font(1).ttf", size)
+    return pygame.font.Font("assets/font(1).ttf", size)
 
-
-def game_over_screen(screen, laps, time):
+def game_over_screen(screen, laps, time, position = 1):
     screen.fill((0, 0, 0))
-    BG = pygame.image.load("Background.png")
+    BG = pygame.image.load("assets/Background.png")
 
     while True:
         #blit backgroumd
@@ -23,34 +21,39 @@ def game_over_screen(screen, laps, time):
         screen.blit(game_over_text, game_over_rect)
 
         #laps and time text
-        laps_message="You ran %d laps!" % (laps-1)
+        laps_message="You ran %d laps!" % laps
         time_message="Your time: %.2f seconds!" % time
+        postion_message= f'#{position}'
+
 
         #blitting
         laps_text=get_font(30).render(laps_message, True, "White")
         time_text=get_font(30).render(time_message, True, "White")
+        position_text=get_font(80).render(postion_message, True, (255, 215, 0) if position == 1 else (192, 192, 192) if position == 2 else (206, 137, 70))
 
         laps_rect=laps_text.get_rect(center=(400, 200))
         time_rect=time_text.get_rect(center=(400, 275))
+        position_rect=position_text.get_rect(center=(400, 400))
 
         screen.blit(laps_text, laps_rect)
         screen.blit(time_text, time_rect)
-        options=pygame.image.load("Options Rect.png")
+        screen.blit(position_text, position_rect)
+        options=pygame.image.load("assets/Options Rect.png")
         pygame.transform.scale(options,(200,100))
         #buttons
         main_menu_button = Button(
             image=options,
-            pos=(400, 450),
+            pos=(400, 550),
             text_input="MAIN MENU",
             font=get_font(40),
             base_color="#d7fcd4",
             hovering_color="White",
         )
-        quit_image=pygame.image.load("Quit Rect.png")
+        quit_image=pygame.image.load("assets/Quit Rect.png")
         pygame.transform.scale(quit_image, (200, 100))
         quit_button = Button(
             image=quit_image,
-            pos=(400, 600),
+            pos=(400, 700),
             text_input="QUIT",
             font=get_font(40),
             base_color="#d7fcd4",

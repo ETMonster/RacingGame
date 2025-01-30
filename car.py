@@ -24,8 +24,9 @@ class Car(Object):
         self.max_turn_speed = max_turn_speed
         self.max_speed = max_speed
 
-        self.laps = 0
+        self.laps = 1
         self.checkpoints = []
+        self.final_time = 0
 
 class Player(Car):
     def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
@@ -36,14 +37,23 @@ class Player(Car):
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, collision, width, height
         )
 
-    def lap_checker(self, race):
+    def update_laps(self, race):
+        rect = pygame.Rect(self.position.x, self.position.y, self.render_image.get_width(), self.render_image.get_height())
 
+        for checkpoint in race.map.checkpoints:
+            if rect.colliderect(checkpoint):
+                if checkpoint not in self.checkpoints:
+                    self.checkpoints.append(checkpoint)
 
-    def last_checkpoint(self, race):
-        #Go to
-        if len(self.checkpoints) == 0:
-            pass
-        #pass
+        if rect.colliderect(race.map.finish):
+            if self.checkpoints == race.map.checkpoints:
+                self.laps += 1
+
+            self.checkpoints.clear()
+
+        if self.laps > race.total_laps:
+            self.final_time = race.race_time
+            race.is_paused = True
 
     def update_rotation(self, delta_time, current_race):
         keys = pygame.key.get_pressed()
@@ -54,13 +64,13 @@ class Player(Car):
         turn_speed = math.sqrt(self.velocity.x ** 2 + self.velocity.y ** 2) / turn_radius if turn_radius > 0 else 0
 
         # Get input
-        if keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]:
+        if (keys[pygame.K_LEFT] and keys[pygame.K_RIGHT]) or (keys[pygame.K_a] and keys[pygame.K_d]):
             pass
-        elif keys[pygame.K_LEFT]:
+        elif keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rotation.radians -= turn_speed * delta_time
             if self.rotation.radians < 0:
                 self.rotation.radians = 2 * math.pi
-        elif keys[pygame.K_RIGHT]:
+        elif keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.rotation.radians += turn_speed * delta_time
             if self.rotation.radians > 2 * math.pi:
                 self.rotation.radians = 0
@@ -89,16 +99,16 @@ class Player(Car):
     def update_position(self, delta_time, current_race):
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_UP] and keys[pygame.K_DOWN]:
+        if (keys[pygame.K_UP] and keys[pygame.K_DOWN]) or (keys[pygame.K_w] and keys[pygame.K_s]):
             pass
-        elif keys[pygame.K_UP]:
+        elif keys[pygame.K_UP] or keys[pygame.K_w]:
             if self.velocity.x > 0 and self.velocity.y > 0: # Check if moving forward
                 self.velocity.x += self.gas_acceleration * delta_time
                 self.velocity.y += self.gas_acceleration * delta_time
             else: # Is moving backwards
                 self.velocity.x += self.brake_acceleration * delta_time
                 self.velocity.y += self.brake_acceleration * delta_time
-        elif keys[pygame.K_DOWN]:
+        elif keys[pygame.K_DOWN] or keys[pygame.K_d]:
             if self.velocity.x < 0 and self.velocity.y < 0: # Check if moving backwards
                 self.velocity.x -= self.gas_acceleration * delta_time
                 self.velocity.y -= self.gas_acceleration * delta_time

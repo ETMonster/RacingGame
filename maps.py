@@ -2,7 +2,6 @@ import pygame
 from constants import *
 import math
 
-
 def map_1():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
     checkpoints.append(pygame.Rect(1000, 2600, 30, 240)) #facing left
@@ -1020,7 +1019,6 @@ def map_3():
         'finish': finish_line
     }
 
-
 calculate_points = [
     map_1, map_2, map_3
 ]
@@ -1034,9 +1032,20 @@ class Map:
 
         self.outer_points = calculate_points[self.id]()['outer']
         self.inner_points = calculate_points[self.id]()['inner']
-        #self.obstacle_points = calculate_points[self.id]()['obstacle']
-        self.checkpoints = calculate_points[self.id]()['checkpoint']
+
+        self.width = abs(max(point[0] for point in self.outer_points)) + abs(min(point[0] for point in self.outer_points))
+        self.height = abs(max(point[1] for point in self.outer_points)) + abs(min(point[1] for point in self.outer_points))
+
+        self.checkpoints = calculate_points[self.id]()['checkpoint'] #Checkpoint and finish have to be converted to world position from image position bc only Ai uses outer/inner points while player doesnt
         self.finish = calculate_points[self.id]()['finish']
+
+        for checkpoint in self.checkpoints:
+            checkpoint.x = checkpoint.x - (self.width // 2)
+            checkpoint.y = checkpoint.y - (self.height // 2)
+
+        self.finish.x = self.finish.x - (self.width // 2)
+        self.finish.y = self.finish.y - (self.height // 2)
+
         self.player_pos = player_pos
         self.player_rotation = player_rotation
         self.npc_dir = npc_dir
@@ -1049,12 +1058,6 @@ class Map:
             self.wall_segments.append((self.inner_points[i - 1], self.inner_points[i]))
         for i in range(len(self.outer_points)):
             self.wall_segments.append((self.outer_points[i - 1], self.outer_points[i]))
-       # for i in self.obstacle_points:
-            #for j in range(len(i)):
-                #self.wall_segments.append((i[j - 1], i[j]))
-
-        self.width = abs(max(point[0] for point in self.outer_points)) + abs(min(point[0] for point in self.outer_points))
-        self.height = abs(max(point[1] for point in self.outer_points)) + abs(min(point[1] for point in self.outer_points))
 
         self.surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
         self.outer_polygons_surface = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
@@ -1076,20 +1079,18 @@ class Map:
         if (self.start_pos[2] <= npc_car.pos[0] <= (self.start_pos[2] + 20)) and (
                 self.start_pos[3] <= npc_car.pos[1] <= (self.start_pos[3] + 240)):
             npc_car.checker=npc_car.laps
-            print(npc_car.checker)
 
     def lap_checker(self, npc_car, total_laps):
         if (self.start_pos[0] <= npc_car.pos[0] < (self.start_pos[0] + 20)) and (
                 self.start_pos[1] <= npc_car.pos[1] <= (self.start_pos[1] + 240)):
             npc_car.laps=npc_car.checker+1
-            print(npc_car.laps)
         if npc_car.laps==total_laps+1:
             return True
         else:
             return False
 
 maps = [
-    Map(0, 'images/maps/map_2.png',[1790, 2600, 1900, 2600], [1850,2650], [80,1175], 180, (math.radians(180), 180), "assets/Map1_Music.mp3", "right", "left"),
+    Map(0, 'images/maps/map_1.png',[1790, 2600, 1900, 2600], [1850, 2650], [80, 1175], 180, (math.radians(180), 180), "assets/Map1_Music.mp3", "right", "left"),
     Map(1, 'images/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0), "assets/Map2_Music.mp3", "left", "right"),
     Map(2, 'images/maps/map_3.png', [1020, 3000, 1200, 3000], [1050, 3070], [-1382,1187], 180, (math.radians(180), 180), "assets/Map3_Music.mp3","right", "left"),
 ]

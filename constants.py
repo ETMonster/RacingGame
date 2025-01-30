@@ -31,31 +31,6 @@ class Object:
 
         self.render_image = self.image
         self.mask = pygame.mask.from_surface(self.render_image)
-        self.corners = [Vector(), Vector(), Vector(), Vector()]
-        self.edges = [[Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()], [Vector(), Vector()]]
-
-    def update_attributes(self):
-        self.corners[0] = Vector(-self.width / 2, -self.height / 2)
-        self.corners[1] = Vector(self.width / 2, -self.height / 2)
-        self.corners[2] = Vector(self.width / 2, self.height / 2)
-        self.corners[3] = Vector(-self.width / 2, self.height / 2)
-
-        for corner in self.corners:
-            prev_corner = Vector(corner.x, corner.y)
-
-            corner.x = prev_corner.x * math.cos(self.rotation.radians) - prev_corner.y * math.sin(self.rotation.radians)
-            corner.y = prev_corner.x * math.sin(self.rotation.radians) + prev_corner.y * math.cos(self.rotation.radians)
-
-            corner.x += self.position.x
-            corner.y += self.position.y
-
-        self.edges.clear()
-        self.edges = [edge for edge in list(combinations(self.corners, 2))]
-
-        distances = [[edge, math.sqrt((edge[1].x - edge[0].x)**2 + (edge[1].y - edge[0].y)**2)] for edge in self.edges]
-        distances.sort(key = lambda x: x[1])
-
-        self.edges = [edge[0] for edge in distances[:-2]]
 
     def check_collision(self, race, delta_position = None):
         offset = (-(delta_position.x + (race.map.width // 2)), -(delta_position.y + (race.map.height // 2)))
@@ -84,31 +59,6 @@ class Object:
                         }
 
         return None
-
-    def debug(self, parameters = None, current_race = None):
-
-        for parameter in parameters:
-            if parameter == 'corners':
-                for corner in self.corners:
-                    try:
-                        current_race.draw_image(pygame.image.load('circle.png'), pygame.Rect(corner.y, corner.x, 1, 1))
-                    except Exception as e:
-                        print(e)
-
-            if parameter == 'edges':
-                for edge in self.edges:
-                    try:
-                        pygame.draw.line(
-                            current_race.screen,
-                            (0, 255, 0),
-                            world_to_screen(x = edge[0].x, y = edge[0].y, return_tuple = True),
-                            world_to_screen(x = edge[1].x, y = edge[1].y, return_tuple = True),
-                        )
-                    except Exception as e:
-                        print(e)
-            if parameter == 'track':
-                pygame.draw.polygon(current_race.screen, (255, 255, 255), current_race.track.outer_points)
-                pygame.draw.polygon(current_race.screen, (50, 50, 50), current_race.track.inner_points)
 
 class Obstacle(Object):
     def __init__(self, image = None, position = Vector(0, 0), rotation = Rotation(0, 0), collision = False, width = None, height = None):

@@ -4,32 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0e8c829f-8840-4923-a556-a1327bbde4fd" name="Changes" comment="Working on collision">
-      <change afterPath="$PROJECT_DIR$/images/maps/map_3.png" afterDir="false" />
+    <list default="true" id="0e8c829f-8840-4923-a556-a1327bbde4fd" name="Changes" comment="Commit">
+      <change afterPath="$PROJECT_DIR$/images/maps/map_1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/test.md" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/car.py" beforeDir="false" afterPath="$PROJECT_DIR$/car.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icons/Carrot (32 x 32).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icons/Cherry (32 x 32).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icons/Cop (32 x 32).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icons/Lemon (32 x 32).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/icons/Slime (32 x 32).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Desert_details (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Desert_road (64 x 64).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Highway_road (96 x 64).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Highway_water_animation (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Highway_water_color (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Summer_details (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Summer_road (64 x 64).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Winter_details (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/levels/Winter_road (64 x 64).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/props/Misc_props (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/props/Road_markings (16 x 16).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Damage_indicator (8 x 8).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Fuel_bar (16 x 56).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Main_UI (32 x 176).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Player_arrow_indicator (8 x 8).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Race_progress (8 x 8).png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/ui/Speed_indicator_numbers (8 x 8).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game_over.py" beforeDir="false" afterPath="$PROJECT_DIR$/game_over.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cars/NPC_cars (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cars/Player_blue (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cars/Player_green (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cars/Player_red (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/cars/Player_yellow (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/circle.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/labels.py" beforeDir="false" afterPath="$PROJECT_DIR$/labels.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maps.py" beforeDir="false" afterPath="$PROJECT_DIR$/maps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
@@ -99,7 +87,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "final",
-    "last_opened_file_path": "C:/Users/brett/PycharmProjects/RacingGame/menu.py",
+    "last_opened_file_path": "C:/Users/brett/PycharmProjects/RacingGame/images/maps",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -246,7 +234,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733844014302</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Commit">
+      <option name="closed" value="true" />
+      <created>1738205171664</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1738205171664</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -266,24 +262,14 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added basic collision" />
     <MESSAGE value="Working on collision" />
-    <option name="LAST_COMMIT_MESSAGE" value="Working on collision" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/maps.py</url>
-          <line>1091</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/RacingGame$maps.coverage" NAME="maps Coverage Results" MODIFIED="1738191987014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RacingGame$main.coverage" NAME="main Coverage Results" MODIFIED="1738190760009" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/RacingGame$car.coverage" NAME="car Coverage Results" MODIFIED="1731339240550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/RacingGame$menu.coverage" NAME="menu Coverage Results" MODIFIED="1738191959311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/RacingGame$final.coverage" NAME="final Coverage Results" MODIFIED="1738204095090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/RacingGame$final.coverage" NAME="final Coverage Results" MODIFIED="1738218028566" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>

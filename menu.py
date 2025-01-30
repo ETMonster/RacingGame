@@ -11,7 +11,7 @@ music_on = True
 #SCREEN = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("assets/background.png")
+BG = pygame.image.load("assets/Background.png")
 LOGO = pygame.image.load("assets/logoimagecorner.png")
 LOGO = pygame.transform.scale(LOGO, (135, 135))
 
@@ -22,7 +22,7 @@ def get_font(size):
     return pygame.font.Font("assets/font(1).ttf", size)
 
 def map_selection_screen():
-    BG = pygame.image.load("assets/background.png")
+    BG = pygame.image.load("assets/Background.png")
     BG = pygame.transform.scale(BG, (800, 800))
 
     map1_img = pygame.image.load("assets/map1overlay.png")
@@ -70,13 +70,13 @@ def map_selection_screen():
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if map1_button.checkForInput(mouse_pos):
-                    start_race(maps[0],selected_laps, selected_speed, music_on)  # Pass the first map to start_race
+                    start_race(maps[0],selected_laps, selected_speed, music_on, pause_menu)  # Pass the first map to start_race
                     return
                 if map2_button.checkForInput(mouse_pos):
-                    start_race(maps[1], selected_laps, selected_speed, music_on)  # Pass the second map to start_race
+                    start_race(maps[1], selected_laps, selected_speed, music_on, pause_menu)  # Pass the second map to start_race
                     return
                 if map3_button.checkForInput(mouse_pos):
-                    start_race(maps[2], selected_laps, selected_speed, music_on)  # Pass the third map to start_race
+                    start_race(maps[2], selected_laps, selected_speed, music_on, pause_menu)  # Pass the third map to start_race
                     return
                 if back_button.checkForInput(mouse_pos):
                     main_menu()
@@ -179,7 +179,63 @@ def options():
 
         pygame.display.update()
 
+def pause_menu(screen, current_race):
 
+    current_race.is_paused = True
+
+    BG = pygame.Surface((800, 800), pygame.SRCALPHA)
+    BG.fill((0, 0, 0, 150))
+
+    resume_button = Button(
+        image=None,
+        pos=(400, 300),
+        text_input="RESUME",
+        font=get_font(50),
+        base_color="White",
+        hovering_color="Green"
+    )
+
+    main_menu_button = Button(
+        image=None,
+        pos=(400, 450),
+        text_input="MAIN MENU",
+        font=get_font(50),
+        base_color="White",
+        hovering_color="Red"
+    )
+
+    while current_race.is_paused:
+        screen.blit(BG, (0, 0))
+
+        title_text = get_font(60).render("PAUSED", True, "White")
+        title_rect = title_text.get_rect(center=(400, 150))
+        screen.blit(title_text, title_rect)
+
+        mouse_pos = pygame.mouse.get_pos()
+
+        for button in [resume_button, main_menu_button]:
+            button.changeColor(mouse_pos)
+            button.update(screen)
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_p:
+                current_race.is_paused = False
+                return
+
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if resume_button.checkForInput(mouse_pos):
+                    current_race.is_paused = False
+                    return
+                if main_menu_button.checkForInput(mouse_pos):
+                    current_race.is_paused = False
+                    main_menu()
+                    return
+
+        pygame.display.update()
 
 def main_menu():
     global music_on
