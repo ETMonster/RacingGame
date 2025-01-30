@@ -55,7 +55,7 @@ def update(npc_image1, npc_image2, start_time):
             if current_race.map.lap_checker(current_race.objects.cars[x], current_race.total_laps):
                 current_race.objects.cars[x].speed = 0
                 print((pygame.time.get_ticks() - start_time) / 1000)
-        if current_race.objects.cars[1].laps <= current_race.objects.cars[0].total_laps:
+        if current_race.objects.cars[1].laps <= current_race.total_laps:
             npc_pos_screen = (
                 (current_race.objects.cars[1].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
                 (current_race.objects.cars[1].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
