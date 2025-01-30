@@ -11,23 +11,23 @@ music_on = True
 #SCREEN = pygame.display.set_mode((800, 800))
 pygame.display.set_caption("Menu")
 
-BG = pygame.image.load("Background.png")
-LOGO = pygame.image.load("logoimagecorner.png")
+BG = pygame.image.load("assets/background.png")
+LOGO = pygame.image.load("assets/logoimagecorner.png")
 LOGO = pygame.transform.scale(LOGO, (135, 135))
 
-PAUSE_ICON = pygame.image.load("PauseIcon.png")
+PAUSE_ICON = pygame.image.load("assets/PauseIcon.png")
 PAUSE_ICON = pygame.transform.scale(PAUSE_ICON, (100, 30))
 
 def get_font(size):
-    return pygame.font.Font("font(1).ttf", size)
+    return pygame.font.Font("assets/font(1).ttf", size)
 
 def map_selection_screen():
-    BG = pygame.image.load("Background.png")
+    BG = pygame.image.load("assets/background.png")
     BG = pygame.transform.scale(BG, (800, 800))
 
-    map1_img = pygame.image.load("map1overlay.png")
-    map2_img = pygame.image.load("map2overlay.png")
-    map3_img = pygame.image.load("map3overlay.png")
+    map1_img = pygame.image.load("assets/map1overlay.png")
+    map2_img = pygame.image.load("assets/map2overlay.png")
+    map3_img = pygame.image.load("assets/map3overlay.png")
 
     map1_img = pygame.transform.scale(map1_img, (300, 200))
     map2_img = pygame.transform.scale(map2_img, (300, 200))
@@ -38,7 +38,7 @@ def map_selection_screen():
     map3_button = Button(image=map3_img, pos=(400, 450), text_input="", font=get_font(50), base_color="White", hovering_color="Green")
 
     back_button = Button(
-        image=pygame.image.load("Quit Rect.png"),
+        image=pygame.image.load("assets/Quit Rect.png"),
         pos=(400, 650),
         text_input="BACK",
         font=get_font(40),
@@ -101,7 +101,7 @@ def options():
     music_no_button = Button(image=None, pos=(485, 500), text_input="NO", font=get_font(50), base_color="Black",
                              hovering_color="LightCoral")
 
-    back_button = Button(image=pygame.image.load("Quit Rect.png"), pos=(400, 650), text_input="BACK", font=get_font(40),
+    back_button = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 650), text_input="BACK", font=get_font(40),
                          base_color="#d7fcd4", hovering_color="White")
 
     while True:
@@ -186,7 +186,7 @@ def main_menu():
 
 
     pygame.mixer.init()
-    pygame.mixer.music.load("Lobby_Music.mp3")  #
+    pygame.mixer.music.load("assets/Lobby_Music.mp3")  #
     pygame.mixer.music.set_volume(1)
 
     if music_on:
@@ -201,11 +201,11 @@ def main_menu():
         MENU_RECT = MENU_TEXT.get_rect(center=(400, 100))
         SCREEN.blit(MENU_TEXT, MENU_RECT)
 
-        PLAY_BUTTON = Button(image=pygame.image.load("Play Rect.png"), pos=(400, 250),
+        PLAY_BUTTON = Button(image=pygame.image.load("assets/Play Rect.png"), pos=(400, 250),
                              text_input="PLAY", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        OPTIONS_BUTTON = Button(image=pygame.image.load("Options Rect.png"), pos=(400, 400),
+        OPTIONS_BUTTON = Button(image=pygame.image.load("assets/Options Rect.png"), pos=(400, 400),
                                 text_input="OPTIONS", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
-        QUIT_BUTTON = Button(image=pygame.image.load("Quit Rect.png"), pos=(400, 550),
+        QUIT_BUTTON = Button(image=pygame.image.load("assets/Quit Rect.png"), pos=(400, 550),
                              text_input="QUIT", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
 
         for button in [PLAY_BUTTON, OPTIONS_BUTTON, QUIT_BUTTON]:

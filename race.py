@@ -6,9 +6,10 @@ import maps
 
 
 class Race:
-    def __init__(self, screen, track, is_paused, friction, objects):
+    def __init__(self, screen, track, total_laps, is_paused, friction, objects):
         self.screen = screen
         self.map = track
+        self.total_laps = total_laps
         self.is_paused = is_paused
         self.friction = friction # <0.001 to 1 (0 = 0% blending each frame, 1 = 100% blending each frame)
         self.objects = objects
@@ -48,8 +49,6 @@ class Race:
                 )
 
                 screen.blit(map_subsurface, map_rect.topleft)
-
-
 
         for obj_group in self.objects.to_dictionary():
             for obj in self.objects.to_dictionary()[obj_group]:

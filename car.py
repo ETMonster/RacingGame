@@ -23,9 +23,9 @@ class Car(Object):
         self.turn_factor = turn_factor
         self.max_turn_speed = max_turn_speed
         self.max_speed = max_speed
-        self.laps=1
-        self.total_laps=2
-        self.checkpoints=[]
+
+        self.laps = 0
+        self.checkpoints = []
 
 class Player(Car):
     def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
@@ -35,6 +35,8 @@ class Player(Car):
             image, position, rotation, is_player, velocity, direction,
             gas_acceleration, brake_acceleration, roll_acceleration, skid_acceleration, min_turn_radius, turn_factor, max_turn_speed, max_speed, collision, width, height
         )
+
+    def lap_checker(self, race):
 
 
     def last_checkpoint(self, race):
@@ -121,7 +123,6 @@ class Player(Car):
         collision = self.check_collision(current_race, self.position)
         if collision is not None:
             print('crash')
-
 
 # NPC CAR
 

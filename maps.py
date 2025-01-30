@@ -553,8 +553,6 @@ def map_2():
         'checkpoint': checkpoints,
         'finish': finish_line
     }
-
-
 def map_3():
     inner_points, outer_points, obstacle_points, checkpoints = [], [], [], []
 
@@ -1074,13 +1072,15 @@ class Map:
         pygame.transform.scale(self.surface, (self.width / camera.scale, self.height / camera.scale))
 
 
-    def checker_count(self , npc_car):
-        if (npc_car.pos[0]>=self.start_pos[2] and npc_car.pos[0]<=(self.start_pos[2]+20)) and (npc_car.pos[1]>=self.start_pos[3] and npc_car.pos[1]<=(self.start_pos[3]+240)):
+    def checker_count(self, npc_car):
+        if (self.start_pos[2] <= npc_car.pos[0] <= (self.start_pos[2] + 20)) and (
+                self.start_pos[3] <= npc_car.pos[1] <= (self.start_pos[3] + 240)):
             npc_car.checker=npc_car.laps
             print(npc_car.checker)
 
     def lap_checker(self, npc_car, total_laps):
-        if (npc_car.pos[0]>=self.start_pos[0] and npc_car.pos[0]<(self.start_pos[0]+20)) and (npc_car.pos[1]>=self.start_pos[1] and npc_car.pos[1]<=(self.start_pos[1]+240)):
+        if (self.start_pos[0] <= npc_car.pos[0] < (self.start_pos[0] + 20)) and (
+                self.start_pos[1] <= npc_car.pos[1] <= (self.start_pos[1] + 240)):
             npc_car.laps=npc_car.checker+1
             print(npc_car.laps)
         if npc_car.laps==total_laps+1:
@@ -1089,6 +1089,7 @@ class Map:
             return False
 
 maps = [
-    Map(0, 'images/maps/map_1.png',[1790, 2600, 1900, 2600], [1850,2650], [80,1175], 180, (math.radians(180), 180), "Map1_Music.mp3", "right", "left"),
-    Map(1, 'images/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0), "Map2_Music.mp3", "left", "right"),
-    Map(2, 'images/maps/map_3.png', [1020, 3000, 1200, 3000], [1050, 3070], [-1382,1187], 180, (math.radians(180), 180), "Map3_Music.mp3","right", "left"),]
+    Map(0, 'images/maps/map_2.png',[1790, 2600, 1900, 2600], [1850,2650], [80,1175], 180, (math.radians(180), 180), "assets/Map1_Music.mp3", "right", "left"),
+    Map(1, 'images/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0), "assets/Map2_Music.mp3", "left", "right"),
+    Map(2, 'images/maps/map_3.png', [1020, 3000, 1200, 3000], [1050, 3070], [-1382,1187], 180, (math.radians(180), 180), "assets/Map3_Music.mp3","right", "left"),
+]

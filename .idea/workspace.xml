@@ -5,10 +5,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0e8c829f-8840-4923-a556-a1327bbde4fd" name="Changes" comment="Working on collision">
+      <change afterPath="$PROJECT_DIR$/images/maps/map_3.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car.py" beforeDir="false" afterPath="$PROJECT_DIR$/car.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icons/Carrot (32 x 32).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icons/Cherry (32 x 32).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icons/Cop (32 x 32).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icons/Lemon (32 x 32).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icons/Slime (32 x 32).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Desert_details (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Desert_road (64 x 64).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Highway_road (96 x 64).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Highway_water_animation (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Highway_water_color (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Summer_details (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Summer_road (64 x 64).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Winter_details (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/levels/Winter_road (64 x 64).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/props/Misc_props (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/props/Road_markings (16 x 16).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Damage_indicator (8 x 8).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Fuel_bar (16 x 56).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Main_UI (32 x 176).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Player_arrow_indicator (8 x 8).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Race_progress (8 x 8).png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/ui/Speed_indicator_numbers (8 x 8).png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/maps.py" beforeDir="false" afterPath="$PROJECT_DIR$/maps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/menu.py" beforeDir="false" afterPath="$PROJECT_DIR$/menu.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/race.py" beforeDir="false" afterPath="$PROJECT_DIR$/race.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +48,24 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <favorite-branches>
+      <branch-storage>
+        <map>
+          <entry type="REMOTE">
+            <value>
+              <list>
+                <branch-info repo="$PROJECT_DIR$" source="origin/final" />
+              </list>
+            </value>
+          </entry>
+        </map>
+      </branch-storage>
+    </favorite-branches>
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -47,25 +89,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/etack2/Desktop/RacingGame/images&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.final.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.maps.executor": "Run",
+    "Python.menu.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "final",
+    "last_opened_file_path": "C:/Users/brett/PycharmProjects/RacingGame/menu.py",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\brett\PycharmProjects\RacingGame\images\maps" />
       <recent name="C:\Users\etack2\Desktop\RacingGame\images" />
       <recent name="C:\Users\etack2\Desktop\RacingGame" />
       <recent name="C:\Users\brett\PycharmProjects\RacingGame" />
@@ -76,7 +122,31 @@
       <recent name="C:\Users\etack2\Desktop\RacingGame\maps" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.final">
+    <configuration name="final" type="PythonConfigurationType" factoryName="Python">
+      <module name="RacingGame" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (RacingGame)" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/menu.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="main" type="PythonConfigurationType" factoryName="Python">
       <module name="RacingGame" />
       <option name="ENV_FILES" value="" />
@@ -100,6 +170,10 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.final" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -194,8 +268,22 @@
     <MESSAGE value="Working on collision" />
     <option name="LAST_COMMIT_MESSAGE" value="Working on collision" />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/maps.py</url>
+          <line>1091</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/RacingGame$main.coverage" NAME="main Coverage Results" MODIFIED="1737477418697" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/RacingGame$maps.coverage" NAME="maps Coverage Results" MODIFIED="1738191987014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RacingGame$main.coverage" NAME="main Coverage Results" MODIFIED="1738190760009" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/RacingGame$car.coverage" NAME="car Coverage Results" MODIFIED="1731339240550" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RacingGame$menu.coverage" NAME="menu Coverage Results" MODIFIED="1738191959311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/RacingGame$final.coverage" NAME="final Coverage Results" MODIFIED="1738204095090" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
   </component>
 </project>
