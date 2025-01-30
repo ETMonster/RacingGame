@@ -26,7 +26,7 @@ class Car(Object):
 
         self.laps = 1
         self.checkpoints = []
-        self.final_time = 0
+        self.finish_position = 1
 
 class Player(Car):
     def __init__(self, image, position = Vector(0, 0), rotation = Rotation(0, 0), is_player = False, velocity = Vector(0, 0), direction = Vector(0, 0), gas_acceleration = 0,
@@ -50,10 +50,6 @@ class Player(Car):
                 self.laps += 1
 
             self.checkpoints.clear()
-
-        if self.laps > race.total_laps:
-            self.final_time = race.race_time
-            race.is_paused = True
 
     def update_rotation(self, delta_time, current_race):
         keys = pygame.key.get_pressed()
@@ -130,9 +126,16 @@ class Player(Car):
         self.position.x += (self.velocity.x * self.direction.x * delta_time) / camera.scale #
         self.position.y += (self.velocity.y * self.direction.y * delta_time) / camera.scale # Update position
 
-        collision = self.check_collision(current_race, self.position)
-        if collision is not None:
-            print('crash')
+        if self.check_collision(current_race, self.position):
+            self.velocity.x = 0
+            self.velocity.y = 0
+
+            if len(self.checkpoints):
+                self.position.x = self.checkpoints[-1].centerx
+                self.position.y = self.checkpoints[-1].centery
+            else:
+                self.position.x = current_race.map.finish.centerx
+                self.position.y = current_race.map.finish.centery
 
 # NPC CAR
 

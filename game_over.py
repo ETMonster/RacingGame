@@ -7,7 +7,7 @@ pygame.init()
 def get_font(size):
     return pygame.font.Font("assets/font(1).ttf", size)
 
-def game_over_screen(screen, laps, time, position = 1):
+def game_over_screen(screen, laps, time, position):
     screen.fill((0, 0, 0))
     BG = pygame.image.load("assets/Background.png")
 
@@ -41,19 +41,19 @@ def game_over_screen(screen, laps, time, position = 1):
         options=pygame.image.load("assets/Options Rect.png")
         pygame.transform.scale(options,(200,100))
         #buttons
-        main_menu_button = Button(
+        """main_menu_button = Button(
             image=options,
             pos=(400, 550),
             text_input="MAIN MENU",
             font=get_font(40),
             base_color="#d7fcd4",
             hovering_color="White",
-        )
+        )"""
         quit_image=pygame.image.load("assets/Quit Rect.png")
         pygame.transform.scale(quit_image, (200, 100))
         quit_button = Button(
             image=quit_image,
-            pos=(400, 700),
+            pos=(400, 600),
             text_input="QUIT",
             font=get_font(40),
             base_color="#d7fcd4",
@@ -63,7 +63,7 @@ def game_over_screen(screen, laps, time, position = 1):
         mouse_pos=pygame.mouse.get_pos()
 
 
-        for button in [main_menu_button, quit_button]:
+        for button in [quit_button]:
             button.changeColor(mouse_pos)
             button.update(screen)
 
@@ -73,10 +73,6 @@ def game_over_screen(screen, laps, time, position = 1):
                 sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if main_menu_button.checkForInput(mouse_pos):
-                    from menu import main_menu
-                    main_menu()
-
                 if quit_button.checkForInput(mouse_pos):
                     pygame.quit()
                     sys.exit()

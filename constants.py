@@ -36,29 +36,7 @@ class Object:
         offset = (-(delta_position.x + (race.map.width // 2)), -(delta_position.y + (race.map.height // 2)))
 
         if not self.mask.overlap(race.map.outer_polygons_mask, offset) or self.mask.overlap(race.map.inner_polygons_mask, offset):
-            print('crash')
-            return None
-
-        for obj_group in race.objects.to_dictionary():
-            for obj in race.objects.to_dictionary()[obj_group]:
-                if obj.is_player:
-                    if obj == self or not obj.collision or not self.collision: # Makes sure to not check for collision on self or obj that doesn't collide
-                        continue
-
-                    obj.mask = pygame.mask.from_surface(obj.render_image)
-
-                    if delta_position is not None:
-                        offset = (delta_position.x - obj.position.x, delta_position.y - obj.position.y)
-                    else:
-                        offset = (self.position.x - obj.position.x, self.position.y - obj.position.y)
-
-                    if self.mask.overlap(obj.mask, offset): # Compares object masks at offset for pixel perfect collision
-                        return {
-                            'offset': offset,
-                            'object': obj
-                        }
-
-        return None
+            return True
 
 class Obstacle(Object):
     def __init__(self, image = None, position = Vector(0, 0), rotation = Rotation(0, 0), collision = False, width = None, height = None):

@@ -18,8 +18,10 @@ font = pygame.font.Font("assets/font(1).ttf", 10)
 
 current_race = None
 
+flag_1, flag_2 = False, False
+
 def update(npc_image1, npc_image2, start_time):
-    global current_race
+    global current_race, flag_1, flag_2
 
     player_car = None
 
@@ -35,7 +37,6 @@ def update(npc_image1, npc_image2, start_time):
                 car.update_position(delta_time, current_race)
                 car.update_laps(current_race)
 
-                #update_lap_player(car, car.render_image.get_rect(), current_race.map.checkpoints, current_race.map.finish)
                 camera.update_position(car)
                 player_car = car
 
@@ -47,7 +48,6 @@ def update(npc_image1, npc_image2, start_time):
             current_race.map.checker_count(current_race.objects.cars[x])
             if current_race.map.lap_checker(current_race.objects.cars[x], current_race.total_laps):
                 current_race.objects.cars[x].speed = 0
-                print((pygame.time.get_ticks() - start_time) / 1000)
         if current_race.objects.cars[1].laps <= current_race.total_laps:
             npc_pos_screen = (
                 (current_race.objects.cars[1].pos[0] - camera.position.x) - (current_race.map.surface.get_width() // 2),
@@ -70,19 +70,18 @@ def update(npc_image1, npc_image2, start_time):
         display_laps(screen, current_race.objects.cars[2].laps, (255, 255, 255), (10, 30), font,
                      current_race.objects.cars[2].name, current_race.total_laps)
 
-        #REPLACE current_race.objects.cars[1].laps with current_race.objects.cars[0].laps
-        if current_race.objects.cars[1].laps > current_race.objects.cars[0].total_laps:
-            current_race.objects.cars[1].speed = 0
-            current_race.objects.cars[2].speed = 0
-            if current_race.map.id == 0:
-                current_race.objects.cars[1].pos = [1850, 2650]
-                current_race.objects.cars[2].pos = [1850, 2750]
-            if current_race.map.id == 1:
-                current_race.objects.cars[1].pos = [3270, 150]
-                current_race.objects.cars[2].pos = [3270, 250]
+        if current_race.objects.cars[0].laps > current_race.total_laps:
             return False
-        else:
-            return True
+
+        if current_race.objects.cars[1].laps > current_race.total_laps and flag_1 == False:
+            player_car.finish_position += 1
+            flag_1 = True
+
+        if current_race.objects.cars[2].laps > current_race.total_laps and flag_2 == False:
+            player_car.finish_position += 1
+            flag_2 = True
+
+        return True
 
 
 def start_race(selected_map, selected_laps, selected_speed, music_on, pause_menu):
@@ -143,7 +142,7 @@ def start_race(selected_map, selected_laps, selected_speed, music_on, pause_menu
     start_game = False
     running = True
     while running:
-        print(current_race.map.player_pos[0], current_race.map.player_pos[1])
+        print(current_race.objects.cars[0].position.x, current_race.objects.cars[0].position.y)
 
         screen.fill((80, 80, 80))
 
@@ -154,9 +153,9 @@ def start_race(selected_map, selected_laps, selected_speed, music_on, pause_menu
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_p:
-                    print(f"Pause state before: {current_race.is_paused}")
+                    current_race.is_paused = True
                     pause_menu(screen, current_race)
-                    print(f"Pause state after: {current_race.is_paused}")
+                    current_race.is_paused = False
 
         # Countdown logic
         elapsed_time = pygame.time.get_ticks() - countdown_time
@@ -183,6 +182,6 @@ def start_race(selected_map, selected_laps, selected_speed, music_on, pause_menu
         pygame.time.Clock().tick(FPS)
 
     display_time = (pygame.time.get_ticks() - (start_time + 3000)) / 1000
-    game_over_screen(screen, current_race.total_laps, display_time)
+    game_over_screen(screen, current_race.total_laps, display_time, current_race.objects.cars[0].finish_position)
 
     pygame.quit()

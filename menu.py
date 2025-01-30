@@ -180,7 +180,6 @@ def options():
         pygame.display.update()
 
 def pause_menu(screen, current_race):
-
     current_race.is_paused = True
 
     BG = pygame.Surface((800, 800), pygame.SRCALPHA)
