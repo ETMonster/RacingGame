@@ -1090,7 +1090,7 @@ class Map:
             return False
 
 maps = [
-    Map(0, 'images/maps/map_1.png',[1790, 2600, 1900, 2600], [1850, 2650], [80, 1175], 180, (math.radians(180), 180), "assets/Map1_Music.mp3", "right", "left"),
-    Map(1, 'images/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0), "assets/Map2_Music.mp3", "left", "right"),
-    Map(2, 'images/maps/map_3.png', [1020, 3000, 1200, 3000], [1050, 3070], [-1382,1187], 180, (math.radians(180), 180), "assets/Map3_Music.mp3","right", "left"),
+    Map(0, 'assets/maps/map_1.png',[1790, 2600, 1900, 2600], [1850, 2650], [80, 1175], 180, (math.radians(180), 180), "assets/Map1_Music.mp3", "right", "left"),
+    Map(1, 'assets/maps/map_2.png',[3280, 110, 3000, 110],[3270, 180], [942, -1562], 0, (0,0), "assets/Map2_Music.mp3", "left", "right"),
+    Map(2, 'assets/maps/map_3.png', [1020, 3000, 1200, 3000], [1050, 3070], [-1382,1187], 180, (math.radians(180), 180), "assets/Map3_Music.mp3","right", "left"),
 ]
