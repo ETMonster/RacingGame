@@ -61,7 +61,7 @@ def update(npc_image1, npc_image2, start_time):
                 (current_race.objects.cars[1].pos[1] - camera.position.y) - (current_race.map.surface.get_height() // 2),
             )
             screen.blit(car_temp, npc_pos_screen)
-        if current_race.objects.cars[2].laps <= current_race.objects.cars[0].total_laps:
+        if current_race.objects.cars[2].laps <= current_race.total_laps:
             car_temp2 = pygame.transform.rotate(npc_image2, -current_race.objects.cars[2].dir)
 
             npc_pos_screen = (
