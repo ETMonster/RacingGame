@@ -52,7 +52,7 @@ def update(npc_image1, npc_image2, start_time):
 
         for x in range(1, 3):
             current_race.map.checker_count(current_race.objects.cars[x])
-            if current_race.map.lap_checker(current_race.objects.cars[x], current_race.objects.cars[0].total_laps):
+            if current_race.map.lap_checker(current_race.objects.cars[x], current_race.total_laps):
                 current_race.objects.cars[x].speed = 0
                 print((pygame.time.get_ticks() - start_time) / 1000)
         if current_race.objects.cars[1].laps <= current_race.objects.cars[0].total_laps:
