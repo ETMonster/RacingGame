@@ -12,7 +12,6 @@ from labels import *
 pygame.init()
 
 screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-pygame.display.set_caption('Racing Prototype')
 clock = pygame.time.Clock()
 font = pygame.font.Font("assets/font(1).ttf", 10)
 

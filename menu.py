@@ -9,7 +9,7 @@ selected_speed = 3
 music_on = True
 
 #SCREEN = pygame.display.set_mode((800, 800))
-pygame.display.set_caption("Menu")
+pygame.display.set_caption("Radical Racing")
 
 BG = pygame.image.load("assets/Background.png")
 LOGO = pygame.image.load("assets/logoimagecorner.png")
